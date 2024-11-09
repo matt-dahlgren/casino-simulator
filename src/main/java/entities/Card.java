@@ -1,5 +1,8 @@
 package entities;
 
+/**
+ * Represents a card with a rank, suit, value, and visibility status.
+ */
 public class Card {
     private String rank;
     private String suit;
@@ -38,7 +41,17 @@ public class Card {
         return suit;
     }
 
+    /**
+     * Get the value of the card (9, 10, 11, etc.).
+     * @return The card's value.
+     */
     public int getValue() { return value; }
+
+    /**
+     * Determine if the card's information should be visible to the player.
+     * @return Whether the card's information should be visible.
+     */
+    public boolean isVisible() { return isVisible; }
 
     /**
      * Allows the value of an ace to be switched to 1 or 11.
@@ -51,10 +64,8 @@ public class Card {
     }
 
     /**
-     * Determine if the card's information should be visible to the player.
-     * @return Whether the card's information should be visible.
+     * Sets the visibility status of the card.
+     * @param newValue represents whether the card should be visibile to the user.
      */
-    public boolean isVisible() { return isVisible; }
-
     public void setVisible(boolean newValue) { isVisible = newValue; }
 }
