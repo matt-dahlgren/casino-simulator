@@ -19,7 +19,7 @@ public interface DeckofCards {
      */
     String getDeckID();
 
-    Card drawCard(int numCards);
+    Card drawCard(String deckID);
 
     /**
      * A method that creates a pile to act as the player's hand.

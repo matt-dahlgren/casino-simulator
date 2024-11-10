@@ -2,6 +2,8 @@ package api;
 
 import java.io.IOException;
 
+import entities.CardFactory;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,7 +16,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static api.APIConstants.SHUFFLE;
+import static api.APIConstants.*;
 
 
 /**
@@ -48,22 +50,33 @@ public class CardDeck implements DeckofCards {
 
     /**
      * A method that draws a card from the deck in play.
-     * @param numCards is the amount of cards you want
+     * @param deckID is the id of the deck you want to draw from
      * @return the Card pulled from the deck in play.
      */
     @Override
-    public Card drawCard(int numCards) {
+    public Card drawCard(String deckID) {
         final OkHttpClient client = new OkHttpClient().newBuilder().build();
+
         final Request request = new Request.Builder().
-                url(String.format("%s/draw/?count=%d", getDeckID(), numCards)).build();
+                url(String.format("%s%s/draw/?count=%d", URL, deckID, ONE_CARD)).build();
 
         try {
             final Response response = client.newCall(request).execute();
             final JSONObject responseBody = new JSONObject(response.body().string());
 
             if (responseBody.getBoolean("success")) {
-                final JSONObject cards = responseBody.getJSONObject("cards");
+//                final JSONArray cards = responseBody.getJSONArray("cards");
+                CardFactory cardFactory = new CardFactory();
+                JSONObject cards = responseBody.getJSONArray("cards").getJSONObject(0);
+                return cardFactory.createCard(cards.getString("value"), cards.getString("suit"));
             }
+            else {
+                throw new RuntimeException(responseBody.getString("message"));
+            }
+        }
+        catch (final IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

@@ -6,4 +6,5 @@ package api;
 public class APIConstants {
     public static final String SHUFFLE = "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1";
     public static final String URL = "https://deckofcardsapi.com/api/deck/";
+    public static final int ONE_CARD = 1;
 }

@@ -1,4 +1,7 @@
 import api.CardDeck;
+import entities.Card;
+import entities.Deck;
+import entities.DeckFactory;
 import org.junit.jupiter.api.Test;
 
 public class CardDeckTest {
@@ -12,10 +15,13 @@ public class CardDeckTest {
 
     @Test
     void testDrawCard() {
-        int numCards = 2;
         CardDeck deck = new CardDeck();
-        deck.drawCard(numCards);
+        DeckFactory df = new DeckFactory();
+        Deck currentDeck = df.createDeck(deck.getDeckID());
 
-        // TODO: Make sure we've gotten two cards back
+        Card newCard = deck.drawCard(currentDeck.getDeckID());
+
+        assert(newCard != null);
+
     }
 }
