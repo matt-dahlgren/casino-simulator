@@ -19,6 +19,8 @@ public class AppBuilder {
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
     private final ImageIcon img = new ImageIcon("resources/images/icon.png");
 
+    private final JLabel hitCard = new JLabel();
+
     private InitialView initialView;
     private InitialViewModel initialViewModel;
 
@@ -32,7 +34,7 @@ public class AppBuilder {
      */
     public AppBuilder addInitialView() {
         initialViewModel = new InitialViewModel();
-        initialView = new InitialView(initialViewModel);
+        initialView = new InitialView(initialViewModel, hitCard);
         cardPanel.add(initialView, initialView.getViewName());
         return this;
     }
