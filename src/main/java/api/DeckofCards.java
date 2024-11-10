@@ -1,10 +1,8 @@
 package api;
 
-import org.json.JSONException;
-
 import entities.Card;
-import enitites.Dealer;
-import edntities.Player;
+import entities.Dealer;
+import entities.Player;
 
 /**
  * DeckofCards is an interface that defines the methods that the CardDeck class must implement.
@@ -15,7 +13,13 @@ public interface DeckofCards {
      * @param player is a valid player.
      * @return the Card pulled from the deck in play.
      */
-    Card drawCard();
+
+    /**
+     * Gets the deck ID from the deckofcards API
+     */
+    String getDeckID();
+
+    Card drawCard(int numCards);
 
     /**
      * A method that creates a pile to act as the player's hand.
