@@ -7,8 +7,8 @@ import javax.swing.JFrame;
  * Responsible for actually running the app!
  */
 public class Main {
-    static final int WIDTH = 600;
-    static final int HEIGHT = 300;
+    static final int WIDTH = 1400;
+    static final int HEIGHT = 800;
 
     /**
      * Builds and runs the CA architecture of the application.

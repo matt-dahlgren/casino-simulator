@@ -20,27 +20,40 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
 
     private final InitialViewModel initialViewModel;
     private InitialController initialController;
-    public JLabel hitCard;
 
-//    private final JButton useless;
+    public JLabel hitCard;
+    public JLabel dealerCardOne;
 
     public InitialView(InitialViewModel initialViewModel, JLabel hitCard) {
         this.initialViewModel = initialViewModel;
         this.hitCard = hitCard;
+        this.dealerCardOne = new JLabel();
         initialViewModel.addPropertyChangeListener(this);
 
         this.setLayout(new BorderLayout());
 
+        Font font = new Font("Georgia", Font.BOLD, 20);
+
         final JLabel appNameLabel = new JLabel(InitialViewModel.APP_LABEL);
         appNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        appNameLabel.setFont(font);
+        appNameLabel.setForeground(Color.BLACK);
 
         final JPanel moves = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
-        constraints.gridy = GridBagConstraints.RELATIVE;
 
         final JButton hit = new JButton(InitialViewModel.HIT_BUTTON_LABEL);
         final JButton stand = new JButton(InitialViewModel.STAND_BUTTON_LABEL);
+
+        final JLabel DEALERLABEL = new JLabel("DEALER -->");
+        DEALERLABEL.setFont(font);
+        DEALERLABEL.setForeground(Color.BLACK);
+
+        final JLabel PLAYERLABEL = new JLabel("PLAYER -->");
+        PLAYERLABEL.setFont(font);
+        PLAYERLABEL.setForeground(Color.BLACK);
+
         hit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -48,18 +61,34 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
                     }
                 }
         );
-//        stand.addActionListener(
-//                new ActionListener() {
-//                    public void actionPerformed(ActionEvent e) {
-//                        standClick
-//                    }
-//                }
-//        );
+        stand.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        standClick();
+                    }
+                }
+        );
 
+        constraints.gridy = 0;
+        moves.add(DEALERLABEL, constraints);
+
+        constraints.gridy = 1;
+        moves.add(Box.createVerticalStrut(100), constraints);
+
+        constraints.gridy = 2;
         moves.add(hit, constraints);
+
+        constraints.gridy = 3;
         moves.add(stand, constraints);
 
-        //        hit.addActionListener(
+        constraints.gridy = 4;
+        moves.add(Box.createVerticalStrut(100), constraints);
+
+        constraints.gridy = 5;
+        moves.add(PLAYERLABEL, constraints);
+
+
+//        hit.addActionListener(
 //                new ActionListener() {
 //                    public void actionPerformed(ActionEvent evt) {
 //                        initialController.switchToLoginView();
@@ -68,8 +97,13 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
 //        );
 
         final JPanel dealer = new JPanel(new GridBagLayout());
-        final JLabel dealerCardOne = new JLabel("FACE DOWN,");
+        dealerCardOne.setText("FACE DOWN,");
+        dealerCardOne.setFont(font);
+        dealerCardOne.setForeground(Color.BLACK);
+
         final JLabel dealerCardTwo = new JLabel("QUEEN");
+        dealerCardTwo.setFont(font);
+        dealerCardTwo.setForeground(Color.BLACK);
 
         constraints = new GridBagConstraints();
 
@@ -82,6 +116,13 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
         final JPanel player = new JPanel(new GridBagLayout());
         final JLabel playerCardOne = new JLabel("KING,");
         final JLabel playerCardTwo = new JLabel("3");
+
+        playerCardOne.setFont(font);
+        playerCardTwo.setFont(font);
+        hitCard.setFont(font);
+        playerCardOne.setForeground(Color.BLACK);
+        playerCardTwo.setForeground(Color.BLACK);
+        hitCard.setForeground(Color.BLACK);
 
         constraints = new GridBagConstraints();
         constraints.gridy = 0;
@@ -110,7 +151,10 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
     }
 
     public void standClick() {
-
+        List<String> cards = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"));
+        Random random = new Random();
+        String dealerText = cards.get(random.nextInt(cards.size()));
+        dealerCardOne.setText(dealerText);
     }
 
     @Override
