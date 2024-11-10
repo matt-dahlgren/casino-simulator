@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Objects;
 
 /**
  * The View for the Initial Use Case.
@@ -28,30 +29,42 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
         this.setLayout(new BorderLayout());
 
         final JLabel appNameLabel = new JLabel(InitialViewModel.APP_LABEL);
-        appNameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        appNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        final JPanel moves = new JPanel();
-        moves.setLayout(new BoxLayout(moves, BoxLayout.Y_AXIS));
-        moves.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        moves.setAlignmentY(Component.CENTER_ALIGNMENT);
+        final JPanel moves = new JPanel(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = GridBagConstraints.RELATIVE;
+
         final JButton hit = new JButton(InitialViewModel.HIT_BUTTON_LABEL);
         final JButton stand = new JButton(InitialViewModel.STAND_BUTTON_LABEL);
-        moves.add(hit);
-        moves.add(stand);
+        moves.add(hit, constraints);
+        moves.add(stand, constraints);
 
-        final JPanel dealer = new JPanel();
-        dealer.setLayout(new FlowLayout(FlowLayout.CENTER));
+        final JPanel dealer = new JPanel(new GridBagLayout());
         final JLabel dealerCardOne = new JLabel("FACE DOWN,");
         final JLabel dealerCardTwo = new JLabel("QUEEN");
-        dealer.add(dealerCardOne);
-        dealer.add(dealerCardTwo);
 
-        final JPanel player = new JPanel();
-        player.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        constraints = new GridBagConstraints();
+
+        constraints.gridy = 0;
+        dealer.add(dealerCardOne, constraints);
+
+        constraints.gridy = 1;
+        dealer.add(dealerCardTwo, constraints);
+
+        final JPanel player = new JPanel(new GridBagLayout());
         final JLabel playerCardOne = new JLabel("KING,");
         final JLabel playerCardTwo = new JLabel("3");
-        player.add(playerCardOne);
-        player.add(playerCardTwo);
+
+        constraints = new GridBagConstraints();
+        constraints.gridy = 0;
+        constraints.anchor = GridBagConstraints.CENTER;
+        player.add(playerCardOne, constraints);
+
+        constraints.gridy = 1;
+        player.add(playerCardTwo, constraints);
 
 //        useless.addActionListener(
 //                new ActionListener() {
@@ -63,7 +76,7 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
 
         this.add(appNameLabel, BorderLayout.NORTH);
         this.add(moves, BorderLayout.WEST);
-        this.add(dealer, BorderLayout.CENTER);
+        this.add(dealer, BorderLayout.NORTH);
         this.add(player, BorderLayout.SOUTH);
     }
 
