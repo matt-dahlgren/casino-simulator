@@ -17,7 +17,7 @@ public interface DeckofCards {
     /**
      * Gets the deck ID from the deckofcards API
      */
-    String getDeckID();
+    String getNewDeckID();
 
     Card drawCard(String deckID);
 
@@ -39,9 +39,10 @@ public interface DeckofCards {
 
     /**
      * A method that shuffles the deck in play.
+     * @param deckID is the ID of the current deck in play
      * @return True if and only if the deck shuffle is successful.
      */
-    boolean shuffleDeck();
+    boolean shuffleDeck(String deckID);
 
     /**
      * A method that returns all hands back to the deck to be reshuffled.
