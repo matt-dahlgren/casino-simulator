@@ -14,10 +14,10 @@ public class Card {
         this.suit = suit;
         isVisible = false;
 
-        if (rank == "J" || rank == "Q" || rank == "K") {
+        if (rank.equals("J") || rank.equals("Q") || rank.equals("K")) {
             value = 10;
         }
-        else if (rank == "A") {
+        else if (rank.equals("A")) {
             value = 11;
         }
         else {
@@ -58,7 +58,7 @@ public class Card {
      * @param newValue The new value of the ace.
      */
     public void setValue(int newValue) {
-        if (rank == "A" && (newValue == 11 || newValue == 1)) {
+        if (rank.equals("A") && (newValue == 11 || newValue == 1)) {
             value = newValue;
         }
     }
