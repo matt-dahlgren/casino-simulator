@@ -46,17 +46,19 @@ public class AppBuilder {
         application.setIconImage(img.getImage());
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Places our completed cardPanel in a GridBagLayout, so that it can be centered.
-        JPanel outerPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = GridBagConstraints.CENTER;
+//        // Places our completed cardPanel in a GridBagLayout, so that it can be centered.
+//        JPanel outerPanel = new JPanel(new GridBagLayout());
+//        GridBagConstraints gbc = new GridBagConstraints();
+//        gbc.gridx = 0;
+//        gbc.gridy = 0;
+//        gbc.weightx = 1.0;
+//        gbc.weighty = 1.0;
+//        gbc.anchor = GridBagConstraints.CENTER;
+//
+//        outerPanel.add(cardPanel, gbc);
+//        application.add(outerPanel);
 
-        outerPanel.add(cardPanel, gbc);
-        application.add(outerPanel);
+        application.add(cardPanel);
 
         // Sets "initialView" as the view, aka initialView is the default view.
         viewManagerModel.setState(initialView.getViewName());

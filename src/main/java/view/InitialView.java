@@ -15,26 +15,43 @@ import java.beans.PropertyChangeListener;
  * The View for the Initial Use Case.
  */
 public class InitialView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final String viewName = "initial";
 
     private final InitialViewModel initialViewModel;
     private InitialController initialController;
 
-    private final JButton useless;
+//    private final JButton useless;
 
     public InitialView(InitialViewModel initialViewModel) {
         this.initialViewModel = initialViewModel;
         initialViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel(InitialViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.setLayout(new BorderLayout());
 
-        final JLabel description = new JLabel(InitialViewModel.DESCRIPTION_LABEL);
-        description.setAlignmentX(Component.CENTER_ALIGNMENT);
+        final JLabel appNameLabel = new JLabel(InitialViewModel.APP_LABEL);
+        appNameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        final JPanel buttons = new JPanel();
-        useless = new JButton(InitialViewModel.USELESS_BUTTON_LABEL);
-        buttons.add(useless);
+        final JPanel moves = new JPanel();
+        moves.setLayout(new BoxLayout(moves, BoxLayout.Y_AXIS));
+        moves.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        moves.setAlignmentY(Component.CENTER_ALIGNMENT);
+        final JButton hit = new JButton(InitialViewModel.HIT_BUTTON_LABEL);
+        final JButton stand = new JButton(InitialViewModel.STAND_BUTTON_LABEL);
+        moves.add(hit);
+        moves.add(stand);
+
+        final JPanel dealer = new JPanel();
+        dealer.setLayout(new FlowLayout(FlowLayout.CENTER));
+        final JLabel dealerCardOne = new JLabel("FACE DOWN,");
+        final JLabel dealerCardTwo = new JLabel("QUEEN");
+        dealer.add(dealerCardOne);
+        dealer.add(dealerCardTwo);
+
+        final JPanel player = new JPanel();
+        player.setLayout(new FlowLayout(FlowLayout.CENTER));
+        final JLabel playerCardOne = new JLabel("KING,");
+        final JLabel playerCardTwo = new JLabel("3");
+        player.add(playerCardOne);
+        player.add(playerCardTwo);
 
 //        useless.addActionListener(
 //                new ActionListener() {
@@ -44,11 +61,10 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
 //                }
 //        );
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        this.add(title);
-        this.add(description);
-        this.add(buttons);
+        this.add(appNameLabel, BorderLayout.NORTH);
+        this.add(moves, BorderLayout.WEST);
+        this.add(dealer, BorderLayout.CENTER);
+        this.add(player, BorderLayout.SOUTH);
     }
 
     @Override
@@ -59,7 +75,8 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
         final InitialState state = (InitialState) evt.getNewValue();
     }
 
-    public String getViewName() { return viewName; }
+    public String getViewName() {
+        return "initial"; }
 
     public void setInitialController(InitialController controller) {this.initialController = controller;}
 
