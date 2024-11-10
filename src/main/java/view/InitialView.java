@@ -143,7 +143,7 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
 
     String text = "";
     public void hitClick() {
-        List<String> cards = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"));
+        List<String> cards = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING"));
         Random random = new Random();
         String card = cards.get(random.nextInt(cards.size()));
         text = text + ", " + card;
@@ -151,7 +151,7 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
     }
 
     public void standClick() {
-        List<String> cards = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"));
+        List<String> cards = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING"));
         Random random = new Random();
         String dealerText = cards.get(random.nextInt(cards.size()));
         dealerCardOne.setText(dealerText);
