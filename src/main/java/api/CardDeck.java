@@ -18,6 +18,6 @@ import okhttp3.Response;
 /**
  * The CardDeck class used to interact with the DeckofCards API.
  */
-public class CardDeck implements DeckofCards {
+abstract public class CardDeck implements DeckofCards {
 
 }

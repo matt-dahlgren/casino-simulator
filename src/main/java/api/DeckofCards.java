@@ -3,8 +3,8 @@ package api;
 import org.json.JSONException;
 
 import entities.Card;
-import enitites.Dealer;
-import edntities.Player;
+import entities.Dealer;
+import entities.Player;
 
 /**
  * DeckofCards is an interface that defines the methods that the CardDeck class must implement.
