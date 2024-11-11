@@ -6,22 +6,22 @@ import java.util.ArrayList;
  * A generic player (super)class.
  */
 public class Player {
-    private ArrayList<Card> hand = new ArrayList<Card>();
+    private final ArrayList<Card> hand = new ArrayList<Card>();
+    ArrayList<Card> deck = new ArrayList<>();
 
     public Player() {
     }
 
     /**
-     * Carries out the player's turn.
-     * @param deck the deck of remaining cards that can be drawn.
+     * Carries out the player's turn. // Moved deck param to the players' attributes.
      */
-    public void doTurn(ArrayList<Card> deck) {
+    public void doTurn() {
     }
 
     /**
      * Allows the player to draw a card.
      */
-    protected void hit(Card newCard) {
+    public void hit(Card newCard) {
         hand.add(newCard);
     }
 
@@ -35,6 +35,7 @@ public class Player {
      * Performs the appropriate action when the player's score exceeds 21.
      */
     protected void bust() {
+        System.out.println("Bust");
     }
 
     /**

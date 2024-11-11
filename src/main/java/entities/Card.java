@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.ArrayList;
+
 /**
  * Represents a card with a rank, suit, value, and visibility status.
  */
@@ -10,18 +12,18 @@ public class Card {
     private boolean isVisible;
 
     public Card(String rank, String suit) {
-        this.rank = rank;
         this.suit = suit;
+        this.rank = rank.substring(0, 1).toUpperCase();
         isVisible = false;
 
-        if (rank.equals("J") || rank.equals("Q") || rank.equals("K")) {
+        if (this.rank.equals("J") || this.rank.equals("Q") || this.rank.equals("K")) {
             value = 10;
         }
-        else if (rank.equals("A")) {
+        else if (this.rank.equals("A")) {
             value = 11;
         }
         else {
-            value = Integer.parseInt(rank);
+            value = Integer.parseInt(this.rank);
         }
     }
 
@@ -68,4 +70,8 @@ public class Card {
      * @param newValue represents whether the card should be visibile to the user.
      */
     public void setVisible(boolean newValue) { isVisible = newValue; }
+
+    public String toString() {
+        return "{suit=" + suit + ", rank=" + rank + ", value=" + value + ", isVisible=" + isVisible + "}";
+    }
 }
