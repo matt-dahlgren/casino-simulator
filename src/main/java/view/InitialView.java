@@ -1,5 +1,6 @@
 package view;
 
+import entities.*;
 import interface_adapter.initial.InitialController;
 import interface_adapter.initial.InitialState;
 import interface_adapter.initial.InitialViewModel;
@@ -30,6 +31,8 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
         this.dealerCardOne = new JLabel();
         initialViewModel.addPropertyChangeListener(this);
 
+        setup();
+
         this.setLayout(new BorderLayout());
 
         Font font = new Font("Georgia", Font.BOLD, 20);
@@ -54,11 +57,13 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
         PLAYERLABEL.setFont(font);
         PLAYERLABEL.setForeground(Color.BLACK);
 
+
         hit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         hitClick();
                     }
+
                 }
         );
         stand.addActionListener(
@@ -96,12 +101,18 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
 //                }
 //        );
 
+        dCardOne = draw();
+        Card dCardTwo = draw();
+
+        Dealer.hit(dCardOne);
+        Dealer.hit(dCardTwo);
+
         final JPanel dealer = new JPanel(new GridBagLayout());
         dealerCardOne.setText("FACE DOWN,");
         dealerCardOne.setFont(font);
         dealerCardOne.setForeground(Color.BLACK);
 
-        final JLabel dealerCardTwo = new JLabel("QUEEN");
+        final JLabel dealerCardTwo = new JLabel(dCardTwo.getRank());
         dealerCardTwo.setFont(font);
         dealerCardTwo.setForeground(Color.BLACK);
 
@@ -113,9 +124,15 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
         constraints.gridy = 1;
         dealer.add(dealerCardTwo, constraints);
 
+        Card CardOne = draw();
+        Card CardTwo = draw();
+
+        User.hit(CardOne);
+        User.hit(CardTwo);
+
         final JPanel player = new JPanel(new GridBagLayout());
-        final JLabel playerCardOne = new JLabel("KING,");
-        final JLabel playerCardTwo = new JLabel("3");
+        final JLabel playerCardOne = new JLabel(CardOne.getRank());
+        final JLabel playerCardTwo = new JLabel(CardTwo.getRank());
 
         playerCardOne.setFont(font);
         playerCardTwo.setFont(font);
@@ -139,23 +156,94 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
         this.add(moves, BorderLayout.WEST);
         this.add(dealer, BorderLayout.NORTH);
         this.add(player, BorderLayout.SOUTH);
+
     }
 
+    //GARBAGE INITIALIZER CODE SLOP (I WANT TO SLEEP) - ANDRIY
+
+    private final ArrayList<Card> cards = new ArrayList<>();
+    private UserPlayer User = new UserPlayer(cards);
+    private Dealer Dealer = new Dealer(cards);
+    private Card dCardOne = new Card("1", "hearts");
+
+
+    private void setup() {
+        ArrayList<String> ranks = new ArrayList<>(Arrays.asList("2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING", "ACE"));
+
+        for (int i = 0; i< 4; i++) {
+            for (int j = 0; j < ranks.size(); j++) {
+                this.cards.add(new Card(ranks.get(j), "hearts"));
+            }
+
+        }
+        this.User = new UserPlayer(this.cards);
+        this.Dealer = new Dealer(this.cards);
+    }
+
+    private Card draw() {
+        Random random = new Random();
+        int size = random.nextInt(this.cards.size());
+        Card card = this.cards.get(size);
+        this.cards.remove(size);
+
+        return card;
+    }
+
+
+    // Both of these fellas probably need to be thrown in their own classes / used as interfaces here
     String text = "";
     public void hitClick() {
-        List<String> cards = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING"));
-        Random random = new Random();
-        String card = cards.get(random.nextInt(cards.size()));
-        text = text + ", " + card;
-        hitCard.setText(text);
+        if (User.getScore() > 21) {
+            System.out.println("Already Busted!");
+        }
+        else {
+            Random random = new Random();
+            int size = random.nextInt(this.cards.size());
+            Card card = this.cards.get(size);
+            this.cards.remove(size);
+
+            this.User.hit(card);
+
+            text = text + ", " + card.getRank();
+            hitCard.setText(text);
+
+            if (User.getScore() > 21) {
+                System.out.println("Busted!");
+                standClick(); // TERRIBLE CA, PLEASE MAKE A DEDICATED STAND/BUSTED CLASS! -andriy
+                return;
+            }
+
+            System.out.println(this.User.getScore());
+        }
     }
 
     public void standClick() {
-        List<String> cards = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING"));
-        Random random = new Random();
-        String dealerText = cards.get(random.nextInt(cards.size()));
+        System.out.println("Dealer's Turn!");
+        String dealerText = dCardOne.getRank();
         dealerCardOne.setText(dealerText);
+        Dealer.doTurn();
+
+        // Below is just temporary because I want to go to sleep and don't have time to make it all separate classes
+        // Very YandereDev-esque code
+
+        if (User.getScore() > 21) {
+            System.out.println("You lost");
+        }
+        else if (Dealer.getScore() > 21) {
+            System.out.println("Dealer Busted, Bets Returned");
+        }
+        else if (User.getScore() > Dealer.getScore()) {
+            System.out.println("You Won! 1.5x Bet Returned");
+        }
+        else if (Dealer.getScore() > User.getScore()) {
+            System.out.println("You Lost! Should've risked it some more!");
+        }
+        else {
+            System.out.println("Tie"); // Only if 21
+        }
+
     }
+    // END OF GARBAGE
 
     @Override
     public void actionPerformed(ActionEvent evt) {JOptionPane.showMessageDialog(this, "Not Implemented Yet"); }
