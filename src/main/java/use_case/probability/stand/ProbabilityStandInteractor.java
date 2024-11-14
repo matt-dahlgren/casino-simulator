@@ -1,39 +1,70 @@
 package use_case.probability.stand;
 
+import entities.Card;
+import entities.Dealer;
+import entities.Player;
+import entities.UserPlayer;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static use_case.probability.ProbabilityConstants.BLACKJACK;
+import static use_case.probability.ProbabilityConstants.fullDeck;
+import static use_case.probability.ProbabilityConstants.sampleDeck;
 import static use_case.probability.ProbabilityConstants.SCENARIO;
 import static use_case.probability.ProbabilityConstants.WINS;
+
+// To reduce runtime of this algorithm, all cards of similar value (bar Ace) are recognized to be the same, and outcomes
+// are multiplied by their frequency as one king's branching possibilities will be the same as another king, queen,
+// jack or ten pulled at the same branch.
 
 /**
  * The class that calculates the probability of winning a game of BlackJack with a current hand.
  */
 public class ProbabilityStandInteractor {
 
-    public final ArrayList<String> unknownCards;
-    public final ArrayList<String> userCards;
-    public final String dealerCard;
+    private final Map<Integer, Integer> unknownCards;
+    private final Map<Integer, Integer> userCards;
+    private final Map<Integer, Integer> dealerCards;
 
     // TO-DO: reconfigure initialization with input data
 
     /**
-     * initialize an instance of ProbabilityStandInteractor.
-     * @param unknownCards is a list of cards configured in the same format as fullDeck in ProbabilityConstants
-     *                     , this list consists of all cards in a game that are not shown (all cards in the deck and the
-     *                     dealer's non-visible card.
-     * @param userCards is a list of cards configured in the same format as fullDeck in ProbabiltyConstants, this list
-     *                  consists of all cards in the user's hand.
-     * @param dealerCard is a string congfigured in the same format as a card in fullDeck in ProbabilityConstants. This
-     *                   is the card that the dealer is showing.
+     * Initializes an instance of ProbabilityStandInteractor.
+     * @param players consists of a list of One Dealer, One UsePlayer, and optionally other non User, non Dealer
+     *                Players.
      */
-    public ProbabilityStandInteractor(ArrayList<String> unknownCards, ArrayList<String> userCards, String dealerCard) {
-        this.unknownCards = unknownCards;
-        this.userCards = userCards;
-        this.dealerCard = dealerCard;
+    public ProbabilityStandInteractor(ArrayList<Player> players) {
+
+        this.unknownCards = new HashMap<>(fullDeck);
+        this.userCards = new HashMap<>(sampleDeck);
+        this.dealerCards = new HashMap<>(sampleDeck);
+
+        for (Player player : players) {
+            if (player instanceof Dealer) {
+                for (Card card: player.getDeck()) {
+                    if (card.isVisible()) {
+                        int value = card.getValue();
+                        this.unknownCards.compute(value, (k, v) -> v - 1);
+                        this.dealerCards.compute(value, (k, v) -> v + 1);
+                    }
+                }
+            }
+            else if (player instanceof UserPlayer) {
+                for (Card card: player.getDeck()) {
+                    int value = card.getValue();
+                    this.unknownCards.compute(value, (k, v) -> v - 1);
+                    this.userCards.compute(value, (k, v) -> v + 1);
+                }
+            }
+            else {
+                for (Card card: player.getDeck()) {
+                    this.unknownCards.compute(card.getValue(), (k, v) -> v - 1);
+                }
+            }
+        }
     }
 
     /**
@@ -66,25 +97,14 @@ public class ProbabilityStandInteractor {
      * smallest possible score.
      * @return an integer representing the score of your current hand.
      */
-    private int handScore(List<String> hand) {
+    private int handScore (Map<Integer, Integer> hand) {
 
         int result = 0;
-        int aceCount = 0;
+        int aceCount = hand.get(11);
 
-        for (String card : hand) {
-            int rank = Integer.parseInt(card.substring(0, 2));
-
-            if (rank == 0) {
-                result += 11;
-                aceCount++;
+        for (int key : hand.keySet()) {
+            result += hand.get(key) * key;
             }
-            else if (1 <= rank && rank <= 9) {
-                result += rank;
-            }
-            else {
-                result += 10;
-            }
-        }
 
         // If the player has a hand with aces and have bust (using any aces as a score of 11), reduce the score by 10
         // until either all aces have been evaluated as score 1 or the hand is scored to be less than or equal to 21.
@@ -112,9 +132,7 @@ public class ProbabilityStandInteractor {
      */
     private int winPercentage(int userScore) {
 
-        ArrayList<String> dealerDeck = new ArrayList<>();
-        dealerDeck.add(dealerCard);
-        Map<String, Integer> winScenario = this.countWinsandGames(userScore, dealerDeck, unknownCards);
+        Map<String, Integer> winScenario = this.countWinsandGames(userScore, dealerCards, unknownCards);
 
         return Math.floorDiv(winScenario.get(WINS), winScenario.get(SCENARIO));
     }
@@ -125,13 +143,13 @@ public class ProbabilityStandInteractor {
      * To take care of a very unlikely edge case, if the deck of cards runs out before the dealer hits 21, this is
      * automatically counted as a player win.
      * @param userScore an integer representing the score of the player's hand.
-     * @param currentDealer a list of strings representing what cards a dealer could POSSIBLY have with one known card.
-     * @param unknownDeck a list of strings representing what cards are assumed to be unknown.
+     * @param currentDealer a map containing all cards dealer theoretically has at time of call.
+     * @param unknownDeck a map containing what cards are assumed to be unknown.
      * @return a map that contains a key representing how many scenarios have been tested and in how many of them the
      * player wins.
      */
-    private Map<String, Integer> countWinsandGames(int userScore, ArrayList<String> currentDealer,
-                                                   ArrayList<String> unknownDeck) {
+    private Map<String, Integer> countWinsandGames(int userScore, Map<Integer, Integer> currentDealer,
+                                                   Map<Integer, Integer> unknownDeck) {
 
         int playerWin = 0;
         int scenarioCount = 0;
@@ -140,33 +158,41 @@ public class ProbabilityStandInteractor {
         result.put(SCENARIO, 0);
         result.put(WINS, 0);
 
-        for (String card : unknownDeck) {
-            ArrayList<String> conditionalDealer = new ArrayList<>(currentDealer);
-            conditionalDealer.add(card);
+        for (int i = 1; i <= 11; i++) {
+
+            // check if there is at least one card of this value left in the unknown card list, if there is not then
+            // continue to the next value to remove useless iterations.
+            if (unknownDeck.get(i) < 1) {
+                continue;
+            }
+
+            Map<Integer, Integer> conditionalDealer = new HashMap<>(currentDealer);
+            conditionalDealer.compute(i, (k, v) -> v + 1);
+
 
             int dealerScore = handScore(conditionalDealer);
 
             if (dealerScore > BLACKJACK) {
-                playerWin++;
-                scenarioCount++;
+                playerWin += unknownDeck.get(i);
+                scenarioCount += unknownDeck.get(i);
             }
 
             // dealerScore will not result in a bust.
             else if (dealerScore >= 17) {
 
                 if (dealerScore < userScore) {
-                    playerWin++;
+                    playerWin += unknownDeck.get(i);
                 }
-                scenarioCount++;
+                scenarioCount += unknownDeck.get(i);
             }
 
-
             else  {
-                ArrayList<String> conditionalUnknown = new ArrayList<>(unknownCards);
-                conditionalUnknown.remove(card);
+
+                Map<Integer, Integer> conditionalUnknown = new HashMap<>(unknownDeck);
+                conditionalUnknown.compute(i, (k, v) -> v - 1);
 
                 // edge-case that the deck is empty to prevent infinite recursion
-                if (conditionalUnknown.isEmpty()) {
+                if (this.sumCollection(conditionalUnknown.values()) == 0) {
                     playerWin++;
                     scenarioCount++;
                 }
@@ -193,4 +219,19 @@ public class ProbabilityStandInteractor {
 
         return result;
     }
+
+    /**
+     * Sums the elements of a collection of integers.
+     * @param values is a list of integers representing the values of a map.
+     * @return an integer representing the sum of a collection containing integers.
+     */
+    private Integer sumCollection(Collection<Integer> values) {
+        int result = 0;
+
+        for (Integer value : values) {
+            result += value;
+        }
+        return result;
+    }
+
 }
