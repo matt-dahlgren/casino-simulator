@@ -25,4 +25,9 @@ public class ProbabilityConstants {
             "11H", "11D", "11S", "11C",
             "12H", "12D", "12S", "12C",
             "13H", "13D", "13S", "13C");
+
+    public static final int BLACKJACK = 21;
+
+    public static final String SCENARIO = "SCENARIO";
+    public static final String WINS = "WINS";
 }
