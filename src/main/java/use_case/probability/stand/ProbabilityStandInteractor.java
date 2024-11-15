@@ -29,7 +29,6 @@ public class ProbabilityStandInteractor {
     private final Map<Integer, Integer> userCards;
     private final Map<Integer, Integer> dealerCards;
 
-    // TO-DO: reconfigure initialization with input data
 
     /**
      * Initializes an instance of ProbabilityStandInteractor.
@@ -97,7 +96,7 @@ public class ProbabilityStandInteractor {
      * smallest possible score.
      * @return an integer representing the score of your current hand.
      */
-    private int handScore (Map<Integer, Integer> hand) {
+    private int handScore(Map<Integer, Integer> hand) {
 
         int result = 0;
         int aceCount = hand.get(11);
@@ -132,9 +131,9 @@ public class ProbabilityStandInteractor {
      */
     private int winPercentage(int userScore) {
 
-        Map<String, Integer> winScenario = this.countWinsandGames(userScore, dealerCards, unknownCards);
+        Map<String, Double> winScenario = this.countWinsandGames(userScore, dealerCards, unknownCards, 1.0);
 
-        return Math.floorDiv(winScenario.get(WINS), winScenario.get(SCENARIO));
+        return Math.floorDiv((int) Math.ceil(winScenario.get(WINS)), (int) Math.ceil(winScenario.get(SCENARIO)));
     }
 
     /**
@@ -148,15 +147,15 @@ public class ProbabilityStandInteractor {
      * @return a map that contains a key representing how many scenarios have been tested and in how many of them the
      * player wins.
      */
-    private Map<String, Integer> countWinsandGames(int userScore, Map<Integer, Integer> currentDealer,
-                                                   Map<Integer, Integer> unknownDeck) {
+    private Map<String, Float> countWinsandGames(int userScore, Map<Integer, Integer> currentDealer,
+                                                   Map<Integer, Integer> unknownDeck, float relativeFrequency) {
 
-        int playerWin = 0;
-        int scenarioCount = 0;
-        Map<String, Integer> result = new HashMap<>();
+        float playerWin = 0f;
+        float scenarioCount = 0f;
+        Map<String, Float> result = new HashMap<>();
 
-        result.put(SCENARIO, 0);
-        result.put(WINS, 0);
+        result.put(SCENARIO, 0f);
+        result.put(WINS, 0f);
 
         for (int i = 1; i <= 11; i++) {
 
@@ -186,13 +185,18 @@ public class ProbabilityStandInteractor {
                 scenarioCount += unknownDeck.get(i);
             }
 
+            else if (dealerScore > userScore) {
+                scenarioCount += unknownDeck.get(i);
+            }
+
             else  {
 
                 Map<Integer, Integer> conditionalUnknown = new HashMap<>(unknownDeck);
                 conditionalUnknown.compute(i, (k, v) -> v - 1);
+                int deckSize = this.sumCollection(conditionalUnknown.values());
 
                 // edge-case that the deck is empty to prevent infinite recursion
-                if (this.sumCollection(conditionalUnknown.values()) == 0) {
+                if (deckSize == 0) {
                     playerWin++;
                     scenarioCount++;
                 }
@@ -201,17 +205,20 @@ public class ProbabilityStandInteractor {
                 // from a non-recursive call to this function the max recursive calls that can be made is 7
                 // assuming the dealer pulls/has four Ones, four twos and one three (score of 15, then there will
                 // one more recursive call).
+                // getting the relative frequencies of these probabilities will weigh probabilities to their actual
+                // chances of happening. Without this a branch of pulls 3 deep would be equally likely as just 1.
                 else {
-                    Map<String, Integer> heldResult = this.countWinsandGames(userScore,
-                            conditionalDealer, conditionalUnknown);
+                    float newRelativeFrequency = relativeFrequency * (1f / deckSize);
+                    Map<String, Float> heldResult = this.countWinsandGames(userScore,
+                            conditionalDealer, conditionalUnknown, newRelativeFrequency);
 
                     result.compute(SCENARIO, (k,v) -> v + heldResult.get(SCENARIO));
                     result.compute(WINS, (k,v) -> v + heldResult.get(WINS));
                 }
             }
 
-            int finalScenarioCount = scenarioCount;
-            int finalWinCount = playerWin;
+            float finalScenarioCount = scenarioCount * relativeFrequency;
+            float finalWinCount = playerWin * relativeFrequency;
 
             result.compute(SCENARIO, (k, v) -> v + finalScenarioCount);
             result.compute(WINS, (k, v) -> v + finalWinCount);
