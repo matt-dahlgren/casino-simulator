@@ -1,7 +1,6 @@
 package interface_adapter.freePlay;
 
-import use_case.freePlayMode.FreePlayInputBoundary;
-import use_case.freePlayMode.FreePlayInputData;
+import use_case.freePlayMode.FreePlayInteractor;
 
 import java.util.ArrayList;
 
@@ -9,22 +8,24 @@ import java.util.ArrayList;
  * Controller for free play mode use case.
  */
 public class FreePlayController {
-    private final FreePlayInputBoundary freePlayInteractor;
+    private final FreePlayInteractor freePlayInteractor;
 
-    public FreePlayController(FreePlayInputBoundary freePlayInputBoundary) {
-        this.freePlayInteractor = freePlayInputBoundary;
+    public FreePlayController(FreePlayInteractor freePlayInteractor) {
+        this.freePlayInteractor = freePlayInteractor;
     }
 
-    public void execute_hit(ArrayList<Integer> playerHandVals, Boolean playing) {
-        final FreePlayInputData freePlayInputData = new FreePlayInputData(playerHandVals, playing);
-
-        freePlayInteractor.hit(freePlayInputData);
+    public void execute_hit() {
+        freePlayInteractor.hit();
     }
 
-    public void execute_stand(ArrayList<Integer> playerHandVals, Boolean playing) {
-        final FreePlayInputData freePlayInputData = new FreePlayInputData(playerHandVals, playing);
+    public void execute_stand() {
 
-        freePlayInteractor.stand(freePlayInputData);
+        freePlayInteractor.stand();
+    }
+
+    public void set_up_game() {
+
+        freePlayInteractor.start();
     }
 
 }
