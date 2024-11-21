@@ -14,7 +14,8 @@ import java.beans.PropertyChangeListener;
 import java.util.*;
 
 /**
- * The View for the Initial Use Case.
+ * This is the view for the team use case, which corresponds to free play mode in our
+ * game-- a BlackJack game with no hints.
  */
 public class TeamView extends JPanel implements ActionListener, PropertyChangeListener {
 
