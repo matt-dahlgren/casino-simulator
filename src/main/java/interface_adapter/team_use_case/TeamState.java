@@ -1,10 +1,10 @@
-package interface_adapter.initial;
+package interface_adapter.team_use_case;
 
 /**
  * The state for the Signup View Model.
  *
  */
-public class InitialState {
+public class TeamState {
 
     @Override
     public String toString() {

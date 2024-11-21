@@ -1,8 +1,8 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.initial.InitialViewModel;
-import view.InitialView;
+import interface_adapter.team_use_case.TeamViewModel;
+import view.TeamView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -21,8 +21,8 @@ public class AppBuilder {
 
     private final JLabel hitCard = new JLabel();
 
-    private InitialView initialView;
-    private InitialViewModel initialViewModel;
+    private TeamView teamView;
+    private TeamViewModel teamViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -32,15 +32,15 @@ public class AppBuilder {
      * Adds the Default View to the application
      * @return this builder
      */
-    public AppBuilder addInitialView() {
-        initialViewModel = new InitialViewModel();
-        initialView = new InitialView(initialViewModel, hitCard);
-        cardPanel.add(initialView, initialView.getViewName());
+    public AppBuilder addTeamView() {
+        teamViewModel = new TeamViewModel();
+        teamView = new TeamView(teamViewModel, hitCard);
+        cardPanel.add(teamView, teamView.getViewName());
         return this;
     }
 
     /**
-     * Creates the JFrame for the application and initially sets the initialView to be displayed.
+     * Creates the JFrame for the application and initially sets the TeamView to be displayed.
      * @return the application
      */
     public JFrame build() {
@@ -62,8 +62,8 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        // Sets "initialView" as the view, aka initialView is the default view.
-        viewManagerModel.setState(initialView.getViewName());
+        // Sets "TeamView" as the view, aka TeamView is the default view.
+        viewManagerModel.setState(teamView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;
