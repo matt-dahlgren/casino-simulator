@@ -24,10 +24,6 @@ import static use_case.probability.ProbabilityConstants.ACETOONE;
 // are multiplied by their frequency as one king's branching possibilities will be the same as another king, queen,
 // jack or ten pulled at the same branch.
 
-// General Ideas of how I want this to work:
-// Basically the same as StandProbability, but before any calculation is done for the userHand, I want to calculate
-// the frequency of sums then use those sums to compare against the
-
 /**
  * The class that carries out the logic behind calculating probabilities of a Player winning if they choose to hit.
  */
@@ -49,7 +45,7 @@ public class ProbabilityHitInteractor implements ProbabilityInteractorInterface 
         this.userCards = new HashMap<>(sampleDeck);
         this.dealerCards = new HashMap<>(sampleDeck);
 
-        for (Player player : probabilityHitInputData.getPlayers()) {
+        for (Player player : this.probabilityHitInputData.getPlayers()) {
             if (player instanceof Dealer) {
                 for (Card card: player.getDeck()) {
                     if (card.isVisible()) {

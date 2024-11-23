@@ -40,7 +40,7 @@ public class ProbabilityStandInteractor implements ProbabilityInteractorInterfac
         this.userCards = new HashMap<>(sampleDeck);
         this.dealerCards = new HashMap<>(sampleDeck);
 
-        for (Player player : probabilityStandInputData.getPlayers()) {
+        for (Player player : this.probabilityStandInputData.getPlayers()) {
             if (player instanceof Dealer) {
                 for (Card card: player.getDeck()) {
                     if (card.isVisible()) {

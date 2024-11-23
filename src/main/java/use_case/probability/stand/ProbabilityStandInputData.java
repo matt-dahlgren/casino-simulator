@@ -1,18 +1,18 @@
 package use_case.probability.stand;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import entities.Player;
 
 public class ProbabilityStandInputData {
 
-    private final ArrayList<Player> players;
+    private final List<Player> players;
 
-    public ProbabilityStandInputData(ArrayList<Player> players) {
+    public ProbabilityStandInputData(List<Player> players) {
         this.players = players;
     }
 
-    public ArrayList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 }
