@@ -1,5 +1,8 @@
 package interface_adapter.probability.stand;
 
-public class ProbabilityStandPresenter {
-    // TODO implement further when views have been fully pushed
+import use_case.probability.hit.ProabilityHitOutputBoundary;
+
+public class ProbabilityStandPresenter implements ProabilityHitOutputBoundary {
+
+    public ProbabilityStandPresenter() {}
 }
