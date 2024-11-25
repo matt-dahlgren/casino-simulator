@@ -13,4 +13,12 @@ public class GameReportDAOConstants {
 
     public static final String HIT = "H";
     public static final String STAND = "S";
+
+    public static final String[] STATISTIC_LABELS = new String[]{
+            "ROUND",
+            "MOVE",
+            "PROBABILITY OF WINNING",
+            "ALTERNATE PROBABILITY OF WINNING",
+            "PROBABILITY DIFFERENCE",
+            "MOVE QUALITY" };
 }
