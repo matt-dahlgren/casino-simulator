@@ -4,7 +4,6 @@ import entities.Card;
 import entities.Dealer;
 import entities.Player;
 import entities.UserPlayer;
-import use_case.probability.ProbabilityInteractorInterface;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -27,23 +26,26 @@ import static use_case.probability.ProbabilityConstants.ACETOONE;
 /**
  * The class that carries out the logic behind calculating probabilities of a Player winning if they choose to hit.
  */
-public class ProbabilityHitInteractor implements ProbabilityInteractorInterface {
+public class ProbabilityHitInteractor implements ProbabilityInteractorInterface, ProbabilityHitInputBoundary {
 
     private final ProbabilityHitInputData probabilityHitInputData;
     private final Map<Integer, Integer> unknownCards;
     private final Map<Integer, Integer> userCards;
     private final Map<Integer, Integer> dealerCards;
+    private final ProbabilityHitOutputBoundary hitPresenter;
 
 
     /**
      * Initializes an instance of ProbabilityHitInteractor.
      */
-    public ProbabilityHitInteractor(ProbabilityHitInputData probabilityHitInputData) {
+    public ProbabilityHitInteractor(ProbabilityHitInputData probabilityHitInputData,
+                                    ProbabilityHitOutputBoundary hitPresenter) {
 
         this.probabilityHitInputData = probabilityHitInputData;
         this.unknownCards = new HashMap<>(fullDeck);
         this.userCards = new HashMap<>(sampleDeck);
         this.dealerCards = new HashMap<>(sampleDeck);
+        this.hitPresenter = hitPresenter;
 
         for (Player player : this.probabilityHitInputData.getPlayers()) {
             if (player instanceof Dealer) {
@@ -197,5 +199,10 @@ public class ProbabilityHitInteractor implements ProbabilityInteractorInterface 
             }
         }
         return result;
+    }
+
+    @Override
+    public void execute(ProbabilityHitInputData inputData) {
+        hitPresenter.prepareProbabilityHitView(new ProbabilityHitOutputData(this.hitProbability()));
     }
 }

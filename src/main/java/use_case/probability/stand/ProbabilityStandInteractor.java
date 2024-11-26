@@ -4,7 +4,6 @@ import entities.Card;
 import entities.Dealer;
 import entities.Player;
 import entities.UserPlayer;
-import use_case.probability.ProbabilityInteractorInterface;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,9 +21,8 @@ import static use_case.probability.ProbabilityConstants.WINS;
 /**
  * The class that calculates the probability of winning a game of BlackJack with a current hand.
  */
-public class ProbabilityStandInteractor implements ProbabilityInteractorInterface {
+public class ProbabilityStandInteractor implements ProbabilityInteractorInterface, ProbabilityStandInputBoundary {
 
-    private final ProbabilityStandInputData probabilityStandInputData;
     private final Map<Integer, Integer> unknownCards;
     private final Map<Integer, Integer> userCards;
     private final Map<Integer, Integer> dealerCards;
@@ -35,12 +33,11 @@ public class ProbabilityStandInteractor implements ProbabilityInteractorInterfac
      */
     public ProbabilityStandInteractor(ProbabilityStandInputData probabilityStandInputData) {
 
-        this.probabilityStandInputData = probabilityStandInputData;
         this.unknownCards = new HashMap<>(fullDeck);
         this.userCards = new HashMap<>(sampleDeck);
         this.dealerCards = new HashMap<>(sampleDeck);
 
-        for (Player player : this.probabilityStandInputData.getPlayers()) {
+        for (Player player : probabilityStandInputData.getPlayers()) {
             if (player instanceof Dealer) {
                 for (Card card: player.getDeck()) {
                     if (card.isVisible()) {
@@ -103,6 +100,12 @@ public class ProbabilityStandInteractor implements ProbabilityInteractorInterfac
         Map<String, Float> winScenario = this.countWinsandGames(userScore, dealerCards, unknownCards, 1f);
 
         return Math.floorDiv((int) Math.ceil(winScenario.get(WINS)), (int) Math.ceil(winScenario.get(SCENARIO)));
+    }
+
+    @Override
+    public ProbabilityStandOutputData execute(ProbabilityStandInputData probabilityStandInputData) {
+
+        ProbabilityStandOutputData outputData = new ProbabilityStandOutputData(this.standProbability());
     }
 
 }
