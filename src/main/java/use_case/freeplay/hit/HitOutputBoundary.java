@@ -16,4 +16,6 @@ public interface HitOutputBoundary {
      * @param message explanation for why bust
      */
     void prepareBustView(String message);
+
+    void prepareExitView();
 }
