@@ -32,7 +32,8 @@ public class APIDataAccessObject implements FreePlayDA {
             if (responseBody.getBoolean("success")) {
                 CardFactory cardFactory = new CardFactory();
                 JSONObject cards = responseBody.getJSONArray("cards").getJSONObject(0);
-                return cardFactory.createCard(cards.getString("value"), cards.getString("suit"));
+                return cardFactory.createCard(cards.getString("value"), cards.getString("suit"),
+                        cards.getString("image"));
             } else {
                 throw new RuntimeException(responseBody.getString("message"));
             }
