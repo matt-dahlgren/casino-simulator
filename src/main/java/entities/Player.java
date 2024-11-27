@@ -7,7 +7,6 @@ import java.util.ArrayList;
  */
 public class Player {
     private final ArrayList<Card> hand = new ArrayList<Card>();
-    ArrayList<Card> deck = new ArrayList<>();
 
     public Player() {
     }

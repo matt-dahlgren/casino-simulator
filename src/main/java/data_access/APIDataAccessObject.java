@@ -7,7 +7,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
-import use_case.freeplay.FreePlayDA;
+import use_case.freePlayMode.FreePlayDA;
 
 import java.io.IOException;
 
@@ -88,3 +88,4 @@ public class APIDataAccessObject implements FreePlayDA {
         }
     }
 }
+
