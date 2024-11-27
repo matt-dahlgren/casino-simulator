@@ -42,16 +42,29 @@ public class HitUseCaseInteractor {
             gameDAO.setPlayer(player);
 
             //output data and presenter
-
+            HitOutputData outputData = new HitOutputData(makeImages(playerHand));
+            hitPresenter.prepareSuccessView(outputData);
         }
         else if ((getHandVal(playerHand)).equals(21)) {
-            //win
+            hitPresenter.prepareExitView("Winner!");
         }
         else {
             //bust
+            hitPresenter.prepareBustView("Bust! You're over 21");
         }
+    }
 
-
+    /**
+     * Helper function that makes array with image links
+     * @param hand the hand list
+     * @return list of strings with links
+     */
+    private ArrayList<String> makeImages (ArrayList<Card> hand) {
+        ArrayList<String> images = new ArrayList<>();
+        for (Card card : hand) {
+            images.add(card.getImage());
+        }
+        return images;
     }
 
     /**

@@ -17,5 +17,5 @@ public interface HitOutputBoundary {
      */
     void prepareBustView(String message);
 
-    void prepareExitView();
+    void prepareExitView(String message);
 }
