@@ -1,8 +1,10 @@
 package interface_adapter.probability.stand;
 
-import use_case.probability.hit.ProabilityHitOutputBoundary;
+import use_case.probability.hit.ProbabilityHitOutputBoundary;
 
-public class ProbabilityStandPresenter implements ProabilityHitOutputBoundary {
+public class ProbabilityStandPresenter implements ProbabilityHitOutputBoundary {
 
-    public ProbabilityStandPresenter() {}
+    public ProbabilityStandPresenter() {
+
+    }
 }

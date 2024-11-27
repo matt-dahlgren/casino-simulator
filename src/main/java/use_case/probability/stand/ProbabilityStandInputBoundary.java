@@ -7,7 +7,6 @@ public interface ProbabilityStandInputBoundary {
 
     /**
      * Executes the probabilityStand usecase.
-     * @param probabilityStandInputData is valid input data.
      */
-    void execute(ProbabilityStandInputData probabilityStandInputData);
+    void execute();
 }

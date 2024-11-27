@@ -9,5 +9,5 @@ public interface ProbabilityHitInputBoundary {
      * Executes the probabilityHit usecase
      * @param probabilityHitInputData is valid input data.
      */
-    void execute(ProbabilityHitInputData probabilityHitInputData);
+    void execute();
 }

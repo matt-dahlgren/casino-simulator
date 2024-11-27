@@ -3,7 +3,7 @@ package use_case.probability.hit;
 /**
  * The output boundary for the ProbabilityHit Usecase.
  */
-public interface ProabilityHitOutputBoundary {
+public interface ProbabilityHitOutputBoundary {
 
     /**
      * Prepares the view for the probabilityHit Use Case.

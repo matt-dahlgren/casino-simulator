@@ -27,9 +27,10 @@ import static use_case.probability.ProbabilityConstants.ACETOONE;
 /**
  * The class that carries out the logic behind calculating probabilities of a Player winning if they choose to hit.
  */
-public class ProbabilityHitInteractor implements ProbabilityInteractorInterface {
+public class ProbabilityHitInteractor implements ProbabilityInteractorInterface, ProbabilityHitInputBoundary {
 
     private final ProbabilityHitInputData probabilityHitInputData;
+    private final ProbabilityHitOutputBoundary hitPresenter;
     private final Map<Integer, Integer> unknownCards;
     private final Map<Integer, Integer> userCards;
     private final Map<Integer, Integer> dealerCards;
@@ -38,9 +39,11 @@ public class ProbabilityHitInteractor implements ProbabilityInteractorInterface 
     /**
      * Initializes an instance of ProbabilityHitInteractor.
      */
-    public ProbabilityHitInteractor(ProbabilityHitInputData probabilityHitInputData) {
+    public ProbabilityHitInteractor(ProbabilityHitInputData probabilityHitInputData,
+                                    ProbabilityHitOutputBoundary probabilityHitOutputBoundary) {
 
         this.probabilityHitInputData = probabilityHitInputData;
+        this.hitPresenter = probabilityHitOutputBoundary;
         this.unknownCards = new HashMap<>(fullDeck);
         this.userCards = new HashMap<>(sampleDeck);
         this.dealerCards = new HashMap<>(sampleDeck);
@@ -197,5 +200,10 @@ public class ProbabilityHitInteractor implements ProbabilityInteractorInterface 
             }
         }
         return result;
+    }
+
+    @Override
+    public void execute() {
+        hitPresenter.prepareProbabilityHitView(new ProbabilityHitOutputData(this.hitProbability()));
     }
 }

@@ -23,8 +23,7 @@ public class ProbabilityStandController {
      * @param players is a list of valid players playing a game of BlackJack.
      */
     public void execute(List<Player> players) {
-        final ProbabilityStandInputData probabilityStandInputData = new ProbabilityStandInputData(players);
 
-        probabilityStandInputBoundary.execute(probabilityStandInputData);
+        probabilityStandInputBoundary.execute();
     }
 }

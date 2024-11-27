@@ -11,6 +11,7 @@ import entities.Player;
  * The controller for the ProbabilityHit Use-Case.
  */
 public class ProbabilityHitController {
+
     private final ProbabilityHitInputBoundary probabilityHitInputBoundary;
 
     public ProbabilityHitController(ProbabilityHitInputBoundary probabilityHitUseCaseInteractor) {
@@ -22,8 +23,6 @@ public class ProbabilityHitController {
      * @param players is a list of valid players playing a game of BlackJack.
      */
     public void execute(List<Player> players) {
-        final ProbabilityHitInputData probabilityHitInputData = new ProbabilityHitInputData(players);
-
-        probabilityHitInputBoundary.execute(probabilityHitInputData);
+        probabilityHitInputBoundary.execute();
     }
 }

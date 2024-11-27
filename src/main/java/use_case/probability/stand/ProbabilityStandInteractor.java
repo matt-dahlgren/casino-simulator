@@ -22,9 +22,10 @@ import static use_case.probability.ProbabilityConstants.WINS;
 /**
  * The class that calculates the probability of winning a game of BlackJack with a current hand.
  */
-public class ProbabilityStandInteractor implements ProbabilityInteractorInterface {
+public class ProbabilityStandInteractor implements ProbabilityInteractorInterface, ProbabilityStandInputBoundary {
 
     private final ProbabilityStandInputData probabilityStandInputData;
+    private final ProbabilityStandOutputBoundary standPresenter;
     private final Map<Integer, Integer> unknownCards;
     private final Map<Integer, Integer> userCards;
     private final Map<Integer, Integer> dealerCards;
@@ -33,8 +34,10 @@ public class ProbabilityStandInteractor implements ProbabilityInteractorInterfac
     /**
      * Initializes an instance of ProbabilityStandInteractor.
      */
-    public ProbabilityStandInteractor(ProbabilityStandInputData probabilityStandInputData) {
+    public ProbabilityStandInteractor(ProbabilityStandInputData probabilityStandInputData,
+                                      ProbabilityStandOutputBoundary probabilityStandOutputBoundary) {
 
+        this.standPresenter = probabilityStandOutputBoundary;
         this.probabilityStandInputData = probabilityStandInputData;
         this.unknownCards = new HashMap<>(fullDeck);
         this.userCards = new HashMap<>(sampleDeck);
@@ -103,6 +106,11 @@ public class ProbabilityStandInteractor implements ProbabilityInteractorInterfac
         Map<String, Float> winScenario = this.countWinsandGames(userScore, dealerCards, unknownCards, 1f);
 
         return Math.floorDiv((int) Math.ceil(winScenario.get(WINS)), (int) Math.ceil(winScenario.get(SCENARIO)));
+    }
+
+    @Override
+    public void execute() {
+        standPresenter.prepareProbabilityStandView(new ProbabilityStandOutputData(this.standProbability()));
     }
 
 }
