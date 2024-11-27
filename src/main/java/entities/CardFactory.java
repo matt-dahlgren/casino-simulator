@@ -11,7 +11,7 @@ public class CardFactory implements CardFactoryInterface {
      * @return Card type object
      */
     @Override
-    public Card createCard(String rank, String suit) {
-        return new Card(rank, suit);
+    public Card createCard(String rank, String suit, String image) {
+        return new Card(rank, suit, image);
     }
 }

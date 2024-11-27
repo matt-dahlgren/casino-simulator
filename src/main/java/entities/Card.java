@@ -10,11 +10,13 @@ public class Card {
     private String suit;
     private int value;
     private boolean isVisible;
+    private String image;
 
-    public Card(String rank, String suit) {
+    public Card(String rank, String suit, String image) {
         this.suit = suit;
         this.rank = rank.substring(0, 1).toUpperCase();
         isVisible = false;
+        this.image = image;
 
         if (this.rank.equals("J") || this.rank.equals("Q") || this.rank.equals("K")) {
             value = 10;
@@ -25,6 +27,10 @@ public class Card {
         else {
             value = Integer.parseInt(this.rank);
         }
+    }
+
+    public String getImage() {
+        return image;
     }
 
     /**
