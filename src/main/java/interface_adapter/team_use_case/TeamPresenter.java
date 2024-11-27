@@ -44,22 +44,5 @@ public class TeamPresenter implements OutputBoundary {
 
 
 
-
-
-    @Override
-    public void prepareSuccessView(BlackjackOutputData outputData) {
-        // Update the user's hand in the view model.
-        blackjackViewModel.setHand(outputData.getUserHand());
-        blackjackViewModel.setHandValue(outputData.getHandValue());
-
-        // Notify the view that the hand has been updated.
-        blackjackViewModel.firePropertyChanged("hand");
-    }
-
-    @Override
-    public void prepareFailView(String error) {
-        // Notify the view of the failure (e.g., user busted).
-        blackjackViewModel.setErrorMessage(error);
-        blackjackViewModel.firePropertyChanged("error");
     }
 }
