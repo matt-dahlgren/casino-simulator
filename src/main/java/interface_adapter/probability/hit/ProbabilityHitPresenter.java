@@ -7,7 +7,6 @@ import use_case.probability.hit.ProbabilityHitOutputData;
 
 public class ProbabilityHitPresenter implements ProbabilityHitOutputBoundary {
 
-    private final ProbabilityHitViewModel probabilityHitViewModel;
     private final ProbabilityViewModel probabilityView;
 
     public ProbabilityHitPresenter(ProbabilityViewModel probabilityViewModel) {
@@ -17,6 +16,6 @@ public class ProbabilityHitPresenter implements ProbabilityHitOutputBoundary {
 
     @Override
     public void prepareProbabilityHitView(ProbabilityHitOutputData outputData) {
-
+        ProbabilityHitViewModel hitModel = new ProbabilityHitViewModel(outputData.getHitWinProbability());
     }
 }

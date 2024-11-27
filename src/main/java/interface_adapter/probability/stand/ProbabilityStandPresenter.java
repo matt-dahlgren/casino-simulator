@@ -1,10 +1,20 @@
 package interface_adapter.probability.stand;
 
-import use_case.probability.hit.ProbabilityHitOutputBoundary;
+import interface_adapter.probability.ProbabilityViewModel;
+import use_case.probability.stand.ProbabilityStandOutputBoundary;
+import use_case.probability.stand.ProbabilityStandOutputData;
 
-public class ProbabilityStandPresenter implements ProbabilityHitOutputBoundary {
+public class ProbabilityStandPresenter implements ProbabilityStandOutputBoundary {
 
-    public ProbabilityStandPresenter() {
+    private final ProbabilityViewModel probabilityViewModel;
 
+    public ProbabilityStandPresenter(ProbabilityViewModel probabilityViewModel) {
+        this.probabilityViewModel = probabilityViewModel;
+    }
+
+    @Override
+    public void prepareProbabilityStandView(ProbabilityStandOutputData outputData) {
+
+        ProbabilityStandViewModel standModel = new ProbabilityStandViewModel(outputData.getStandWinProbability());
     }
 }
