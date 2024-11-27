@@ -11,16 +11,16 @@ import java.util.ArrayList;
  * Output Data for the Setup Use Case.
  */
 public class SetupOutputData {
-    private final Dealer dealer;
-    private final UserPlayer userPlayer;
+    private final ArrayList<String> dealerHand;
+    private final ArrayList<String> userPlayerHand;
 
-    public SetupOutputData(Dealer dealer, UserPlayer userPlayer) {
-        this.dealer = dealer;
-        this.userPlayer = userPlayer;
+    public SetupOutputData(ArrayList<String> dealerHand, ArrayList<String> userPlayerHand) {
+        this.dealerHand = dealerHand;
+        this.userPlayerHand = userPlayerHand;
     }
 
-    public Dealer getDealer() {return this.dealer;}
+    public ArrayList<String> getDealerHand() {return this.dealerHand;}
 
-    public UserPlayer getUserPlayer() {return this.userPlayer;}
+    public ArrayList<String> getUserPlayer() {return this.userPlayerHand;}
 
 }
