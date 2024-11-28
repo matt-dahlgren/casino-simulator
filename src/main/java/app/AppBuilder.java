@@ -1,12 +1,20 @@
 package app;
 
+import data_access.GameReportDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.initial.InitialViewModel;
+import interface_adapter.report.*;
+import use_case.email_report.EmailReportInteractor;
+import use_case.email_report.EmailReportOutputBoundary;
+import use_case.endgame_report.GameReportInteractor;
+import use_case.endgame_report.GameReportOutputBoundary;
 import view.InitialView;
+import view.ReportView;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 /**
  *
@@ -21,8 +29,8 @@ public class AppBuilder {
 
     private final JLabel hitCard = new JLabel();
 
-    private InitialView initialView;
-    private InitialViewModel initialViewModel;
+    private ReportView initialView;
+    private ReportViewModel initialViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -32,10 +40,29 @@ public class AppBuilder {
      * Adds the Default View to the application
      * @return this builder
      */
-    public AppBuilder addInitialView() {
-        initialViewModel = new InitialViewModel();
-        initialView = new InitialView(initialViewModel, hitCard);
-        cardPanel.add(initialView, initialView.getViewName());
+    public AppBuilder addInitialView() throws FileNotFoundException {
+        //initialViewModel = new InitialViewModel();
+        //initialView = new InitialView(initialViewModel, hitCard);
+        //cardPanel.add(initialView, initialView.getViewName());
+        //return this;
+
+        initialViewModel = new ReportViewModel("src/main/java/user_data/Martha.csv");
+        initialView = new ReportView(initialViewModel);
+        cardPanel.add(initialView, "Hello");
+
+        GameReportDataAccessObject DAO = new GameReportDataAccessObject("src/main/java/user_data/Martha.csv");
+
+        EmailReportOutputBoundary emailReportPresenter = new EmailReportPresenter(initialViewModel, viewManagerModel);
+        EmailReportInteractor emailReportInteractor = new EmailReportInteractor(DAO, emailReportPresenter);
+        EmailReportController emailReportController = new EmailReportController(emailReportInteractor);
+
+        GameReportOutputBoundary gameReportPresenter = new GameReportPresenter(initialViewModel, viewManagerModel);
+        GameReportInteractor gameReportInteractor = new GameReportInteractor(DAO, gameReportPresenter);
+        GameReportController gameReportController = new GameReportController(gameReportInteractor);
+
+        initialView.setEmailReportController(emailReportController);
+        initialView.setGameReportController(gameReportController);
+
         return this;
     }
 
