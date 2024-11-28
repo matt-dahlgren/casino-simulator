@@ -1,4 +1,4 @@
-package interface_adapter.freePlay.stand;
+package interface_adapter.freeplay.stand;
 
 /**
  * The state for the Team Use Case (free play mode) View Model.

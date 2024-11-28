@@ -1,4 +1,4 @@
-package interface_adapter.freePlay.stand;
+package interface_adapter.freeplay.stand;
 
 import interface_adapter.ViewModel;
 

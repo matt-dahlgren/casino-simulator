@@ -5,6 +5,8 @@ import data_access.APIDataAccessObject;
 
 import entities.Card;
 
+import java.util.ArrayList;
+
 import static use_case.probability.ProbabilityConstants.BLACKJACK;
 
 /**
@@ -106,10 +108,20 @@ public class FreePlayStandInteractor {
 
         this.pullToSeventeen();
 
-        int dealerScore = dealerHandScore();
+        int dealerScore = this.dealerHandScore();
+        int playerScore = this.playerHandScore();
 
-        Boolean gameWin = (dealerScore > BLACKJACK) || this.playerHandScore() >= dealerScore;
+        Boolean gameWin = (dealerScore > BLACKJACK) || playerScore >= dealerScore;
 
+        ArrayList<String> cardStrings = new ArrayList<>();
 
+        for (Card card : gameDataAccessObject.getDealer().getHand()) {
+            cardStrings.add(card.getImage());
+        }
+
+        FreePlayStandOutputData outputData = new FreePlayStandOutputData(dealerScore, playerScore,
+                cardStrings, gameWin);
+
+        outputPresenter.prepareStandView(outputData);
     }
 }
