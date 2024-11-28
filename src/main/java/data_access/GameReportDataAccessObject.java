@@ -84,13 +84,4 @@ public class GameReportDataAccessObject implements GameReportDataAccessInterface
      */
     @Override
     public int getNumGames() { return gameSummaries.size(); }
-
-    /**
-     * Gets the types of game statistics (which is constant for every game).
-     * @return an array containing the types of game statistics
-     */
-    public String[] getStatLabels() {
-        return new String[]{ "MOVE", "PROBABILITY OF WINNING", "ALTERNATE PROBABILITY OF WINNING",
-                "PROBABILITY DIFFERENCE", "MOVE QUALITY" };
-    }
 }

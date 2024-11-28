@@ -29,7 +29,7 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
-                .addInitialView()
+                .addTeamView()
                 .build();
 
         application.pack();

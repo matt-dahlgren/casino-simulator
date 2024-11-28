@@ -1,4 +1,4 @@
-package use_case.game_report;
+package use_case.endgame_report;
 
 /**
  * The Input Data for the game report use case.

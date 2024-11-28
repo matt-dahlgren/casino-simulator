@@ -1,4 +1,4 @@
-package use_case.game_report;
+package use_case.endgame_report;
 
 /**
  * Input Boundary for actions which are related to the game report.

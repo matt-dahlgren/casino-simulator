@@ -1,30 +1,22 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
  * The dealer player.
  */
 public class Dealer extends Player {
+    private final ArrayList<Card> hand;
 
-    public Dealer(ArrayList<Card> deck) {
-        this.deck = deck;
+    public Dealer(ArrayList<Card> hand) {
+        this.hand = hand;
     }
 
-    /**
-     * Carries out the dealer's turn (the dealer hits until their score reaches 17, then stands).
-     *
-     * @param deck the deck of remaining cards that can be drawn.
-     */
-    public void doTurn(ArrayList<Card> deck) {
-        while (getScore() < 17) {
-            Random random = new Random();
-            int size = random.nextInt(this.deck.size());
-            Card card = this.deck.get(size);
-            this.deck.remove(size);
-            hit(card);
-            System.out.println("Dealer Played" + card);
-        }
+    public ArrayList<Card> getHand() {
+        return hand;
     }
+
+    public void setHand(ArrayList<Card> hand) {}
 }

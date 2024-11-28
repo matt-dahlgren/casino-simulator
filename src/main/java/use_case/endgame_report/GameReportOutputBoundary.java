@@ -1,4 +1,4 @@
-package use_case.game_report;
+package use_case.endgame_report;
 
 /**
  * The output boundary for the game report use case.
@@ -11,7 +11,7 @@ public interface GameReportOutputBoundary {
     void prepareSuccessView(GameReportOutputData outputData);
 
     /**
-     * Prepares the failure view for the Login Use Case.
+     * Prepares the failure view for the game report use case.
      * @param error the explanation of the failure
      */
     void prepareFailView(String error);

@@ -1,4 +1,4 @@
-package use_case.game_report;
+package use_case.endgame_report;
 
 /**
  * The interface of the DAO for the game report use case.
