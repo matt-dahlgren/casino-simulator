@@ -1,9 +1,9 @@
 package view;
 
 import entities.*;
-import interface_adapter.initial.InitialController;
-import interface_adapter.initial.InitialState;
-import interface_adapter.initial.InitialViewModel;
+import interface_adapter.team_use_case.TeamController;
+import interface_adapter.team_use_case.TeamState;
+import interface_adapter.team_use_case.TeamViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,24 +12,24 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
-import java.util.List;
 
 /**
- * The View for the Initial Use Case.
+ * This is the view for the team use case, which corresponds to free play mode in our
+ * game-- a BlackJack game with no hints.
  */
-public class InitialView extends JPanel implements ActionListener, PropertyChangeListener {
+public class TeamView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private final InitialViewModel initialViewModel;
-    private InitialController initialController;
+    private final TeamViewModel teamViewModel;
+    private TeamController teamController;
 
     public JLabel hitCard;
     public JLabel dealerCardOne;
 
-    public InitialView(InitialViewModel initialViewModel, JLabel hitCard) {
-        this.initialViewModel = initialViewModel;
+    public TeamView(TeamViewModel teamViewModel, JLabel hitCard) {
+        this.teamViewModel = teamViewModel;
         this.hitCard = hitCard;
         this.dealerCardOne = new JLabel();
-        initialViewModel.addPropertyChangeListener(this);
+        teamViewModel.addPropertyChangeListener(this);
 
         setup();
 
@@ -37,7 +37,7 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
 
         Font font = new Font("Georgia", Font.BOLD, 20);
 
-        final JLabel appNameLabel = new JLabel(InitialViewModel.APP_LABEL);
+        final JLabel appNameLabel = new JLabel(TeamViewModel.APP_LABEL);
         appNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         appNameLabel.setFont(font);
         appNameLabel.setForeground(Color.BLACK);
@@ -46,8 +46,8 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
 
-        final JButton hit = new JButton(InitialViewModel.HIT_BUTTON_LABEL);
-        final JButton stand = new JButton(InitialViewModel.STAND_BUTTON_LABEL);
+        final JButton hit = new JButton(TeamViewModel.HIT_BUTTON_LABEL);
+        final JButton stand = new JButton(TeamViewModel.STAND_BUTTON_LABEL);
 
         final JLabel DEALERLABEL = new JLabel("DEALER -->");
         DEALERLABEL.setFont(font);
@@ -250,13 +250,13 @@ public class InitialView extends JPanel implements ActionListener, PropertyChang
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final InitialState state = (InitialState) evt.getNewValue();
+        final TeamState state = (TeamState) evt.getNewValue();
     }
 
     public String getViewName() {
         return "initial"; }
 
-    public void setInitialController(InitialController controller) {this.initialController = controller;}
+    public void setTeamController(TeamController controller) {this.teamController = controller;}
 
 
 }
