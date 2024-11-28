@@ -1,10 +1,23 @@
 package interface_adapter.learn_mode;
+import use_case.learn_mode.LearnModeInputBoundary;
 
-public class ObjectiveController {
+public class LearnModeController {
+    private final LearnModeInputBoundary learnModeInteractor;
 
-    private final ObjectiveInputBoundary objectiveInteractor;
+    public LearnModeController(LearnModeInputBoundary learnModeInteractor) {
+        this.learnModeInteractor = learnModeInteractor;
+    }
+
+    public void switchToObjectiveView(){
+        learnModeInteractor.switchToObjectiveView();
+    }
+
     public void switchToMovesView() {
-        objectiveInteractor.switchToMovesView();
+        learnModeInteractor.switchToMovesView();
+    }
+
+    public void switchToDealingView() {
+        learnModeInteractor.switchToDealingView();
     }
 
 }

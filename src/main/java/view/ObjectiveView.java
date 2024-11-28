@@ -1,5 +1,9 @@
 package view;
 
+/**
+ * This is the objective view for the learn mode use case.
+ */
+
 import interface_adapter.learn_mode.*;
 
 import javax.swing.*;
@@ -9,14 +13,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-/**
- * This is the moves view for the learn mode use case.
- */
 
-public class MovesView extends JPanel implements ActionListener, PropertyChangeListener {
+public class ObjectiveView extends JPanel implements ActionListener, PropertyChangeListener {
     private LearnModeController learnModeController;
 
-    public MovesView(ObjectiveViewModel objectiveViewModel, DealingViewModel dealingViewModel, MovesViewModel movesViewModel) {
+    public ObjectiveView(ObjectiveViewModel objectiveViewModel, DealingViewModel dealingViewModel, MovesViewModel movesViewModel) {
         objectiveViewModel.addPropertyChangeListener(this);
         movesViewModel.addPropertyChangeListener(this);
         dealingViewModel.addPropertyChangeListener(this);
@@ -38,13 +39,7 @@ public class MovesView extends JPanel implements ActionListener, PropertyChangeL
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 2;
-        JLabel objective = new JLabel("If player dealt 21 (in their first two cards) it is a BLACKJACK.\n" +
-                "At each turn, a player can HIT or STAY.\n" +
-                "\n" +
-                "HIT: Player is dealt another card from the deck \n" +
-                "STAY: Player is not dealt a card, it’s the next player’s turn \n" +
-                "\n" +
-                "If player hits and the sum of their card values exceeds 21, it is a BUST.");
+        JLabel objective = new JLabel("The goal of Blackjack is to have the sum of your card values get closer to 21 than the dealer's total, without going over 21. Each player plays against the dealer to try and get the best total.");
         instructionsPanel.add(objective, constraints);
 
         // This button allows player to click Objective and see what the objective of the game is
@@ -66,10 +61,10 @@ public class MovesView extends JPanel implements ActionListener, PropertyChangeL
         JButton movesButton = new JButton("Moves");
         instructionsPanel.add(movesButton, constraints);
 
-        objectiveButton.addActionListener(new ActionListener() {
+        movesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                learnModeController.switchToObjectiveView();
+                learnModeController.switchToMovesView();
             }
         });
 
@@ -85,8 +80,8 @@ public class MovesView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final MovesState state = (MovesState) evt.getNewValue();
-        JOptionPane.showMessageDialog(this, "Moves property change");
+        final ObjectiveState state = (ObjectiveState) evt.getNewValue();
+        JOptionPane.showMessageDialog(this, "Objective property change");
 
     }
 
@@ -96,4 +91,11 @@ public class MovesView extends JPanel implements ActionListener, PropertyChangeL
     }
 
 }
+
+
+
+
+
+
+
 
