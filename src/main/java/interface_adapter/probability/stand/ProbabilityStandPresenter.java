@@ -1,20 +1,21 @@
 package interface_adapter.probability.stand;
 
-import interface_adapter.probability.ProbabilityViewModel;
 import use_case.probability.stand.ProbabilityStandOutputBoundary;
 import use_case.probability.stand.ProbabilityStandOutputData;
 
 public class ProbabilityStandPresenter implements ProbabilityStandOutputBoundary {
 
-    private final ProbabilityViewModel probabilityViewModel;
+    private final ProbabilityStandViewModel probabilityViewModel;
 
-    public ProbabilityStandPresenter(ProbabilityViewModel probabilityViewModel) {
+    public ProbabilityStandPresenter(ProbabilityStandViewModel probabilityViewModel) {
         this.probabilityViewModel = probabilityViewModel;
     }
 
+    //TODO: implement listener and add to the state of an active BLACKJACK GAME
     @Override
     public void prepareProbabilityStandView(ProbabilityStandOutputData outputData) {
 
-        ProbabilityStandViewModel standModel = new ProbabilityStandViewModel(outputData.getStandWinProbability());
+        final ProbabilityStandState probabilityState = probabilityViewModel.getState();
+        probabilityState.setStandProbability(outputData.getStandWinProbability());
     }
 }

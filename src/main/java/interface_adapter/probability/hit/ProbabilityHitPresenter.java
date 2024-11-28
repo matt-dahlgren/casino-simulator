@@ -1,21 +1,23 @@
 package interface_adapter.probability.hit;
 
-import interface_adapter.probability.ProbabilityViewModel;
 import use_case.probability.hit.ProbabilityHitOutputBoundary;
-import interface_adapter.probability.ProbabilityViewModel;
 import use_case.probability.hit.ProbabilityHitOutputData;
 
 public class ProbabilityHitPresenter implements ProbabilityHitOutputBoundary {
 
-    private final ProbabilityViewModel probabilityView;
+    private final ProbabilityHitViewModel probabilityView;
 
-    public ProbabilityHitPresenter(ProbabilityViewModel probabilityViewModel) {
-        this.probabilityView = probabilityViewModel;
+    public ProbabilityHitPresenter(ProbabilityHitViewModel probabilityHitViewModel) {
+        this.probabilityView = probabilityHitViewModel;
 
     }
 
+    //TODO: connect this view model with the state of an active game.
     @Override
     public void prepareProbabilityHitView(ProbabilityHitOutputData outputData) {
-        ProbabilityHitViewModel hitModel = new ProbabilityHitViewModel(outputData.getHitWinProbability());
+
+        final ProbabilityHitState probabilityState = probabilityView.getState();
+        probabilityState.setStandProbability(outputData.getHitWinProbability());
+
     }
 }
