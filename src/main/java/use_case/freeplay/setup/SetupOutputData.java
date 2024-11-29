@@ -1,10 +1,5 @@
 package use_case.freeplay.setup;
 
-
-import entities.Card;
-import entities.Dealer;
-import entities.UserPlayer;
-
 import java.util.ArrayList;
 
 /**

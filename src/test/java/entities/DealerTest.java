@@ -12,8 +12,8 @@ public class DealerTest {
      */
     @Test
     public void DealerSetHandTest() {
-        ArrayList<Card> hand = new ArrayList<Card>();
-        ArrayList<Card> hand2 = new ArrayList<Card>();
+        ArrayList<Card> hand = new ArrayList<>();
+        ArrayList<Card> hand2 = new ArrayList<>();
 
         hand.add(new Card("10", "Hearts", "https://wiki.tf2classic.com/w/images/f/f4/Backpack_Sandvich.png"));
         hand.add(new Card("A", "Spades", "https://wiki.tf2classic.com/w/images/f/f4/Backpack_Sandvich.png"));
@@ -33,7 +33,7 @@ public class DealerTest {
      */
     @Test
     public void DealerGetScoreTest() {
-        ArrayList<Card> hand = new ArrayList<Card>();
+        ArrayList<Card> hand = new ArrayList<>();
 
         hand.add(new Card("10", "Hearts", "https://wiki.tf2classic.com/w/images/f/f4/Backpack_Sandvich.png"));
         hand.add(new Card("A", "Spades", "https://wiki.tf2classic.com/w/images/f/f4/Backpack_Sandvich.png"));
@@ -47,7 +47,7 @@ public class DealerTest {
      */
     @Test
     public void DealerHitTest() {
-        ArrayList<Card> hand = new ArrayList<Card>();
+        ArrayList<Card> hand = new ArrayList<>();
 
         hand.add(new Card("10", "Hearts", "https://wiki.tf2classic.com/w/images/f/f4/Backpack_Sandvich.png"));
         hand.add(new Card("A", "Spades", "https://wiki.tf2classic.com/w/images/f/f4/Backpack_Sandvich.png"));

@@ -6,11 +6,11 @@ import java.util.ArrayList;
  * Represents a card with a rank, suit, value, and visibility status.
  */
 public class Card {
-    private String rank;
-    private String suit;
+    final private String rank;
+    final private String suit;
     private int value;
     private boolean isVisible;
-    private String image;
+    final private String image;
 
     public Card(String rank, String suit, String image) {
         this.suit = suit;
