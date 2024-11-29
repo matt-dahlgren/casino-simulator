@@ -12,7 +12,7 @@ import static use_case.probability.ProbabilityConstants.BLACKJACK;
 /**
  * The interactor for the FreePlayStand UseCase, it is assumed that at this point this player has not Bust.
  */
-public class FreePlayStandInteractor {
+public class FreePlayStandInteractor implements FreePlayStandInputBoundary{
 
     private final GameDataAccessObject gameDataAccessObject;
     private final FreePlayStandOutputDataBoundary outputPresenter;
@@ -111,7 +111,7 @@ public class FreePlayStandInteractor {
         int dealerScore = this.dealerHandScore();
         int playerScore = this.playerHandScore();
 
-        Boolean gameWin = (dealerScore > BLACKJACK) || playerScore >= dealerScore;
+        boolean gameWin = (dealerScore > BLACKJACK) || playerScore >= dealerScore;
 
         ArrayList<String> cardStrings = new ArrayList<>();
 

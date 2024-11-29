@@ -1,5 +1,6 @@
 package use_case.probability.stand;
 
+import data_access.GameDataAccessObject;
 import entities.Card;
 import entities.Dealer;
 import entities.Player;
@@ -24,7 +25,7 @@ import static use_case.probability.ProbabilityConstants.WINS;
  */
 public class ProbabilityStandInteractor implements ProbabilityInteractorInterface, ProbabilityStandInputBoundary {
 
-    private final ProbabilityStandInputData probabilityStandInputData;
+    private final GameDataAccessObject gameDataAccessObject;
     private final ProbabilityStandOutputBoundary standPresenter;
     private final Map<Integer, Integer> unknownCards;
     private final Map<Integer, Integer> userCards;
@@ -34,38 +35,33 @@ public class ProbabilityStandInteractor implements ProbabilityInteractorInterfac
     /**
      * Initializes an instance of ProbabilityStandInteractor.
      */
-    public ProbabilityStandInteractor(ProbabilityStandInputData probabilityStandInputData,
+    public ProbabilityStandInteractor(GameDataAccessObject gameDataAccessObject,
                                       ProbabilityStandOutputBoundary probabilityStandOutputBoundary) {
 
+        this.gameDataAccessObject = gameDataAccessObject;
         this.standPresenter = probabilityStandOutputBoundary;
-        this.probabilityStandInputData = probabilityStandInputData;
         this.unknownCards = new HashMap<>(fullDeck);
         this.userCards = new HashMap<>(sampleDeck);
         this.dealerCards = new HashMap<>(sampleDeck);
 
-        for (Player player : this.probabilityStandInputData.getPlayers()) {
-            if (player instanceof Dealer) {
-                for (Card card: player.getDeck()) {
-                    if (card.isVisible()) {
-                        int value = card.getValue();
-                        this.unknownCards.compute(value, (k, v) -> v - 1);
-                        this.dealerCards.compute(value, (k, v) -> v + 1);
-                    }
-                }
-            }
-            else if (player instanceof UserPlayer) {
-                for (Card card: player.getDeck()) {
-                    int value = card.getValue();
-                    this.unknownCards.compute(value, (k, v) -> v - 1);
-                    this.userCards.compute(value, (k, v) -> v + 1);
-                }
-            }
-            else {
-                for (Card card: player.getDeck()) {
-                    this.unknownCards.compute(card.getValue(), (k, v) -> v - 1);
-                }
+        for (Card card: gameDataAccessObject.getDealer().getHand()) {
+            if (card.isVisible()) {
+                int value = card.getValue();
+                this.unknownCards.compute(value, (k, v) -> v - 1);
+                this.dealerCards.compute(value, (k, v) -> v + 1);
             }
         }
+
+        for (Card card: gameDataAccessObject.getPlayer().getHand()) {
+            int value = card.getValue();
+            this.unknownCards.compute(value, (k, v) -> v - 1);
+            this.userCards.compute(value, (k, v) -> v + 1);
+        }
+
+        for (Player player: gameDataAccessObject.getComputerPlayers())
+            for (Card card: player.getHand()) {
+                this.unknownCards.compute(card.getValue(), (k, v) -> v - 1);
+            }
     }
 
     /**

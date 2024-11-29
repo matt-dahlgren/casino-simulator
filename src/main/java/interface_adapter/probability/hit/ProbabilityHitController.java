@@ -1,7 +1,6 @@
 package interface_adapter.probability.hit;
 
 import use_case.probability.hit.ProbabilityHitInputBoundary;
-import use_case.probability.hit.ProbabilityHitInputData;
 
 import java.util.List;
 
@@ -20,9 +19,8 @@ public class ProbabilityHitController {
 
     /**
      * Executes the ProbabilityHit use-case.
-     * @param players is a list of valid players playing a game of BlackJack.
      */
-    public void execute(List<Player> players) {
+    public void execute() {
         probabilityHitInputBoundary.execute();
     }
 }

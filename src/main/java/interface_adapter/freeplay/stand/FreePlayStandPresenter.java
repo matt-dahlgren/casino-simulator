@@ -6,17 +6,20 @@ import use_case.freeplay.stand.FreePlayStandOutputDataBoundary;
 
 public class FreePlayStandPresenter implements FreePlayStandOutputDataBoundary {
 
-    private final FreePlayStandViewModel freePlayStandViewModel;
-    private final ViewManagerModel viewManagerModel;
+    private final FreePlayStandViewModel viewModel;
 
-    public FreePlayStandPresenter(ViewManagerModel viewManagerModel, FreePlayStandViewModel freePlayStandViewModel) {
-        this.freePlayStandViewModel = freePlayStandViewModel;
-        this.viewManagerModel = viewManagerModel;
+    public FreePlayStandPresenter( FreePlayStandViewModel freePlayStandViewModel) {
+        this.viewModel = freePlayStandViewModel;
     }
 
+    //TODO: Add Listeners and actions
     @Override
     public void prepareStandView(FreePlayStandOutputData outputData) {
-        final FreePlayStandState freePlayStandState = FreePlayStandViewModel.getState();
+        final FreePlayStandState standState = viewModel.getState();
+        standState.setCardImages(outputData.getDealerCardPictures());
+        standState.setDealerScore(outputData.getDealerScore());
+        standState.setPlayerScore(outputData.getPlayerScore());
+        standState.setPlayerWin(outputData.isPlayerWin());
 
     }
 }

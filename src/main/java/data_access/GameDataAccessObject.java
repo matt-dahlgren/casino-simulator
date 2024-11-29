@@ -1,8 +1,11 @@
 package data_access;
 
 import entities.Dealer;
+import entities.Player;
 import entities.UserPlayer;
 import use_case.freeplay.GameDataAccess;
+
+import java.util.ArrayList;
 
 /**
  * Game Data woohoo
@@ -10,12 +13,14 @@ import use_case.freeplay.GameDataAccess;
 public class GameDataAccessObject implements GameDataAccess {
     UserPlayer userPlayer;
     Dealer dealer;
+    ArrayList<Player> computerPlayers;
     String deckID;
 
-    public GameDataAccessObject(UserPlayer userPlayer, Dealer dealer, String deckID) {
+    public GameDataAccessObject(UserPlayer userPlayer, Dealer dealer, String deckID, ArrayList<Player> computerPlayers) {
         this.userPlayer = userPlayer;
         this.dealer = dealer;
         this.deckID = deckID;
+        this.computerPlayers = computerPlayers;
     }
 
 
@@ -71,5 +76,13 @@ public class GameDataAccessObject implements GameDataAccess {
     @Override
     public void setDeckID(String id) {
         deckID = id;
+    }
+
+    public void setComputerPlayers(ArrayList<Player> computerPlayers) {
+        this.computerPlayers = computerPlayers;
+    }
+
+    public ArrayList<Player> getComputerPlayers() {
+        return computerPlayers;
     }
 }

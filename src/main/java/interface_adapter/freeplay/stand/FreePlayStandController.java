@@ -1,5 +1,6 @@
 package interface_adapter.freeplay.stand;
 
+import use_case.freeplay.stand.FreePlayStandInputBoundary;
 import use_case.freeplay.stand.FreePlayStandInteractor;
 
 /**
@@ -7,9 +8,9 @@ import use_case.freeplay.stand.FreePlayStandInteractor;
  */
 public class FreePlayStandController {
 
-    private final FreePlayStandInteractor freePlayStandInteractor;
+    private final FreePlayStandInputBoundary freePlayStandInteractor;
 
-    public FreePlayStandController(FreePlayStandInteractor freePlayStandInteractor) {
+    public FreePlayStandController(FreePlayStandInputBoundary freePlayStandInteractor) {
         this.freePlayStandInteractor = freePlayStandInteractor;
     }
 
