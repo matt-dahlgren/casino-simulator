@@ -2,8 +2,6 @@ package use_cases.setup_use_case;
 
 import data_access.APIDataAccessObject;
 import data_access.GameDataAccessObject;
-import entities.Dealer;
-import entities.UserPlayer;
 import org.junit.jupiter.api.Test;
 import use_case.freeplay.setup.*;
 
