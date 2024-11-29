@@ -14,8 +14,8 @@ public class Card {
 
     public Card(String rank, String suit, String image) {
         this.suit = suit;
-        this.rank = rank.substring(0, 1).toUpperCase();
-        isVisible = false;
+        this.rank = rank;
+        isVisible = true;
         this.image = image;
 
         if (this.rank.equals("J") || this.rank.equals("Q") || this.rank.equals("K")) {
