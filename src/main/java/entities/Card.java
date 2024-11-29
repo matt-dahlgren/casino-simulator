@@ -1,7 +1,5 @@
 package entities;
 
-import java.util.ArrayList;
-
 /**
  * Represents a card with a rank, suit, value, and visibility status.
  */
