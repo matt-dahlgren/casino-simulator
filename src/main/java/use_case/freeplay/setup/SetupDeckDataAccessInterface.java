@@ -11,10 +11,12 @@ public interface SetupDeckDataAccessInterface {
      * Draws a card from the API deck.
      * @return card drawn from the API deck.
      */
-    Card draw();
+    Card getCard();
 
     /**
-     * Returns
+     * Provides the DeckID from the API deck.
+     * @return the deckID as a string.
      */
+    String getDeckID();
 
 }
