@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class SetupInteractor implements SetupInputBoundary {
     private final SetupDeckDataAccessInterface deckDataObject;
     private final SetupOutputBoundary setupPresenter;
-    private final GameDataAccessObject gameDataObject;
+    private final SetupGameDataAccessInterface gameDataObject;
 
-    public SetupInteractor(GameDataAccessObject gameDataAccessObject,
+    public SetupInteractor(SetupGameDataAccessInterface gameDataAccessObject,
                            SetupDeckDataAccessInterface setupDeckDataAccessInterface,
                            SetupOutputBoundary setupPresenter) {
         this.gameDataObject = gameDataAccessObject;
