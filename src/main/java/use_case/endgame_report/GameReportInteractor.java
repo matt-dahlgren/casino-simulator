@@ -15,8 +15,10 @@ public class GameReportInteractor implements GameReportInputBoundary {
 
     @Override
     public void execute(GameReportInputData gameReportInputData) {
-        int gameNum = isValidGameNum(gameReportInputData.getGameNum());
+        int gameNum = inputToGameNum(gameReportInputData.getGameNum());
 
+        // If the entered game number is valid, prepapre the success view
+        // Otherwise, prepapre the fail view
         if (gameNum == -1) {
             reportPresenter.prepareFailView("Please enter a valid game number");
         }
@@ -33,7 +35,7 @@ public class GameReportInteractor implements GameReportInputBoundary {
      * @param input the user input
      * @return the number of the game the user wants to see a summary of, or -1 in the case of invalid input
      */
-    private int isValidGameNum(String input) {
+    private int inputToGameNum(String input) {
         if (!isNum(input)) {
             return -1;
         }
@@ -60,5 +62,10 @@ public class GameReportInteractor implements GameReportInputBoundary {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    @Override
+    public void switchToMainMenuView() {
+        reportPresenter.switchToMainMenuView();
     }
 }

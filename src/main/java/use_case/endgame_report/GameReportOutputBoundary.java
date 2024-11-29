@@ -15,4 +15,9 @@ public interface GameReportOutputBoundary {
      * @param error the explanation of the failure
      */
     void prepareFailView(String error);
+
+    /**
+     * Switches to the main menu view.
+     */
+    void switchToMainMenuView();
 }
