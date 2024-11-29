@@ -50,4 +50,8 @@ public class Player {
 
         return score;
     }
+
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
 }

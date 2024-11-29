@@ -1,8 +1,6 @@
-package interface_adapter.freePlay;
+package interface_adapter.freeplay;
 
 import use_case.freePlayMode.FreePlayInteractor;
-
-import java.util.ArrayList;
 
 /**
  * Controller for free play mode use case.
