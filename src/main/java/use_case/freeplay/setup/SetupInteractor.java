@@ -29,12 +29,12 @@ public class SetupInteractor implements SetupInputBoundary {
         String deckID = deckDataObject.getDeckID();
 
         ArrayList<Card> userPlayerHand = new ArrayList<Card>();
-        userPlayerHand.add(deckDataObject.getCard());
-        userPlayerHand.add(deckDataObject.getCard());
+        userPlayerHand.add(deckDataObject.getCard(deckID));
+        userPlayerHand.add(deckDataObject.getCard(deckID));
 
         ArrayList<Card> dealerHand = new ArrayList<Card>();
-        dealerHand.add(deckDataObject.getCard());
-        dealerHand.add(deckDataObject.getCard());
+        dealerHand.add(deckDataObject.getCard(deckID));
+        dealerHand.add(deckDataObject.getCard(deckID));
 
         //Creates hidden card
         dealerHand.getFirst().setVisible(false);
