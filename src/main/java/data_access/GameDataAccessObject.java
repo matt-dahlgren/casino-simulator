@@ -17,6 +17,8 @@ public class GameDataAccessObject implements GameDataAccess, SetupGameDataAccess
     ArrayList<Player> computerPlayers;
     String deckID;
 
+    public GameDataAccessObject() {}
+
     public GameDataAccessObject(UserPlayer userPlayer, Dealer dealer, String deckID, ArrayList<Player> computerPlayers) {
         this.userPlayer = userPlayer;
         this.dealer = dealer;
