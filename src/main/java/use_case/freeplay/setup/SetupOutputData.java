@@ -27,6 +27,6 @@ public class SetupOutputData {
 
     public ArrayList<String> getDealerHand() {return this.dealerHand;}
 
-    public ArrayList<String> getUserPlayer() {return this.userPlayerHand;}
+    public ArrayList<String> getUserPlayerHand() {return this.userPlayerHand;}
 
 }
