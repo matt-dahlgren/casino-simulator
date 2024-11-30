@@ -8,12 +8,13 @@ import okhttp3.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 import use_case.freePlayMode.FreePlayDA;
+import use_case.freeplay.setup.SetupDeckDataAccessInterface;
 
 import java.io.IOException;
 
 import static api.APIConstants.*;
 
-public class APIDataAccessObject implements FreePlayDA {
+public class APIDataAccessObject implements FreePlayDA, SetupDeckDataAccessInterface {
     /**
      * @param deckID is the ID of the current deck in play
      * @return Card object of the new card

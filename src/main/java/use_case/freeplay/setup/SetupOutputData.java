@@ -1,10 +1,5 @@
 package use_case.freeplay.setup;
 
-
-import entities.Card;
-import entities.Dealer;
-import entities.UserPlayer;
-
 import java.util.ArrayList;
 
 /**
@@ -27,6 +22,6 @@ public class SetupOutputData {
 
     public ArrayList<String> getDealerHand() {return this.dealerHand;}
 
-    public ArrayList<String> getUserPlayer() {return this.userPlayerHand;}
+    public ArrayList<String> getUserPlayerHand() {return this.userPlayerHand;}
 
 }
