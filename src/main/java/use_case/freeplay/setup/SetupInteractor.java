@@ -1,9 +1,7 @@
 package use_case.freeplay.setup;
 
-import data_access.GameDataAccessObject;
 import entities.Card;
 import entities.Dealer;
-import entities.User;
 import entities.UserPlayer;
 
 import java.util.ArrayList;
@@ -14,9 +12,9 @@ import java.util.ArrayList;
 public class SetupInteractor implements SetupInputBoundary {
     private final SetupDeckDataAccessInterface deckDataObject;
     private final SetupOutputBoundary setupPresenter;
-    private final GameDataAccessObject gameDataObject;
+    private final SetupGameDataAccessInterface gameDataObject;
 
-    public SetupInteractor(GameDataAccessObject gameDataAccessObject,
+    public SetupInteractor(SetupGameDataAccessInterface gameDataAccessObject,
                            SetupDeckDataAccessInterface setupDeckDataAccessInterface,
                            SetupOutputBoundary setupPresenter) {
         this.gameDataObject = gameDataAccessObject;
@@ -28,13 +26,13 @@ public class SetupInteractor implements SetupInputBoundary {
     public void execute() {
         String deckID = deckDataObject.getDeckID();
 
-        ArrayList<Card> userPlayerHand = new ArrayList<Card>();
-        userPlayerHand.add(deckDataObject.getCard());
-        userPlayerHand.add(deckDataObject.getCard());
+        ArrayList<Card> userPlayerHand = new ArrayList<>();
+        userPlayerHand.add(deckDataObject.getCard(deckID));
+        userPlayerHand.add(deckDataObject.getCard(deckID));
 
-        ArrayList<Card> dealerHand = new ArrayList<Card>();
-        dealerHand.add(deckDataObject.getCard());
-        dealerHand.add(deckDataObject.getCard());
+        ArrayList<Card> dealerHand = new ArrayList<>();
+        dealerHand.add(deckDataObject.getCard(deckID));
+        dealerHand.add(deckDataObject.getCard(deckID));
 
         //Creates hidden card
         dealerHand.getFirst().setVisible(false);
@@ -43,8 +41,8 @@ public class SetupInteractor implements SetupInputBoundary {
         UserPlayer userPlayer = new UserPlayer(userPlayerHand);
 
         //Creates the lists that hold the strings for the image links for the cards.
-        ArrayList<String> userPlayerHandLinks = new ArrayList<String>();
-        ArrayList<String> dealerHandLinks = new ArrayList<String>();
+        ArrayList<String> userPlayerHandLinks = new ArrayList<>();
+        ArrayList<String> dealerHandLinks = new ArrayList<>();
 
         for (Card card : dealer.getHand()) {
             dealerHandLinks.add(card.getImage());

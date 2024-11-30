@@ -4,17 +4,20 @@ import entities.Dealer;
 import entities.Player;
 import entities.UserPlayer;
 import use_case.freeplay.GameDataAccess;
+import use_case.freeplay.setup.SetupGameDataAccessInterface;
 
 import java.util.ArrayList;
 
 /**
  * Game Data woohoo
  */
-public class GameDataAccessObject implements GameDataAccess {
+public class GameDataAccessObject implements GameDataAccess, SetupGameDataAccessInterface {
     UserPlayer userPlayer;
     Dealer dealer;
     ArrayList<Player> computerPlayers;
     String deckID;
+
+    public GameDataAccessObject() {}
 
     public GameDataAccessObject(UserPlayer userPlayer, Dealer dealer, String deckID, ArrayList<Player> computerPlayers) {
         this.userPlayer = userPlayer;
