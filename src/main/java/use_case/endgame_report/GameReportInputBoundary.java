@@ -9,4 +9,9 @@ public interface GameReportInputBoundary {
      * @param gameReportInputData the input data
      */
     void execute(GameReportInputData gameReportInputData);
+
+    /**
+     * Executes the switch to main menu view use case.
+     */
+    void switchToMainMenuView();
 }

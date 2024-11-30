@@ -1,10 +1,10 @@
-package interface_adapter.email_report;
+package interface_adapter.report;
 
 import use_case.email_report.EmailReportInputBoundary;
 import use_case.email_report.EmailReportInputData;
 
 /**
- * Controller for the game report use case.
+ * Controller for the (emailing) game report use case.
  */
 public class EmailReportController {
     private final EmailReportInputBoundary emailReportUseCaseInteractor;

@@ -1,6 +1,6 @@
 package data_access;
 
-import use_case.game_report.GameReportDataAccessInterface;
+import use_case.endgame_report.GameReportDataAccessInterface;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -21,4 +21,11 @@ public class GameReportDAOConstants {
             "ALTERNATE PROBABILITY OF WINNING",
             "PROBABILITY DIFFERENCE",
             "MOVE QUALITY" };
+    public static final String[] COLUMN_SPACING = new String[]{
+            "                 ",
+            "              ",
+            "                                                ",
+            "                                                                       ",
+            "                                                 ",
+            "" };
 }

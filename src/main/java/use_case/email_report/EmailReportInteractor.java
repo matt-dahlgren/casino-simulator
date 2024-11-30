@@ -2,11 +2,9 @@ package use_case.email_report;
 
 import use_case.endgame_report.GameReportDataAccessInterface;
 import data_access.GameReportDAOConstants;
-import use_case.endgame_report.GameReportOutputData;
 
 import javax.mail.*;
 import javax.mail.internet.*;
-import java.util.Arrays;
 import java.util.Properties;
 
 /**
@@ -30,9 +28,11 @@ public class EmailReportInteractor implements EmailReportInputBoundary {
 
         String from = "learnblackjack101";
         String pass = "sdap cdvb hmte uqph";
-        String to = "learnblackjack101@gmail.com";
+        String to = emailReportInputData.getEmail();
         String subject = "Your Blackjack Game Summary";
 
+        // If the email is sent, prepare the success view
+        // Otherwise, prepare the fail view
         if (sendEmail(from, pass, to, subject, body)) {
             final EmailReportOutputData emailReportOutputData = new EmailReportOutputData(gameNum, gameData);
             reportPresenter.prepareSuccessView(emailReportOutputData);
@@ -92,13 +92,13 @@ public class EmailReportInteractor implements EmailReportInputBoundary {
      * @return the game data formatted to be easily readable
      */
     public String emailFromData(String[][] gameData) {
-        String email = String.join("  ", GameReportDAOConstants.STATISTIC_LABELS);
+        String email = String.join("      ", GameReportDAOConstants.STATISTIC_LABELS);
 
         for (int i = 0; i < gameData.length; i++) {
-            email += "\n" + (i + 1);
+            email += "\n" + (i + 1) + GameReportDAOConstants.COLUMN_SPACING[0];
 
             for (int j = 1; j < GameReportDAOConstants.STATISTIC_LABELS.length; j++) {
-                email += padRight(gameData[i][j - 1], GameReportDAOConstants.STATISTIC_LABELS[j].length() + 2);
+                email += gameData[i][j - 1] + GameReportDAOConstants.COLUMN_SPACING[j];
             }
         }
 
@@ -112,6 +112,7 @@ public class EmailReportInteractor implements EmailReportInputBoundary {
      * @return the string padded to the desired length
      */
     public static String padRight(String s, int n) {
+        n += n;
         return String.format("%-" + n + "s", s);
     }
 }

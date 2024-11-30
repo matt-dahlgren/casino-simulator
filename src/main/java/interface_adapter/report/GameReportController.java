@@ -1,4 +1,4 @@
-package interface_adapter.game_report;
+package interface_adapter.report;
 
 import use_case.endgame_report.GameReportInputBoundary;
 import use_case.endgame_report.GameReportInputData;
@@ -20,5 +20,13 @@ public class GameReportController {
     public void execute(String gameNum) {
         final GameReportInputData gameReportInputData = new GameReportInputData(gameNum);
         gameReportUseCaseInteractor.execute(gameReportInputData);
+    }
+
+
+    /**
+     * Executes the switch to main menu view use case.
+     */
+    public void switchToMainMenuView() {
+        gameReportUseCaseInteractor.switchToMainMenuView();
     }
 }
