@@ -1,17 +1,25 @@
 package view;
 
+import interface_adapter.probability.hit.ProbabilityHitViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 
-import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
+import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
 
 public class ProbabilityHitView extends JPanel{
 
-    public ProbabilityHitView(int outputData) {
+    private ProbabilityHitViewModel probabilityHitViewModel;
+
+    public ProbabilityHitView(ProbabilityHitViewModel probabilityHitViewModel) {
+
+        this.probabilityHitViewModel = probabilityHitViewModel;
 
         setLayout(new BorderLayout());
         setSize(300, 100);
         setBackground(TABLECOLOUR);
+
+        int outputData = probabilityHitViewModel.getState().getStandProbability();
 
         JLabel hitLabel = new JLabel("<html><font color = 'white'>Hit: " + outputData + "%</font></html>");
         hitLabel.setFont(new Font("Times New Roman", Font.BOLD, 14));
