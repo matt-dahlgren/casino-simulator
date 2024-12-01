@@ -24,4 +24,9 @@ public class HitController {
     public void switchToMainMenuView() {
         hitInteractor.switchToMainMenuView();
     }
+
+    public int getHandVal() {
+        return hitInteractor.getHandVal();
+    }
+
 }

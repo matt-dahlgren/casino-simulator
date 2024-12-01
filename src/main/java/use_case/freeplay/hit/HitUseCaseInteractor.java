@@ -33,7 +33,7 @@ public class HitUseCaseInteractor implements HitInputBoundary {
         ArrayList<Card> playerHand = player.getHand();
 
         //if the player can take their turn
-        if (canHit(getHandVal(playerHand))) {
+        if (canHit(getHandValue(playerHand))) {
             //hit branch
             //add card to player hand
             playerHand.add(freePlayDataAccessObject.getCard(gameDAO.getDeckID()));
@@ -45,7 +45,7 @@ public class HitUseCaseInteractor implements HitInputBoundary {
             HitOutputData outputData = new HitOutputData(makeImages(playerHand));
             hitPresenter.prepareSuccessView(outputData);
         }
-        else if ((getHandVal(playerHand)).equals(21)) {
+        else if ((getHandValue(playerHand)).equals(21)) {
             hitPresenter.prepareExitView("Winner!");
         }
         else {
@@ -67,6 +67,17 @@ public class HitUseCaseInteractor implements HitInputBoundary {
     @Override
     public void switchToMainMenuView() {
         hitPresenter.switchToMainMenuView();
+    }
+
+    @Override
+    public int getHandVal() {
+        UserPlayer player = gameDAO.getPlayer();
+        ArrayList<Card> playerHand = player.getHand();
+        int valOfHand = 0;
+        for (Card card : playerHand) {
+            valOfHand += card.getValue();
+        }
+        return valOfHand;
     }
 
     /**
@@ -91,7 +102,7 @@ public class HitUseCaseInteractor implements HitInputBoundary {
         return handVal < 21;
     }
 
-    private Integer getHandVal(ArrayList<Card> hand) {
+    private Integer getHandValue(ArrayList<Card> hand) {
         int valOfHand = 0;
         for (Card card : hand) {
             valOfHand += card.getValue();

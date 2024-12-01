@@ -139,17 +139,17 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         movesPanel.setBounds(810, 100, 230, 50);
         add(movesPanel, BorderLayout.LINE_START);
 
-//        JPanel playerScorePanel = new JPanel(new FlowLayout());
-//        playerScorePanel.setBackground(TABLECOLOUR);
-//
-//        JLabel playerScoreLabel =
-//                new JLabel("<html><font color = 'white'>Your Score: " + outputData + "</font></html>");
-//        playerScoreLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
-//        playerScoreLabel.setSize(50, 100);
-//
-//        playerScorePanel.add(playerScoreLabel);
-//
-//        add(playerScorePanel, BorderLayout.SOUTH);
+        JPanel playerScorePanel = new JPanel(new FlowLayout());
+        playerScorePanel.setBackground(TABLECOLOUR);
+
+        JLabel playerScoreLabel =
+                new JLabel("<html><font color = 'white'>Your Score: " + "0" + "</font></html>");
+        playerScoreLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
+        playerScoreLabel.setSize(50, 100);
+
+        playerScorePanel.add(playerScoreLabel);
+
+        add(playerScorePanel, BorderLayout.SOUTH);
 
         }
     public void propertyChange(PropertyChangeEvent evt) {

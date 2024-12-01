@@ -8,4 +8,6 @@ public interface HitInputBoundary {
     void switchToDealerAfterStandView();
 
     void switchToMainMenuView();
+
+    int getHandVal();
 }
