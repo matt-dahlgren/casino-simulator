@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
 
 public class HitView extends JPanel implements ActionListener, PropertyChangeListener {
-    private SetupController standupController;
     private HitController hitController;
 
     public HitView(SetupViewModel setupViewModel, HitViewModel hitViewModel) {
@@ -93,7 +92,7 @@ public class HitView extends JPanel implements ActionListener, PropertyChangeLis
             }
         });
 
-        standupController.execute_setup();
+
         hitController.execute();
         ArrayList<String> playerCards = hitViewModel.PLAYER_HAND;
         String dealerCardOneURL = setupViewModel.DEALER_ONE;
