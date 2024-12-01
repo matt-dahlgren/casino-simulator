@@ -16,10 +16,10 @@ public class Card {
         isVisible = true;
         this.image = image;
 
-        if (this.rank.equals("J") || this.rank.equals("Q") || this.rank.equals("K")) {
+        if (this.rank.equals("JACK") || this.rank.equals("QUEEN") || this.rank.equals("KING")) {
             value = 10;
         }
-        else if (this.rank.equals("A")) {
+        else if (this.rank.equals("ACE")) {
             value = 11;
         }
         else {
@@ -64,7 +64,7 @@ public class Card {
      * @param newValue The new value of the ace.
      */
     public void setValue(int newValue) {
-        if (rank.equals("A") && (newValue == 11 || newValue == 1)) {
+        if (rank.equals("ACE") && (newValue == 11 || newValue == 1)) {
             value = newValue;
         }
     }
