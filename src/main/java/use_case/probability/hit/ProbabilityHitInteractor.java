@@ -200,6 +200,9 @@ public class ProbabilityHitInteractor implements ProbabilityInteractorInterface,
 
     @Override
     public void execute() {
-        hitPresenter.prepareProbabilityHitView(new ProbabilityHitOutputData(this.hitProbability()));
+        int score = hitProbability();
+        gameDataAccessObject.updateHitProbability(score);
+        gameDataAccessObject.updateHandScore(handScore(userCards));
+        hitPresenter.prepareProbabilityHitView(new ProbabilityHitOutputData(score));
     }
 }

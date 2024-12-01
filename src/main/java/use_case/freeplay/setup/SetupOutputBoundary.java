@@ -13,4 +13,10 @@ public interface SetupOutputBoundary {
      * @param errorMessage the explanation of the failure
      */
     void prepareFailView(String errorMessage);
+
+    void switchToHitView();
+
+    void switchToDealerAfterStandView();
+
+    void switchToMainMenuView();
 }
