@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.freeplay.hit.HitController;
 import interface_adapter.freeplay.hit.HitViewModel;
 import interface_adapter.freeplay.setup.SetupController;
 import interface_adapter.freeplay.setup.SetupState;
@@ -19,10 +20,10 @@ import java.util.ArrayList;
 
 import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
 
-public class SetupView extends JPanel implements ActionListener, PropertyChangeListener {
-    private SetupController setupController;
+public class HitView extends JPanel implements ActionListener, PropertyChangeListener {
+    private HitController hitController;
 
-    public SetupView(SetupViewModel setupViewModel, HitViewModel hitViewModel) {
+    public HitView(SetupViewModel setupViewModel, HitViewModel hitViewModel) {
         setupViewModel.addPropertyChangeListener(this);
         hitViewModel.addPropertyChangeListener(this);
 
@@ -129,7 +130,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
                 cardPanel.add(errorLabel, BorderLayout.CENTER);
             }}
 
-            JPanel dealerPanel = new FlippedDealerCards(dealerCards);
+        JPanel dealerPanel = new FlippedDealerCards(dealerCards);
 
         cardPanel.add(playerPanel, BorderLayout.SOUTH);
         cardPanel.add(dealerPanel, BorderLayout.NORTH);
@@ -151,7 +152,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
 //
 //        add(playerScorePanel, BorderLayout.SOUTH);
 
-        }
+    }
     public void propertyChange(PropertyChangeEvent evt) {
         final SetupState state = (SetupState) evt.getNewValue();
         JOptionPane.showMessageDialog(this, "Setup state change.");
