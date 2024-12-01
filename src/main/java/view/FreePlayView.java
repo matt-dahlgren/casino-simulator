@@ -1,6 +1,18 @@
 package view;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+
 import javax.swing.*;
+
+import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
 
 public class FreePlayView extends JPanel {
 

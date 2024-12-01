@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
+import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
 
 public class FlippedDealerCards extends JPanel {
 
