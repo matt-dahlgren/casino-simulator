@@ -1,9 +1,9 @@
-package use_case.freeplay.stand;
+package use_case.dealer_screen;
 
 /**
  * The Input Boundary for the FreePlayStand Use case.
  */
-public interface FreePlayStandInputBoundary {
+public interface DealerScreenInputBoundary {
 
     /**
      * Execute the FreePlayStand Use case.

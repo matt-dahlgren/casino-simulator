@@ -1,4 +1,4 @@
-package interface_adapter.freeplay.stand;
+package interface_adapter.dealer_screen;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * The state for the Team Use Case (free play mode) View Model.
  *
  */
-public class FreePlayStandState {
+public class DealerScreenState {
 
     private int dealerScore;
     private int playerScore;

@@ -1,15 +1,15 @@
-package use_case.freeplay.stand;
+package use_case.dealer_screen;
 
 import java.util.ArrayList;
 
-public class FreePlayStandOutputData {
+public class DealerScreenOutputData {
 
     private final int dealerScore;
     private final int playerScore;
     private final boolean playerWin;
     private final ArrayList<String> dealerCardPictures;
 
-    public FreePlayStandOutputData(int dealerScore, int playerScore, ArrayList<String> dealerCardPictures, boolean win) {
+    public DealerScreenOutputData(int dealerScore, int playerScore, ArrayList<String> dealerCardPictures, boolean win) {
         this.dealerScore = dealerScore;
         this.playerScore = playerScore;
         this.dealerCardPictures = dealerCardPictures;

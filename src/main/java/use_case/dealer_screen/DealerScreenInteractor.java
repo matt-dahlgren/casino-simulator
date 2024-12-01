@@ -1,4 +1,4 @@
-package use_case.freeplay.stand;
+package use_case.dealer_screen;
 
 import data_access.GameDataAccessObject;
 import data_access.APIDataAccessObject;
@@ -12,13 +12,13 @@ import static use_case.probability.ProbabilityConstants.BLACKJACK;
 /**
  * The interactor for the FreePlayStand UseCase, it is assumed that at this point this player has not Bust.
  */
-public class FreePlayStandInteractor implements FreePlayStandInputBoundary{
+public class DealerScreenInteractor implements DealerScreenInputBoundary {
 
     private final GameDataAccessObject gameDataAccessObject;
-    private final FreePlayStandOutputDataBoundary outputPresenter;
+    private final DealerScreenOutputDataBoundary outputPresenter;
 
-    public FreePlayStandInteractor(GameDataAccessObject gameDataAccessObject,
-                                   FreePlayStandOutputDataBoundary outputPresenter) {
+    public DealerScreenInteractor(GameDataAccessObject gameDataAccessObject,
+                                  DealerScreenOutputDataBoundary outputPresenter) {
         this.gameDataAccessObject = gameDataAccessObject;
         this.outputPresenter = outputPresenter;
     }
@@ -119,7 +119,7 @@ public class FreePlayStandInteractor implements FreePlayStandInputBoundary{
             cardStrings.add(card.getImage());
         }
 
-        FreePlayStandOutputData outputData = new FreePlayStandOutputData(dealerScore, playerScore,
+        DealerScreenOutputData outputData = new DealerScreenOutputData(dealerScore, playerScore,
                 cardStrings, gameWin);
 
         outputPresenter.prepareStandView(outputData);
