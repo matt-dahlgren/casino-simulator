@@ -10,4 +10,10 @@ public interface SetupInputBoundary {
      */
 
     void execute();
+
+    void switchToHitView();
+
+    void switchToDealerAfterStandView();
+
+    void switchToMainMenuView();
 }

@@ -1,6 +1,8 @@
 package view;
 
 import interface_adapter.freePlay.FreePlayController;
+import interface_adapter.freeplay.setup.SetupController;
+import interface_adapter.learn_mode.LearnModeController;
 import interface_adapter.main_menu.MainMenuState;
 import interface_adapter.main_menu.MainMenuViewModel;
 
@@ -18,8 +20,8 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
 
     //TODO Locate all other controllers accessible from Main Menu as attributes
     private AssistedController assistedController;
-    private FreePlayController freePlayController;
-    private LearnController learnController;
+    private SetupController setupController;
+    private LearnModeController learnController;
     private LogoutController logoutController;
 
     private final JLabel username;
@@ -75,7 +77,7 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
         freePlay.addActionListener(
                 evt -> {
                     if (evt.getSource().equals(freePlay)) {
-                        this.freePlayController.execute();
+                        this.setupController.execute_setup();
                     }
                 }
         );
@@ -115,8 +117,8 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
         this.assistedController = assistedController;
     }
 
-    public void setFreePlayController(FreePlayController freePlayController) {
-        this.freePlayController = freePlayController;
+    public void setSetupController(FreePlayController setupController) {
+        this.setupController = setupController;
     }
 
     public void setLogoutController(LogoutController logoutController) {
