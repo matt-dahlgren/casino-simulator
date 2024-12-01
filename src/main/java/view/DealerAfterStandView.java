@@ -1,6 +1,6 @@
 package view;
 
-import interface_adapter.freeplay.stand.FreePlayStandViewModel;
+import interface_adapter.dealer_screen.DealerScreenViewModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,13 +10,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
+import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
 
 public class DealerAfterStandView extends JPanel {
 
-    FreePlayStandViewModel viewModel;
+    DealerScreenViewModel viewModel;
 
-    public DealerAfterStandView(FreePlayStandViewModel viewModel) {
+    public DealerAfterStandView(DealerScreenViewModel viewModel) {
         this.viewModel = viewModel;
 
         int dealerScore = viewModel.getState().getDealerScore();
