@@ -1,20 +1,17 @@
-package use_case.probability.stand;
+package use_case.assisted_mode.hit.probability;
 
 import data_access.GameDataAccessObject;
 import entities.Card;
-import entities.Dealer;
 import entities.Player;
-import entities.UserPlayer;
-import use_case.probability.ProbabilityInteractorInterface;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static use_case.probability.ProbabilityConstants.BLACKJACK;
-import static use_case.probability.ProbabilityConstants.fullDeck;
-import static use_case.probability.ProbabilityConstants.sampleDeck;
-import static use_case.probability.ProbabilityConstants.SCENARIO;
-import static use_case.probability.ProbabilityConstants.WINS;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.BLACKJACK;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.fullDeck;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.sampleDeck;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.SCENARIO;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.WINS;
 
 // To reduce runtime of this algorithm, all cards of similar value (bar Ace) are recognized to be the same, and outcomes
 // are multiplied by their frequency as one king's branching possibilities will be the same as another king, queen,
@@ -23,10 +20,9 @@ import static use_case.probability.ProbabilityConstants.WINS;
 /**
  * The class that calculates the probability of winning a game of BlackJack with a current hand.
  */
-public class ProbabilityStandInteractor implements ProbabilityInteractorInterface, ProbabilityStandInputBoundary {
+public class ProbabilityStandCalculator implements ProbabilityInteractorInterface {
 
     private final GameDataAccessObject gameDataAccessObject;
-    private final ProbabilityStandOutputBoundary standPresenter;
     private final Map<Integer, Integer> unknownCards;
     private final Map<Integer, Integer> userCards;
     private final Map<Integer, Integer> dealerCards;
@@ -35,11 +31,9 @@ public class ProbabilityStandInteractor implements ProbabilityInteractorInterfac
     /**
      * Initializes an instance of ProbabilityStandInteractor.
      */
-    public ProbabilityStandInteractor(GameDataAccessObject gameDataAccessObject,
-                                      ProbabilityStandOutputBoundary probabilityStandOutputBoundary) {
+    public ProbabilityStandCalculator(GameDataAccessObject gameDataAccessObject) {
 
         this.gameDataAccessObject = gameDataAccessObject;
-        this.standPresenter = probabilityStandOutputBoundary;
         this.unknownCards = new HashMap<>(fullDeck);
         this.userCards = new HashMap<>(sampleDeck);
         this.dealerCards = new HashMap<>(sampleDeck);
@@ -104,11 +98,14 @@ public class ProbabilityStandInteractor implements ProbabilityInteractorInterfac
         return Math.floorDiv((int) Math.ceil(winScenario.get(WINS)), (int) Math.ceil(winScenario.get(SCENARIO)));
     }
 
-    @Override
-    public void execute() {
+    public Map<Integer, Integer> getUserCards() {
+        return userCards;
+    }
+
+    public int execute() {
         int score = standProbability();
         gameDataAccessObject.updateStandProbability(score);
-        standPresenter.prepareProbabilityStandView(new ProbabilityStandOutputData(score));
+        return score;
     }
 
 }

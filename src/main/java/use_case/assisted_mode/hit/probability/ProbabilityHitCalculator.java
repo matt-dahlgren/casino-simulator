@@ -1,25 +1,22 @@
-package use_case.probability.hit;
+package use_case.assisted_mode.hit.probability;
 
 import data_access.GameDataAccessObject;
 import entities.Card;
-import entities.Dealer;
 import entities.Player;
-import entities.UserPlayer;
-import use_case.probability.ProbabilityInteractorInterface;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import static use_case.probability.ProbabilityConstants.BLACKJACK;
-import static use_case.probability.ProbabilityConstants.BUST;
-import static use_case.probability.ProbabilityConstants.fullDeck;
-import static use_case.probability.ProbabilityConstants.sampleDeck;
-import static use_case.probability.ProbabilityConstants.SCENARIO;
-import static use_case.probability.ProbabilityConstants.WINS;
-import static use_case.probability.ProbabilityConstants.values;
-import static use_case.probability.ProbabilityConstants.INITIALSCORE;
-import static use_case.probability.ProbabilityConstants.ACETOONE;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.BLACKJACK;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.BUST;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.fullDeck;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.sampleDeck;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.SCENARIO;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.WINS;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.values;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.INITIALSCORE;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.ACETOONE;
 
 // To reduce runtime of this algorithm, all cards of similar value (bar Ace) are recognized to be the same, and outcomes
 // are multiplied by their frequency as one king's branching possibilities will be the same as another king, queen,
@@ -28,10 +25,9 @@ import static use_case.probability.ProbabilityConstants.ACETOONE;
 /**
  * The class that carries out the logic behind calculating probabilities of a Player winning if they choose to hit.
  */
-public class ProbabilityHitInteractor implements ProbabilityInteractorInterface, ProbabilityHitInputBoundary {
+public class ProbabilityHitCalculator implements ProbabilityInteractorInterface {
 
     private final GameDataAccessObject gameDataAccessObject;
-    private final ProbabilityHitOutputBoundary hitPresenter;
     private final Map<Integer, Integer> unknownCards;
     private final Map<Integer, Integer> userCards;
     private final Map<Integer, Integer> dealerCards;
@@ -40,11 +36,9 @@ public class ProbabilityHitInteractor implements ProbabilityInteractorInterface,
     /**
      * Initializes an instance of ProbabilityHitInteractor.
      */
-    public ProbabilityHitInteractor(GameDataAccessObject gameDataAccessObject,
-                                    ProbabilityHitOutputBoundary probabilityHitOutputBoundary) {
+    public ProbabilityHitCalculator(GameDataAccessObject gameDataAccessObject) {
 
         this.gameDataAccessObject = gameDataAccessObject;
-        this.hitPresenter = probabilityHitOutputBoundary;
         this.unknownCards = new HashMap<>(fullDeck);
         this.userCards = new HashMap<>(sampleDeck);
         this.dealerCards = new HashMap<>(sampleDeck);
@@ -198,11 +192,10 @@ public class ProbabilityHitInteractor implements ProbabilityInteractorInterface,
         return result;
     }
 
-    @Override
-    public void execute() {
+    public int execute() {
         int score = hitProbability();
         gameDataAccessObject.updateHitProbability(score);
         gameDataAccessObject.updateHandScore(handScore(userCards));
-        hitPresenter.prepareProbabilityHitView(new ProbabilityHitOutputData(score));
+        return score;
     }
 }

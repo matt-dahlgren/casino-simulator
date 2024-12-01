@@ -7,7 +7,7 @@ import entities.Card;
 
 import java.util.ArrayList;
 
-import static use_case.probability.ProbabilityConstants.BLACKJACK;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.BLACKJACK;
 
 /**
  * The interactor for the FreePlayStand UseCase, it is assumed that at this point this player has not Bust.

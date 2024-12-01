@@ -1,12 +1,12 @@
-package use_case.probability;
+package use_case.assisted_mode.hit.probability;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import static use_case.probability.ProbabilityConstants.BLACKJACK;
-import static use_case.probability.ProbabilityConstants.SCENARIO;
-import static use_case.probability.ProbabilityConstants.WINS;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.BLACKJACK;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.SCENARIO;
+import static use_case.assisted_mode.hit.probability.ProbabilityConstants.WINS;
 
 /**
  * Interface that carries out common functions between ProbabilityStandInteractor and ProbabilityHitInteractor.
