@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.freeplay.hit.HitController;
+import interface_adapter.freeplay.hit.HitState;
 import interface_adapter.freeplay.hit.HitViewModel;
 import interface_adapter.freeplay.setup.SetupState;
 import interface_adapter.freeplay.setup.SetupViewModel;
@@ -92,14 +93,9 @@ public class HitView extends JPanel implements ActionListener, PropertyChangeLis
 
 
         hitController.execute();
+        ArrayList<String> playerCards = hitViewModel.PLAYER_HAND;
         String dealerCardOneURL = setupViewModel.DEALER_ONE;
         String dealerCardTwoURL = setupViewModel.DEALER_TWO;
-        String playerCardOneURL = setupViewModel.PLAYER_ONE;
-        String playerCardTwoURL = setupViewModel.PLAYER_TWO;
-
-        ArrayList<String> playerCards = new ArrayList<>();
-        playerCards.add(playerCardOneURL);
-        playerCards.add(playerCardTwoURL);
 
         ArrayList<String> dealerCards = new ArrayList<>();
         dealerCards.add(dealerCardOneURL);
@@ -153,8 +149,8 @@ public class HitView extends JPanel implements ActionListener, PropertyChangeLis
 
     }
     public void propertyChange(PropertyChangeEvent evt) {
-        final SetupState state = (SetupState) evt.getNewValue();
-        JOptionPane.showMessageDialog(this, "Setup state change.");
+        final HitState state = (HitState) evt.getNewValue();
+        JOptionPane.showMessageDialog(this, "Hit state change.");
     }
 
     @Override
