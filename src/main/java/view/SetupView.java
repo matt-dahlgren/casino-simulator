@@ -7,12 +7,17 @@ import interface_adapter.freeplay.setup.SetupState;
 import interface_adapter.freeplay.setup.SetupViewModel;
 import interface_adapter.learn_mode.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 
 import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
 
@@ -89,11 +94,53 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
 
 
         setupController.execute_setup();
-        String dealer_card_one_URL = setupViewModel.DEALER_ONE;
-        String dealer_card_two_URL = setupViewModel.DEALER_TWO;
-        String player_card_one_URL = setupViewModel.PLAYER_ONE;
-        String player_card_two_URL = setupViewModel.PLAYER_TWO;
+        String dealerCardOneURL = setupViewModel.DEALER_ONE;
+        String dealerCardTwoURL = setupViewModel.DEALER_TWO;
+        String playerCardOneURL = setupViewModel.PLAYER_ONE;
+        String playerCardTwoURL = setupViewModel.PLAYER_TWO;
+
+        ArrayList<String> playerCards = new ArrayList<>();
+        playerCards.add(playerCardOneURL);
+        playerCards.add(playerCardTwoURL);
+
+        ArrayList<String> dealerCards = new ArrayList<>();
+        dealerCards.add(dealerCardOneURL);
+        dealerCards.add(dealerCardTwoURL);
+
         // add code to display image URLs here
+        JPanel cardPanel = new JPanel(new BorderLayout());
+        cardPanel.setBackground(TABLECOLOUR);
+
+        JPanel playerPanel = new JPanel(new FlowLayout());
+        playerPanel.setBackground(TABLECOLOUR);
+
+        // Build the viewing of the Players Hand
+        for (String card : playerCards) {
+            try {
+                URL imageUrl = new URL(card);
+                BufferedImage image = ImageIO.read(imageUrl);
+                ImageIcon icon = new ImageIcon(image);
+                JLabel imageLabel = new JLabel(icon);
+
+                playerPanel.add(imageLabel);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                JLabel errorLabel = new JLabel("Failed to load image.");
+                errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                cardPanel.add(errorLabel, BorderLayout.CENTER);
+            }}
+
+            JPanel dealerPanel = new FlippedDealerCards(dealerCards);
+
+        cardPanel.add(playerPanel, BorderLayout.SOUTH);
+        cardPanel.add(dealerPanel, BorderLayout.NORTH);
+
+        add(cardPanel, BorderLayout.CENTER);
+
+        movesPanel.setBounds(810, 100, 230, 50);
+        add(movesPanel, BorderLayout.LINE_START);
+
 
 
 //        JPanel playerScorePanel = new JPanel(new FlowLayout());
@@ -107,47 +154,8 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
 //        playerScorePanel.add(playerScoreLabel);
 //
 //        add(playerScorePanel, BorderLayout.SOUTH);
-//
-//        JPanel cardPanel = new JPanel(new BorderLayout());
-//        cardPanel.setBackground(TABLECOLOUR);
-//
-//        JPanel playerPanel = new JPanel(new FlowLayout());
-//        playerPanel.setBackground(TABLECOLOUR);
-//
-//        // Build the viewing of the Players Hand
-//        for (String card : playerCards) {
-//            try {
-//                URL imageUrl = new URL(card);
-//                BufferedImage image = ImageIO.read(imageUrl);
-//                ImageIcon icon = new ImageIcon(image);
-//                JLabel imageLabel = new JLabel(icon);
-//
-//                playerPanel.add(imageLabel);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                JLabel errorLabel = new JLabel("Failed to load image.");
-//                errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//                cardPanel.add(errorLabel, BorderLayout.CENTER);
-//            }
-//
-//        }
-//
-//        // Build the viewing of the dealers (flipped) hand.
-//        JPanel dealerPanel = new FlippedDealerCards(dealerCards);
-//
-//        cardPanel.add(playerPanel, BorderLayout.SOUTH);
-//        cardPanel.add(dealerPanel, BorderLayout.NORTH);
-//
-//        add(cardPanel, BorderLayout.CENTER);
-//
-//        movesPanel.setBounds(810, 100, 230, 50);
-//        add(movesPanel, BorderLayout.LINE_START);
-//
-//    }
 
-    }
-
-    @Override
+        }
     public void propertyChange(PropertyChangeEvent evt) {
         final SetupState state = (SetupState) evt.getNewValue();
         JOptionPane.showMessageDialog(this, "Setup state change.");
@@ -159,3 +167,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
     }
 
 }
+
+
+
+
