@@ -59,4 +59,19 @@ public class SetupInteractor implements SetupInputBoundary {
         final SetupOutputData setupOutputData = new SetupOutputData(dealerHandLinks, userPlayerHandLinks);
         setupPresenter.prepareSuccessView(setupOutputData);
     }
+
+    @Override
+    public void switchToHitView() {
+        setupPresenter.switchToHitView();
+    }
+
+    @Override
+    public void switchToDealerAfterStandView() {
+        setupPresenter.switchToDealerAfterStandView();
+    }
+
+    @Override
+    public void switchToMainMenuView() {
+        setupPresenter.switchToMainMenuView();
+    }
 }
