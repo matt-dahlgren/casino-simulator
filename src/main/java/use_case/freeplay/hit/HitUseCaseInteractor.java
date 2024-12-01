@@ -13,7 +13,7 @@ import use_case.freeplay.GameDataAccess;
 
 import java.util.ArrayList;
 
-public class HitUseCaseInteractor {
+public class HitUseCaseInteractor implements HitInputBoundary {
     private final FreePlayDA freePlayDataAccessObject;
     private final GameDataAccess gameDAO;
     private final HitOutputBoundary hitPresenter;
@@ -52,6 +52,21 @@ public class HitUseCaseInteractor {
             //bust
             hitPresenter.prepareBustView("Bust! You're over 21");
         }
+    }
+
+    @Override
+    public void switchToHitView() {
+        hitPresenter.switchToHitView();
+    }
+
+    @Override
+    public void switchToDealerAfterStandView() {
+        hitPresenter.switchToDealerAfterStandView();
+    }
+
+    @Override
+    public void switchToMainMenuView() {
+        hitPresenter.switchToMainMenuView();
     }
 
     /**

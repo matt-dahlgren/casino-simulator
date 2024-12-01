@@ -2,7 +2,6 @@ package view;
 
 import interface_adapter.freeplay.hit.HitController;
 import interface_adapter.freeplay.hit.HitViewModel;
-import interface_adapter.freeplay.setup.SetupController;
 import interface_adapter.freeplay.setup.SetupState;
 import interface_adapter.freeplay.setup.SetupViewModel;
 
@@ -58,7 +57,7 @@ public class HitView extends JPanel implements ActionListener, PropertyChangeLis
         hitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setupController.switchToHitView();
+                hitController.switchToHitView();
             }
         });
 
@@ -72,7 +71,7 @@ public class HitView extends JPanel implements ActionListener, PropertyChangeLis
         standButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setupController.switchToDealerAfterStandView();
+                hitController.switchToDealerAfterStandView();
             }
         });
 
@@ -87,12 +86,12 @@ public class HitView extends JPanel implements ActionListener, PropertyChangeLis
         quitGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setupController.switchToMainMenuView();
+                hitController.switchToMainMenuView();
             }
         });
 
 
-        setupController.execute_setup();
+        hitController.execute();
         String dealerCardOneURL = setupViewModel.DEALER_ONE;
         String dealerCardTwoURL = setupViewModel.DEALER_TWO;
         String playerCardOneURL = setupViewModel.PLAYER_ONE;
