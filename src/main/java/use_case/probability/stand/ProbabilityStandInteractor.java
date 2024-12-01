@@ -106,7 +106,9 @@ public class ProbabilityStandInteractor implements ProbabilityInteractorInterfac
 
     @Override
     public void execute() {
-        standPresenter.prepareProbabilityStandView(new ProbabilityStandOutputData(this.standProbability()));
+        int score = standProbability();
+        gameDataAccessObject.updateStandProbability(score);
+        standPresenter.prepareProbabilityStandView(new ProbabilityStandOutputData(score));
     }
 
 }
