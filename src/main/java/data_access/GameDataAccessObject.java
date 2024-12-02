@@ -22,17 +22,14 @@ public class GameDataAccessObject implements GameDataAccess, SetupGameDataAccess
     Map<Integer, Integer> standProbability;
     Map<Integer, Integer> handScore;
 
-    public GameDataAccessObject() {
-        this.hitProbability = new HashMap<>();
-        this.standProbability = new HashMap<>();
-        this.handScore = new HashMap<>();
-    }
-
     public GameDataAccessObject(UserPlayer userPlayer, Dealer dealer, String deckID, ArrayList<Player> computerPlayers) {
         this.userPlayer = userPlayer;
         this.dealer = dealer;
         this.deckID = deckID;
         this.computerPlayers = computerPlayers;
+        this.hitProbability = new HashMap<>();
+        this.standProbability = new HashMap<>();
+        this.handScore = new HashMap<>();
     }
 
     /**
