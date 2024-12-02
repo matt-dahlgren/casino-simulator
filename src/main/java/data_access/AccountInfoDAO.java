@@ -57,13 +57,11 @@ public class AccountInfoDAO implements SignupUserDataAccessInterface {
         return currentUser;
     }
 
-    // the following methods deal with the map of users
-
     /**
      * Adds a user
      * @param user the user to be added
      */
-    public void addUser(User user) {
+    public void addUser(User user) throws IOException {
         // Adds the user to the user map
         users.put(user.getUsername(), user);
 
@@ -76,10 +74,19 @@ public class AccountInfoDAO implements SignupUserDataAccessInterface {
         catch (IOException e) {
             e.printStackTrace();
         }
+
+        FileWriter writer = new FileWriter(dataPath, true);
+        writer.write(user.getUsername() + "," + user.getPassword() + "," + user.getEmail() + "\n");
+        writer.close();
     }
 
     public User getUser(String username) {
         return users.get(username);
+    }
+
+    @Override
+    public String getCurrentEmail() {
+        return users.get(currentUser).getEmail();
     }
 
     public boolean userExists(String username) {
