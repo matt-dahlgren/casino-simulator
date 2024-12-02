@@ -31,17 +31,18 @@ public class NewHitInteractor implements NewHitInputBoundary {
         if (getScore(player.getHand()) < 21) {
 
             Card newCard = freePlayDA.getCard(gameDataAccess.getDeckID());
-            player.hit(newCard);
 
-            System.out.println(player.getHand());
+            ArrayList<Card> hand = gameDataAccess.getPlayer().getHand();
+            hand.add(newCard);
+            gameDataAccess.getPlayer().setHand(hand);
+
 
             ArrayList<String> player_images = new ArrayList<>();
-            for (Card card : player.getHand()) {
+            for (Card card : gameDataAccess.getPlayer().getHand()) {
                 player_images.add(card.getImage());
             }
-            System.out.println(player.getHand());
 
-            final NewHitOutputData outputData = new NewHitOutputData(player_images);
+            final NewHitOutputData outputData = new NewHitOutputData(player_images, getScore(player.getHand()));
 
             hitPresenter.prepareSuccessView(outputData);
         }

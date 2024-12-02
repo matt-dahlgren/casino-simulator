@@ -23,7 +23,11 @@ public class NewHitPresenter implements NewHitOutputBoundary {
 
         SetupState setupState = setupViewModel.getState();
         setupState.setPlayerHand(outputData.getUserPlayerHand());
+        setupState.setScore(outputData.getScore());
 
-    System.out.println("Success NewHitPresenter Success view prepared!");
+        setupViewModel.firePropertyChanged("hit");
+
+
+        System.out.println("Success NewHitPresenter Success view prepared!");
     }
 }

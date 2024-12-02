@@ -30,6 +30,8 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
     private final JPanel dealerPanel;
     private final JPanel playerPanel;
 
+    private int SCORE = 0;
+
     public SetupView(SetupViewModel setupViewModel) {
         this.setupViewModel = setupViewModel;
         setupViewModel.addPropertyChangeListener(this);
@@ -127,7 +129,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         playerScorePanel.setBackground(TABLECOLOUR);
 
         JLabel playerScoreLabel =
-                new JLabel("<html><font color = 'white'>Your Score: " + "0" + "</font></html>");
+                new JLabel("<html><font color = 'white'>Your Score: " + SCORE + "</font></html>");
         playerScoreLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
         playerScoreLabel.setSize(50, 100);
 
@@ -172,8 +174,10 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
                     dealerPanel.add(errorLabel, BorderLayout.CENTER);
                 }}
             }
+
         else if (evt.getPropertyName().equals("hit")) {
             final SetupState state = (SetupState) evt.getNewValue();
+
             int componentCount = playerPanel.getComponentCount();
             int handSize = state.getPlayerHand().size();
 
@@ -195,6 +199,10 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
             }
             //Reloads the page, allows the new cards to be updated to it
             this.revalidate();
+        }
+
+        else if (evt.getPropertyName().equals("stand")) {
+            final SetupState state = (SetupState) evt.getNewValue();
         }
 
         }
