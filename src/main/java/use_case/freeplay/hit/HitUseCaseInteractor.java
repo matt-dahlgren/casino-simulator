@@ -32,17 +32,17 @@ public class HitUseCaseInteractor implements HitInputBoundary {
         UserPlayer player = gameDAO.getPlayer();
         ArrayList<Card> playerHand = player.getHand();
 
-        //if the player can take their turn
-        if (canHit(getHandValue(playerHand))) {
-            //hit branch
-            //add card to player hand
-            playerHand.add(freePlayDataAccessObject.getCard(gameDAO.getDeckID()));
-            player.setHand(playerHand);
-            //update player
-            gameDAO.setPlayer(player);
+        //add card to player hand
+        playerHand.add(freePlayDataAccessObject.getCard(gameDAO.getDeckID()));
+        player.setHand(playerHand);
+        //update player
+        gameDAO.setPlayer(player);
 
-            //output data and presenter
-            HitOutputData outputData = new HitOutputData(makeImages(playerHand));
+        //checking if they've bust or won
+        if (canHit(getHandValue(playerHand))) {
+            //successful hit, success view
+            HitOutputData outputData = new HitOutputData(makeImages(playerHand),
+                    makeImages(gameDAO.getDealer().getHand()));
             hitPresenter.prepareSuccessView(outputData);
         }
         else if ((getHandValue(playerHand)).equals(21)) {
