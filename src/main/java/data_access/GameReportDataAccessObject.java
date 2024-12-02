@@ -31,6 +31,8 @@ public class GameReportDataAccessObject implements GameReportDataAccessInterface
 
     private static final int BLACKJACK = 21;
 
+    public GameReportDataAccessObjectDAO() { }
+
     public GameReportDataAccessObject(String username) throws FileNotFoundException {
         String csvPath = "src/main/java/user_data/" + username + ".csv";
         File csvFile = new File(csvPath);
