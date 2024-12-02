@@ -23,6 +23,7 @@ public class AssistedModeHitPresenter implements AssistedGameOutputDataBoundary 
         this.mainMenuViewModel = mainMenuViewModel;
     }
 
+    @Override
     public void prepareAssistedView(AssistedGameOutputData data) {
         final AssistedModeState assistedModeState = assistedModeViewModel.getState();
         assistedModeState.setHitWin(data.getHitWin());
@@ -38,6 +39,7 @@ public class AssistedModeHitPresenter implements AssistedGameOutputDataBoundary 
         this.viewManagerModel.firePropertyChanged();
     }
 
+    @Override
     public void prepareMainMenu() {
         final MainMenuState mainMenuState = mainMenuViewModel.getState();
         this.mainMenuViewModel.setState(mainMenuState);
@@ -47,14 +49,19 @@ public class AssistedModeHitPresenter implements AssistedGameOutputDataBoundary 
         this.viewManagerModel.firePropertyChanged();
     }
 
+    @Override
     public void prepareAssistedStand(AssistedGameOutputData data) {
         final DealerScreenState dealerScreenState = dealerScreenViewModel.getState();
         dealerScreenState.setDealerScore(data.getDealerScore());
         dealerScreenState.setPlayerScore(data.getPlayerScore());
         dealerScreenState.setCardImages(data.getDealerCards());
         dealerScreenState.setPlayerWin(data.isGameWin());
+        dealerScreenState.setGameType(0);
 
         this.dealerScreenViewModel.setState(dealerScreenState);
         this.dealerScreenViewModel.firePropertyChanged();
+
+        this.viewManagerModel.setState(dealerScreenViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
 }
