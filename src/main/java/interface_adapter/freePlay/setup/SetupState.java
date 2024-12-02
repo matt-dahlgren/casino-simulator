@@ -1,4 +1,4 @@
-package interface_adapter.freeplay.setup;
+package interface_adapter.freePlay.setup;
 
 public class SetupState {
     private String dealerCardOne="";

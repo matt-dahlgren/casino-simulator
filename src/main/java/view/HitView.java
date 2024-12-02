@@ -1,11 +1,10 @@
 package view;
 
 import interface_adapter.freePlay.setup.SetupViewModel;
-import interface_adapter.freeplay.hit.HitController;
-import interface_adapter.freeplay.hit.HitState;
-import interface_adapter.freeplay.hit.HitViewModel;
-import interface_adapter.freeplay.setup.SetupController;
-import interface_adapter.freeplay.setup.SetupState;
+import interface_adapter.freePlay.hit.HitController;
+import interface_adapter.freePlay.hit.HitState;
+import interface_adapter.freePlay.hit.HitViewModel;
+
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,8 +23,9 @@ import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLEC
 public class HitView extends JPanel implements ActionListener, PropertyChangeListener {
     private HitController hitController;
 
-    public HitView(SetupViewModel setupViewModel, HitViewModel hitViewModel) {
-        setupViewModel.addPropertyChangeListener(this);
+    private final String viewName = "hit view";
+
+    public HitView(HitViewModel hitViewModel) {
         hitViewModel.addPropertyChangeListener(this);
 
         setBackground(TABLECOLOUR);
@@ -163,6 +163,9 @@ public class HitView extends JPanel implements ActionListener, PropertyChangeLis
         JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
     }
 
+    public String getViewName() {
+        return viewName;
+    }
 }
 
 

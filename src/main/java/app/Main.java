@@ -29,7 +29,9 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
-                .addMainMenuAView()
+                .addMainMenuView()
+                .addHitView()
+                .addHitUseCase()
                 .build();
 
         application.pack();

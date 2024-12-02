@@ -1,4 +1,4 @@
-package interface_adapter.freeplay.hit;
+package interface_adapter.freePlay.hit;
 
 import use_case.freeplay.hit.HitInputBoundary;
 
@@ -29,4 +29,7 @@ public class HitController {
         return hitInteractor.getHandVal();
     }
 
+    public void execute_setup() {
+        hitInteractor.execute_setup();
+    }
 }

@@ -1,4 +1,4 @@
-package interface_adapter.freeplay.hit;
+package interface_adapter.freePlay.hit;
 
 import java.util.ArrayList;
 

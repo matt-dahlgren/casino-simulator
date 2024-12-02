@@ -1,7 +1,10 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.freePlay.setup.SetupViewModel;
 import interface_adapter.main_menu.MainMenuViewModel;
+import interface_adapter.freePlay.hit.HitViewModel;
+import view.HitView;
 import view.MainMenuView;
 import view.ViewManager;
 
@@ -20,7 +23,10 @@ public class AppBuilder {
     private final ImageIcon img = new ImageIcon("resources/images/icon.png");
 
     private MainMenuView mainMenuView;
+    private HitView hitView;
+
     private MainMenuViewModel mainMenuViewModel;
+    private HitViewModel hitViewModel;
 
 
     public AppBuilder() {
@@ -31,7 +37,7 @@ public class AppBuilder {
      * Adds the Main Menu view to the application
      * @return this builder
      */
-    public AppBuilder addMainMenuAView() {
+    public AppBuilder addMainMenuView() {
         mainMenuViewModel = new MainMenuViewModel();
         mainMenuView = new MainMenuView(mainMenuViewModel);
         cardPanel.add(mainMenuView, mainMenuView.getViewName());
@@ -39,7 +45,18 @@ public class AppBuilder {
     }
 
     /**
-     * Creates the JFrame for the application and initially sets the TeamView to be displayed.
+     * Adds the Hit view to the application
+     * @return this builder
+     */
+    public AppBuilder addHitView() {
+        hitViewModel = new HitViewModel();
+        hitView = new HitView(hitViewModel);
+        cardPanel.add(hitView, hitView.getViewName());
+        return this;
+    }
+
+    /**
+     * Creates the JFrame for the application and initially sets the Signup View to be displayed.
      * @return the application
      */
     public JFrame build() {

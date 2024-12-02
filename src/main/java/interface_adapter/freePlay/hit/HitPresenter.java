@@ -1,19 +1,18 @@
-package interface_adapter.freeplay.hit;
+package interface_adapter.freePlay.hit;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.freePlay.setup.SetupViewModel;
-import interface_adapter.freeplay.setup.SetupState;
 import interface_adapter.main_menu.MainMenuViewModel;
 import use_case.freeplay.hit.HitOutputBoundary;
 import use_case.freeplay.hit.HitOutputData;
-import interface_adapter.freeplay.hit.HitState;
+import interface_adapter.freePlay.hit.HitState;
 
 import java.util.ArrayList;
 
 public class HitPresenter implements HitOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     SetupViewModel setupViewModel;
-    interface_adapter.freeplay.hit.HitViewModel hitViewModel;
+    interface_adapter.freePlay.hit.HitViewModel hitViewModel;
     MainMenuViewModel mainMenuViewModel;
 
     public HitPresenter(ViewManagerModel viewManagerModel) {

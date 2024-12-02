@@ -80,6 +80,11 @@ public class HitUseCaseInteractor implements HitInputBoundary {
         return valOfHand;
     }
 
+    @Override
+    public void execute_setup() {
+
+    }
+
     /**
      * Helper function that makes array with image links
      * @param hand the hand list

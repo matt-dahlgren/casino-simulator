@@ -10,4 +10,6 @@ public interface HitInputBoundary {
     void switchToMainMenuView();
 
     int getHandVal();
+
+    void execute_setup();
 }

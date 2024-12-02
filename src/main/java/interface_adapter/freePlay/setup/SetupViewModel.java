@@ -2,8 +2,6 @@ package interface_adapter.freePlay.setup;
 
 import interface_adapter.ViewModel;
 
-import interface_adapter.freeplay.setup.SetupState;
-
 public class SetupViewModel extends ViewModel<SetupState> {
     public String DEALER_ONE;
     public String DEALER_TWO;
