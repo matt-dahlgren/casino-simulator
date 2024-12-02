@@ -4,20 +4,25 @@ import data_access.APIDataAccessObject;
 import data_access.GameDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.freePlay.newhit.NewHitController;
-import interface_adapter.freePlay.newhit.NewHitPresenter;
+import interface_adapter.freeplay.newhit.NewHitPresenter;
 import interface_adapter.freeplay.setup.SetupController;
 import interface_adapter.freeplay.setup.SetupPresenter;
 import interface_adapter.freeplay.setup.SetupViewModel;
 import interface_adapter.main_menu.MainMenuViewModel;
+import interface_adapter.signup_adapter.*;
+import interface_adapter.login_adapter.*;
+import use_case.signup.*;
+import use_case.login.*;
 import use_case.freeplay.newhit.NewHitInputBoundary;
 import use_case.freeplay.newhit.NewHitInteractor;
 import use_case.freeplay.newhit.NewHitOutputBoundary;
 import use_case.freeplay.setup.SetupInputBoundary;
 import use_case.freeplay.setup.SetupInteractor;
 import use_case.freeplay.setup.SetupOutputBoundary;
-import view.MainMenuView;
-import view.SetupView;
-import view.ViewManager;
+import use_case.signup.SignupInteractor;
+import view.*;
+
+import data_access.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,10 +46,14 @@ public class AppBuilder {
     //Views
     private MainMenuView mainMenuView;
     private SetupView setupView;
+    private SignupView signupView;
+    private LoginView loginView;
 
     //View Models
     private MainMenuViewModel mainMenuViewModel;
     private SetupViewModel setupViewModel;
+    private SignupViewModel signupViewModel;
+    private LoginViewModel loginViewModel;
 
 
     public AppBuilder() {
@@ -52,6 +61,17 @@ public class AppBuilder {
     }
 
     //Views
+
+    /**
+     * Adds the SignUp view to the application
+     * @return this builder
+     */
+    public AppBuilder addSignUpView() {
+        signupViewModel = new SignupViewModel();
+        signupView = new SignupView(signupViewModel);
+        cardPanel.add(signupView, signupView.getViewName());
+        return this;
+    }
 
     /**
      * Adds the Main Menu view to the application
@@ -76,6 +96,20 @@ public class AppBuilder {
     }
 
     //Use cases
+
+    /**
+     * Adds the Signup Use Case to the application.
+     * @return this builder.
+     */
+    public AppBuilder addSignupUseCase() {
+        final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(signupViewModel, loginViewModel, viewManagerModel);
+
+        final SignupInputBoundary signupInteractor = new SignupInteractor(gameDAO, APIDAO, signupOutputBoundary);
+
+        final SignupController controller = new SetupController(signupInteractor);
+        signupView.setSignupController(controller);
+        return this;
+    }
 
     /**
      * Adds the Setup Use Case to the application.
