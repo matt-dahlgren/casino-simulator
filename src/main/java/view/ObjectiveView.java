@@ -75,6 +75,13 @@ public class ObjectiveView extends JPanel implements ActionListener, PropertyCha
         movesButton.setFont(buttonFont);
         instructionsPanel.add(movesButton, constraints);
 
+        mainMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                learnModeController.switchToMainMenuView();
+            }
+        });
+
         movesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
