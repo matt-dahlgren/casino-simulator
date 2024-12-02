@@ -8,7 +8,7 @@ import entities.Card;
 import entities.CardFactory;
 import entities.Player;
 import entities.UserPlayer;
-import use_case.freePlayMode.FreePlayDA;
+import use_case.freeplay.FreePlayDA;
 import use_case.freeplay.GameDataAccess;
 
 import java.util.ArrayList;

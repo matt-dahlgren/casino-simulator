@@ -1,8 +1,8 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.team_use_case.TeamViewModel;
-import view.TeamView;
+import interface_adapter.main_menu.MainMenuViewModel;
+import view.MainMenuView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -19,23 +19,22 @@ public class AppBuilder {
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
     private final ImageIcon img = new ImageIcon("resources/images/icon.png");
 
-    private final JLabel hitCard = new JLabel();
+    private MainMenuView mainMenuView;
+    private MainMenuViewModel mainMenuViewModel;
 
-    private TeamView teamView;
-    private TeamViewModel teamViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
     }
 
     /**
-     * Adds the Default View to the application
+     * Adds the Main Menu view to the application
      * @return this builder
      */
-    public AppBuilder addTeamView() {
-        teamViewModel = new TeamViewModel();
-        teamView = new TeamView(teamViewModel, hitCard);
-        cardPanel.add(teamView, teamView.getViewName());
+    public AppBuilder addMainMenuAView() {
+        mainMenuViewModel = new MainMenuViewModel();
+        mainMenuView = new MainMenuView(mainMenuViewModel);
+        cardPanel.add(mainMenuView, mainMenuView.getViewName());
         return this;
     }
 
@@ -63,7 +62,7 @@ public class AppBuilder {
         application.add(cardPanel);
 
         // Sets "TeamView" as the view, aka TeamView is the default view.
-        viewManagerModel.setState(teamView.getViewName());
+        viewManagerModel.setState(mainMenuView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

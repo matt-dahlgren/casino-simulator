@@ -12,11 +12,13 @@ import java.util.ArrayList;
 
 import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
 
+
 public class DealerAfterStandView extends JPanel {
 
     DealerScreenViewModel viewModel;
 
     public DealerAfterStandView(DealerScreenViewModel viewModel) {
+
         this.viewModel = viewModel;
 
         int dealerScore = viewModel.getState().getDealerScore();

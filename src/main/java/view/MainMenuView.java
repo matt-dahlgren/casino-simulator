@@ -1,12 +1,12 @@
 package view;
 
-import interface_adapter.freePlay.FreePlayController;
 import interface_adapter.freeplay.setup.SetupController;
 import interface_adapter.learn_mode.LearnModeController;
 import interface_adapter.main_menu.MainMenuState;
 import interface_adapter.main_menu.MainMenuViewModel;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -19,10 +19,10 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
     private final MainMenuViewModel mainMenuViewModel;
 
     //TODO Locate all other controllers accessible from Main Menu as attributes
-    private AssistedController assistedController;
+//    private AssistedController assistedController;
     private SetupController setupController;
     private LearnModeController learnController;
-    private LogoutController logoutController;
+//    private LogoutController logoutController;
 
     private final JLabel username;
 
@@ -57,22 +57,22 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
 
         //Action Listeners that make buttons functional
         //TODO Change the .execute() parameters based on the requirements (none I think)
-        logOut.addActionListener(
-                evt -> {
-                    if (evt.getSource().equals(logOut)) {
-                        final MainMenuState currentState = mainMenuViewModel.getState();
-                        this.logoutController.execute(currentState.getUsername());
-                    }
-                }
-        );
-
-        assisted.addActionListener(
-                evt -> {
-                    if (evt.getSource().equals(assisted)) {
-                        this.assistedController.execute();
-                    }
-                }
-        );
+//        logOut.addActionListener(
+//                evt -> {
+//                    if (evt.getSource().equals(logOut)) {
+//                        final MainMenuState currentState = mainMenuViewModel.getState();
+//                        this.logoutController.execute(currentState.getUsername());
+//                    }
+//                }
+//        );
+//
+//        assisted.addActionListener(
+//                evt -> {
+//                    if (evt.getSource().equals(assisted)) {
+//                        this.assistedController.execute();
+//                    }
+//                }
+//        );
 
         freePlay.addActionListener(
                 evt -> {
@@ -81,14 +81,14 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
-
-        learn.addActionListener(
-                evt -> {
-                    if (evt.getSource().equals(learn)) {
-                        this.learnController.execute();
-                    }
-                }
-        );
+//
+//        learn.addActionListener(
+//                evt -> {
+//                    if (evt.getSource().equals(learn)) {
+//                        this.learnController.execute();
+//                    }
+//                }
+//        );
 
 
         buttons.add(assisted);
@@ -113,19 +113,33 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
     }
 
     //TODO Include all relevant controllers for the classes
-    public void setAssistedController(AssistedController assistedController) {
-        this.assistedController = assistedController;
-    }
+//    public void setAssistedController(AssistedController assistedController) {
+//        this.assistedController = assistedController;
+//    }
 
-    public void setSetupController(FreePlayController setupController) {
+    public void setSetupController(SetupController setupController) {
         this.setupController = setupController;
     }
 
-    public void setLogoutController(LogoutController logoutController) {
-        this.logoutController = logoutController;
+    @Override
+    /**
+     * React to a button click that results in evt.
+     * @param evt the ActionEvent to react to
+     */
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
     }
 
-    public void setLearnController(LearnController learncontroller) {
-        this.learnController = learncontroller;
+    public String getViewName() {
+        return viewName;
     }
+
+
+//    public void setLogoutController(LogoutController logoutController) {
+//        this.logoutController = logoutController;
+//    }
+//
+//    public void setLearnController(LearnController learncontroller) {
+//        this.learnController = learncontroller;
+//    }
 }

@@ -1,12 +1,12 @@
-package interface_adapter.freeplay.setup;
+package interface_adapter.freePlay.setup;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.freePlay.setup.SetupViewModel;
 import interface_adapter.freeplay.hit.HitViewModel;
-import interface_adapter.freeplay.stand.FreePlayStandViewModel;
 import interface_adapter.main_menu.MainMenuViewModel;
-import interface_adapter.team_use_case.TeamViewModel;
 import use_case.freeplay.setup.SetupOutputBoundary;
 import use_case.freeplay.setup.SetupOutputData;
+import interface_adapter.freeplay.setup.SetupState;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ public class SetupPresenter implements SetupOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     SetupViewModel setupViewModel;
     HitViewModel hitViewModel;
-    FreePlayStandViewModel freePlayStandViewModel;
+//    FreePlayStandViewModel freePlayStandViewModel;
     MainMenuViewModel mainMenuViewModel;
 
     public SetupPresenter(ViewManagerModel viewManagerModel) {
@@ -62,8 +62,8 @@ public class SetupPresenter implements SetupOutputBoundary {
 
     @Override
     public void switchToDealerAfterStandView() {
-        viewManagerModel.setState(freePlayStandViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+//        viewManagerModel.setState(freePlayStandViewModel.getViewName());
+//        viewManagerModel.firePropertyChanged();
     }
 
     @Override

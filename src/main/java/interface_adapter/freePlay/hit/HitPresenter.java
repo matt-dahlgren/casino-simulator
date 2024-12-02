@@ -1,20 +1,19 @@
 package interface_adapter.freeplay.hit;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.freePlay.setup.SetupViewModel;
 import interface_adapter.freeplay.setup.SetupState;
-import interface_adapter.freeplay.setup.SetupViewModel;
-import interface_adapter.freeplay.stand.FreePlayStandViewModel;
 import interface_adapter.main_menu.MainMenuViewModel;
 import use_case.freeplay.hit.HitOutputBoundary;
 import use_case.freeplay.hit.HitOutputData;
+import interface_adapter.freeplay.hit.HitState;
 
 import java.util.ArrayList;
 
 public class HitPresenter implements HitOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     SetupViewModel setupViewModel;
-    HitViewModel hitViewModel;
-    FreePlayStandViewModel freePlayStandViewModel;
+    interface_adapter.freeplay.hit.HitViewModel hitViewModel;
     MainMenuViewModel mainMenuViewModel;
 
     public HitPresenter(ViewManagerModel viewManagerModel) {
@@ -66,8 +65,8 @@ public class HitPresenter implements HitOutputBoundary {
 
     @Override
     public void switchToDealerAfterStandView() {
-        viewManagerModel.setState(freePlayStandViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+//        viewManagerModel.setState(freePlayStandViewModel.getViewName());
+//        viewManagerModel.firePropertyChanged();
     }
 
     @Override

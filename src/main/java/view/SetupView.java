@@ -1,9 +1,9 @@
 package view;
 
+import interface_adapter.freePlay.setup.SetupViewModel;
 import interface_adapter.freeplay.hit.HitViewModel;
 import interface_adapter.freeplay.setup.SetupController;
 import interface_adapter.freeplay.setup.SetupState;
-import interface_adapter.freeplay.setup.SetupViewModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
+//import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
 
 public class SetupView extends JPanel implements ActionListener, PropertyChangeListener {
     private SetupController setupController;
@@ -25,6 +25,10 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
     public SetupView(SetupViewModel setupViewModel, HitViewModel hitViewModel) {
         setupViewModel.addPropertyChangeListener(this);
         hitViewModel.addPropertyChangeListener(this);
+
+        //TODO Switch colour to whatever our table colour (why does probability have this feature?)
+
+        Color TABLECOLOUR = new Color(42, 99, 39);
 
         setBackground(TABLECOLOUR);
 

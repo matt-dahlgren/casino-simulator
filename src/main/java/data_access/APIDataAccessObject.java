@@ -7,7 +7,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
-import use_case.freePlayMode.FreePlayDA;
+import use_case.freeplay.FreePlayDA;
 import use_case.freeplay.setup.SetupDeckDataAccessInterface;
 
 import java.io.IOException;

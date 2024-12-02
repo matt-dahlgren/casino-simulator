@@ -7,7 +7,8 @@ import entities.Card;
 
 import java.util.ArrayList;
 
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.BLACKJACK;
+//import static use_case.assisted_mode.hit.probability.ProbabilityConstants.BLACKJACK;
+
 
 /**
  * The interactor for the FreePlayStand UseCase, it is assumed that at this point this player has not Bust.
@@ -44,7 +45,7 @@ public class DealerScreenInteractor implements DealerScreenInputBoundary {
         // If the player has a hand with aces and have bust (using any aces as a score of 11), reduce the score by 10
         // until either all aces have been evaluated as score 1 or the hand is scored to be less than or equal to 21.
         while (aceCount > 0) {
-            if (result > BLACKJACK) {
+            if (result > 21) {
                 result -= 10;
                 aceCount--;
             }
@@ -77,7 +78,7 @@ public class DealerScreenInteractor implements DealerScreenInputBoundary {
         // If the player has a hand with aces and have bust (using any aces as a score of 11), reduce the score by 10
         // until either all aces have been evaluated as score 1 or the hand is scored to be less than or equal to 21.
         while (aceCount > 0) {
-            if (result > BLACKJACK) {
+            if (result > 21) {
                 result -= 10;
                 aceCount--;
             }
@@ -111,7 +112,7 @@ public class DealerScreenInteractor implements DealerScreenInputBoundary {
         int dealerScore = this.dealerHandScore();
         int playerScore = this.playerHandScore();
 
-        boolean gameWin = (dealerScore > BLACKJACK) || playerScore >= dealerScore;
+        boolean gameWin = (dealerScore > 21) || playerScore >= dealerScore;
 
         ArrayList<String> cardStrings = new ArrayList<>();
 

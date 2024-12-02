@@ -1,11 +1,11 @@
 package view;
 
+import interface_adapter.freePlay.setup.SetupViewModel;
 import interface_adapter.freeplay.hit.HitController;
 import interface_adapter.freeplay.hit.HitState;
 import interface_adapter.freeplay.hit.HitViewModel;
 import interface_adapter.freeplay.setup.SetupController;
 import interface_adapter.freeplay.setup.SetupState;
-import interface_adapter.freeplay.setup.SetupViewModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
