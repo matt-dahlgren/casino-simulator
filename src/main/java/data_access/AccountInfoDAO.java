@@ -63,14 +63,19 @@ public class AccountInfoDAO implements SignupUserDataAccessInterface {
      * Adds a user
      * @param user the user to be added
      */
-    public void addUser(User user) throws IOException {
+    public void addUser(User user) {
         // Adds the user to the user map
         users.put(user.getUsername(), user);
 
         // Adds a user to the user file
-        FileWriter writer = new FileWriter(dataPath, true);
-        writer.write(user.getUsername() + "," + user.getPassword() + "," + user.getEmail() + "\n");
-        writer.close();
+        try {
+            FileWriter writer = new FileWriter(dataPath, true);
+            writer.write(user.getUsername() + "," + user.getPassword() + "," + user.getEmail() + "\n");
+            writer.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public User getUser(String username) {

@@ -1,12 +1,12 @@
 package use_case.logout;
 
-import data_access.InMemoryUserDAO;
+import data_access.AccountInfoDAO;
 
 public class LogoutInteractor implements LogoutInputBoundary{
-    private InMemoryUserDAO userDataAccessObject;
+    private AccountInfoDAO userDataAccessObject;
     private LogoutOutputBoundary logoutPresenter;
 
-    public LogoutInteractor(InMemoryUserDAO userDataAccessInterface,
+    public LogoutInteractor(AccountInfoDAO userDataAccessInterface,
                            LogoutOutputBoundary logoutOutputBoundary) {
         this.userDataAccessObject = userDataAccessInterface;
         this.logoutPresenter = logoutOutputBoundary;
@@ -21,7 +21,7 @@ public class LogoutInteractor implements LogoutInputBoundary{
     public void execute(LogoutInputData logoutInputData) {
         final String username = logoutInputData.getUser();
         userDataAccessObject.setCurrentUser(null);
-        final LogoutOutputData logoutOutputData = new LogoutOutputData(username);
+        final LogoutOutputData logoutOutputData = new LogoutOutputData("");
         logoutPresenter.prepareSuccessView(logoutOutputData);
     }
 }

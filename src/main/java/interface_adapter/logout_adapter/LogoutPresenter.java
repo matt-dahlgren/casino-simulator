@@ -2,17 +2,24 @@ package interface_adapter.logout_adapter;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login_adapter.LoginPresenter;
+import interface_adapter.login_adapter.LoginState;
 import interface_adapter.login_adapter.LoginViewModel;
+import interface_adapter.main_menu.MainMenuState;
+import interface_adapter.main_menu.MainMenuViewModel;
 import use_case.logout.LogoutOutputBoundary;
 import use_case.logout.LogoutOutputData;
+import view.MainMenuView;
 
 public class LogoutPresenter implements LogoutOutputBoundary {
     private ViewManagerModel viewManagerModel;
     private LoginViewModel loginViewModel;
+    private MainMenuViewModel mainMenuViewModel;
 
-    public LogoutPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel) {
+    public LogoutPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel,
+                           MainMenuViewModel mainMenuViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
+        this.mainMenuViewModel = mainMenuViewModel;
     }
 
     /**
@@ -22,6 +29,16 @@ public class LogoutPresenter implements LogoutOutputBoundary {
      */
     @Override
     public void prepareSuccessView(LogoutOutputData outputData) {
+        final MainMenuState mainMenuState = mainMenuViewModel.getState();
+        mainMenuState.setUsername(outputData.getUsername());
+        mainMenuViewModel.setState(mainMenuState);
+        mainMenuViewModel.firePropertyChanged();
+
+        final LoginState loginState = loginViewModel.getState();
+        loginState.setUsername(outputData.getUsername());
+        loginState.setPassword("");
+        loginViewModel.setState(loginState);
+        loginViewModel.firePropertyChanged();
 
     }
 

@@ -1,16 +1,16 @@
 package use_case.login;
 
-import data_access.InMemoryUserDAO;
+import data_access.AccountInfoDAO;
 import entities.User;
 
 /**
  * Log in interactor
  */
 public class LoginInteractor implements LoginInputBoundary{
-    private final InMemoryUserDAO userDAO;
+    private final AccountInfoDAO userDAO;
     private final LoginOutputBoundary loginPresenter;
 
-    public LoginInteractor(InMemoryUserDAO userDAO, LoginOutputBoundary loginPresenter) {
+    public LoginInteractor(AccountInfoDAO userDAO, LoginOutputBoundary loginPresenter) {
         this.userDAO = userDAO;
         this.loginPresenter = loginPresenter;
     }
