@@ -20,4 +20,8 @@ public class LearnModeInteractor {
         learnModePresenter.switchToDealingView();
     }
 
+    public void switchToMainMenuView(){
+        learnModePresenter.switchToMainMenuView();
+    }
+
 }

@@ -20,4 +20,7 @@ public class LearnModeController {
         learnModeInteractor.switchToDealingView();
     }
 
+    public void switchToMainMenuView() {
+        learnModeInteractor.switchToMainMenuView();
+    }
 }
