@@ -20,10 +20,8 @@ public class LoginController {
      * @param password the password of the user that is logging in.
      */
     public void execute(String username, String password) {
-        final LoginInputData loginInputData = new LoginInputData(username,
-                password);
+        final LoginInputData loginInputData = new LoginInputData(username, password);
 
         loginInputBoundary.execute(loginInputData);
     }
-}
 }
