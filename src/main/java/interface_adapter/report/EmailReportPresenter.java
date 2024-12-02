@@ -19,10 +19,8 @@ public class EmailReportPresenter implements EmailReportOutputBoundary {
 
     @Override
     public void prepareSuccessView(EmailReportOutputData outputData) {
-        // TODO: This function will be modified once the team use case is done and writing user data to files
-        // is implemented
         final ReportState reportState = reportViewModel.getState();
-        // reportState.setEmail(outputData.getEmail());
+        reportState.setFeedback(outputData.getFeedback());
         reportViewModel.setState(reportState);
         reportViewModel.firePropertyChanged();
 
@@ -32,7 +30,8 @@ public class EmailReportPresenter implements EmailReportOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-        // TODO: This function will be modified once the team use case is done and writing user data to files
-        // is implemented
+        final ReportState reportState = reportViewModel.getState();
+        reportState.setFeedback(error);
+        reportViewModel.firePropertyChanged();
     }
 }

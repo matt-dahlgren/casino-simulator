@@ -1,7 +1,5 @@
 package use_case.email_report;
 
-import use_case.endgame_report.GameReportInputData;
-
 /**
  * Input Boundary for actions which are related to emailing the game report.
  */

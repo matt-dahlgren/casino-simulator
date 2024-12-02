@@ -26,7 +26,6 @@ public class GameDataAccessObject implements GameDataAccess, SetupGameDataAccess
         this.computerPlayers = computerPlayers;
     }
 
-
     /**
      * Gets the user player
      * @return player

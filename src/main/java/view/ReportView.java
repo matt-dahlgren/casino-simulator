@@ -1,5 +1,6 @@
 package view;
 
+import data_access.GameReportDAOConstants;
 import interface_adapter.report.GameReportController;
 import interface_adapter.report.EmailReportController;
 import interface_adapter.report.ReportState;
@@ -16,44 +17,37 @@ import java.beans.PropertyChangeListener;
 
 import java.awt.Color;
 
-import static data_access.GameReportDAOConstants.STATISTIC_LABELS;
-
 /**
  * The View for when the user is viewing game data
  */
 public class ReportView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final String gameNumPrompt =
-            "<html><span style='font-family: Times New Roman; font-size: 20px; color: white;'>" +
-                    "Enter the number of the game report you'd like to see: </span></html>";
-
-    private final String viewName = "report";
-    private final ReportViewModel reportViewModel;
+    private static final String GAME_NUM_PROMPT = "<html><span style='font-family: Times New Roman; font-size: 20px; " +
+            "color: white;'>Enter the number of the game report you'd like to see: </span></html>";
 
     private final JTextField gameNumInputField = new JTextField(15);
-    private final JLabel gameNumErrorField = new JLabel();
+    private final JLabel feedbackField = new JLabel();
 
     private final JButton searchReportsButton;
     private final JButton sendEmailButton;
     private final JButton goToMainButton;
 
-    private final LabelTextPanel gameNumInfo = new LabelTextPanel(new JLabel(gameNumPrompt), gameNumInputField);
+    private final LabelTextPanel gameNumInfo = new LabelTextPanel(new JLabel(GAME_NUM_PROMPT), gameNumInputField);
 
-    private JLabel title;
-    private JTable dataTable;
+    private final JLabel title;
+    private final JTable dataTable;
 
-    private GameReportController gameReportController;
-    private EmailReportController emailReportController;
+    private transient GameReportController gameReportController;
+    private transient EmailReportController emailReportController;
 
     public ReportView(ReportViewModel reportViewModel) {
-        // TODO: Add email error field and functionality for the email and menu buttons
-        this.reportViewModel = reportViewModel;
-        this.reportViewModel.addPropertyChangeListener(this);
+        reportViewModel.addPropertyChangeListener(this);
 
         ReportState state = reportViewModel.getState();
         String[][] gameData = state.getGameData();
         String[][] gameDateWithTurns = formatGameData(gameData);
+        String[] statisticLabels = GameReportDAOConstants.getStatisticLabels();
 
-        dataTable = new JTable(10, STATISTIC_LABELS.length);
+        dataTable = new JTable(10, statisticLabels.length);
         formatDataTable(gameDateWithTurns);
 
         int gameNum = reportViewModel.getState().getOutputGameNum();
@@ -65,34 +59,27 @@ public class ReportView extends JPanel implements ActionListener, PropertyChange
         goToMainButton = new JButton("Go To Main Menu");
 
         searchReportsButton.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(searchReportsButton)) {
-                            ReportState state = reportViewModel.getState();
-                            gameReportController.execute(state.getInputGameNum());
-                        }
+                evt -> {
+                    if (evt.getSource().equals(searchReportsButton)) {
+                        ReportState state1 = reportViewModel.getState();
+                        gameReportController.execute(state1.getInputGameNum());
                     }
                 }
         );
 
         sendEmailButton.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(sendEmailButton)) {
-                            // TODO
-                            // ReportState state = reportViewModel.getState();
-                            // emailReportController.execute(state.getEmail(), state.getOutputGameNum());
-                        }
+                evt -> {
+                    if (evt.getSource().equals(sendEmailButton)) {
+                        ReportState state2 = reportViewModel.getState();
+                        emailReportController.execute(state2.getOutputGameNum());
                     }
                 }
         );
 
         goToMainButton.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(goToMainButton)) {
-                            // TODO
-                        }
+                evt -> {
+                    if (evt.getSource().equals(goToMainButton)) {
+                        gameReportController.switchToMainMenuView();
                     }
                 }
         );
@@ -125,21 +112,22 @@ public class ReportView extends JPanel implements ActionListener, PropertyChange
         this.add(title);
         this.add(dataTable);
         this.add(gameNumInfo);
-        this.add(gameNumErrorField);
+        this.add(feedbackField);
         this.add(searchReportsButton);
         this.add(sendEmailButton);
         this.add(goToMainButton);
     }
 
+    @Override
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final ReportState state = (ReportState) evt.getNewValue();
         setFields(state);
-        gameNumErrorField.setText(state.getGameNumError());
+        feedbackField.setText(state.getFeedback());
     }
 
     private void setFields(ReportState state) {
@@ -152,7 +140,7 @@ public class ReportView extends JPanel implements ActionListener, PropertyChange
     }
 
     public String getViewName() {
-        return viewName;
+        return "report";
     }
 
     public void setGameReportController(GameReportController gameReportController) {
@@ -171,16 +159,14 @@ public class ReportView extends JPanel implements ActionListener, PropertyChange
     private String[][] formatGameData(String[][] gameData) {
         // Adds headings
         String[][] gameDataWithTurns = new String[10][gameData[0].length + 1];
-        gameDataWithTurns[0] = STATISTIC_LABELS;
+        gameDataWithTurns[0] = GameReportDAOConstants.getStatisticLabels();
 
         // Adds move numbers
         for (int i = 0; i < gameData.length; i++) {
             gameDataWithTurns[i + 1][0] = Integer.toString(i + 1);
 
             // Adds the data from gameData
-            for (int j = 0; j < gameData[i].length; j++) {
-                gameDataWithTurns[i + 1][j + 1] = gameData[i][j];
-            }
+            System.arraycopy(gameData[i], 0, gameDataWithTurns[i + 1], 1, gameData[i].length);
         }
 
         return gameDataWithTurns;
@@ -190,6 +176,8 @@ public class ReportView extends JPanel implements ActionListener, PropertyChange
      * Updates the information in the data table
      */
     private void formatDataTable(String[][] gameData) {
+        String[] statisticLabels = GameReportDAOConstants.getStatisticLabels();
+
         // Empties the data table
         for (int i = 0; i < dataTable.getRowCount(); i++) {
             for (int j = 0; j < dataTable.getColumnCount(); j++) {
@@ -199,7 +187,7 @@ public class ReportView extends JPanel implements ActionListener, PropertyChange
 
         // Loads new data into the table
         for (int i = 0; i < gameData.length; i++) {
-            for (int j = 0; j < STATISTIC_LABELS.length; j++) {
+            for (int j = 0; j < statisticLabels.length; j++) {
                 dataTable.setValueAt(gameData[i][j], i, j);
             }
         }
@@ -215,9 +203,10 @@ public class ReportView extends JPanel implements ActionListener, PropertyChange
         Color dataTableBackground = new Color(217, 217, 217);
         Color dataTableForeground = new Color(0, 0, 0);
 
-        Font titleFont = new Font("Times New Roman", Font.BOLD, 32);
-        Font textFont = new Font("Times New Roman", Font.BOLD, 20);
-        Font dataTableFont = new Font("Times New Roman", Font.BOLD, 16);
+        String timesNewRoman = "Times New Roman";
+        Font titleFont = new Font(timesNewRoman, Font.BOLD, 32);
+        Font textFont = new Font(timesNewRoman, Font.BOLD, 20);
+        Font dataTableFont = new Font(timesNewRoman, Font.BOLD, 16);
 
         // Setting fonts and colours
         this.setLayout(null);
@@ -237,14 +226,14 @@ public class ReportView extends JPanel implements ActionListener, PropertyChange
         sendEmailButton.setFont(textFont);
         goToMainButton.setFont(textFont);
 
-        gameNumErrorField.setFont(textFont);
-        gameNumErrorField.setForeground(textColour);
+        feedbackField.setFont(textFont);
+        feedbackField.setForeground(textColour);
 
         // Setting coordinates and dimensions
         title.setBounds(550,60,600,50);
         dataTable.setBounds(85,120,1200,160);
         gameNumInfo.setBounds(150,300,800,50);
-        gameNumErrorField.setBounds(950, 300, 800, 50);
+        feedbackField.setBounds(950, 300, 800, 50);
         searchReportsButton.setBounds(330, 360, 230, 50);
         sendEmailButton.setBounds(570, 360, 230, 50);
         goToMainButton.setBounds(810, 360, 230, 50);

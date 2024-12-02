@@ -3,7 +3,6 @@ package interface_adapter.report;
 import interface_adapter.ViewManagerModel;
 import use_case.endgame_report.GameReportOutputBoundary;
 import use_case.endgame_report.GameReportOutputData;
-import view.ViewManager;
 
 /**
  * The Presenter for the Login Use Case.
@@ -23,7 +22,7 @@ public class GameReportPresenter implements GameReportOutputBoundary {
         final ReportState reportState = reportViewModel.getState();
         reportState.setOutputGameNum(outputData.getGameNum());
         reportState.setGameData(outputData.getGameStats());
-        reportState.setGameNumError("");
+        reportState.setFeedback("");
         reportViewModel.setState(reportState);
         reportViewModel.firePropertyChanged();
 
@@ -35,12 +34,13 @@ public class GameReportPresenter implements GameReportOutputBoundary {
     public void prepareFailView(String error) {
         // On failure, indicate to the user that they entered bad input
         final ReportState reportState = reportViewModel.getState();
-        reportState.setGameNumError(error);
+        reportState.setFeedback(error);
         reportViewModel.firePropertyChanged();
     }
 
     @Override
     public void switchToMainMenuView() {
+        // TODO
         viewManagerModel.setState(reportViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

@@ -1,6 +1,7 @@
 package interface_adapter.report;
 
 import data_access.GameReportDataAccessObject;
+import entities.User;
 
 import java.io.FileNotFoundException;
 
@@ -11,16 +12,15 @@ public class ReportState {
     private String[][] gameData;
     private String inputGameNum;
     private int outputGameNum;
-    private String gameNumError;
+    private String feedback;
+    private User user;
 
     public ReportState() {
 
     }
 
-    public ReportState(String csvPath, int gameNum) throws FileNotFoundException {
-        // TODO: This function will be modified once the team use case is done and writing user data to files
-        // is implemented
-        GameReportDataAccessObject reportDAO = new GameReportDataAccessObject(csvPath);
+    public ReportState(String username, int gameNum) throws FileNotFoundException {
+        GameReportDataAccessObject reportDAO = new GameReportDataAccessObject(username);
         gameData = reportDAO.getGameSummary(gameNum);
         outputGameNum = gameNum;
     }
@@ -31,7 +31,9 @@ public class ReportState {
 
     public int getOutputGameNum() { return outputGameNum; }
 
-    public String getGameNumError() { return gameNumError; }
+    public String getFeedback() { return feedback; }
+
+    public User getUser() { return user; }
 
     public void setGameData(String[][] gameData) { this.gameData = gameData; }
 
@@ -39,5 +41,7 @@ public class ReportState {
 
     public void setOutputGameNum(int gameNum) { this.outputGameNum = gameNum; }
 
-    public void setGameNumError(String error) { this.gameNumError = error; }
+    public void setFeedback(String feedback) { this.feedback = feedback; }
+
+    public void setUser(User user) { this.user = user; }
 }

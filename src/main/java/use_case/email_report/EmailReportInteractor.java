@@ -1,7 +1,9 @@
 package use_case.email_report;
 
+import data_access.AccountInfoDAO;
 import use_case.endgame_report.GameReportDataAccessInterface;
 import data_access.GameReportDAOConstants;
+import use_case.signup.SignupUserDataAccessInterface;
 
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -13,11 +15,14 @@ import java.util.Properties;
 public class EmailReportInteractor implements EmailReportInputBoundary {
     private final GameReportDataAccessInterface reportDataAccessObject;
     private final EmailReportOutputBoundary reportPresenter;
+    private final SignupUserDataAccessInterface accountInfoDAO;
 
     public EmailReportInteractor(GameReportDataAccessInterface reportDataAccessObject,
-                                 EmailReportOutputBoundary reportOutputBoundary) {
+                                 EmailReportOutputBoundary reportOutputBoundary,
+                                 SignupUserDataAccessInterface accountInfoDAO) {
         this.reportDataAccessObject = reportDataAccessObject;
         this.reportPresenter = reportOutputBoundary;
+        this.accountInfoDAO = accountInfoDAO;
     }
 
     @Override
@@ -28,17 +33,17 @@ public class EmailReportInteractor implements EmailReportInputBoundary {
 
         String from = "learnblackjack101";
         String pass = "sdap cdvb hmte uqph";
-        String to = emailReportInputData.getEmail();
+        String to = accountInfoDAO.getCurrentEmail();
         String subject = "Your Blackjack Game Summary";
 
         // If the email is sent, prepare the success view
         // Otherwise, prepare the fail view
         if (sendEmail(from, pass, to, subject, body)) {
-            final EmailReportOutputData emailReportOutputData = new EmailReportOutputData(gameNum, gameData);
+            final EmailReportOutputData emailReportOutputData = new EmailReportOutputData("Sent!");
             reportPresenter.prepareSuccessView(emailReportOutputData);
         }
         else {
-            reportPresenter.prepareFailView("Please enter a valid email address");
+            reportPresenter.prepareFailView("Sorry, we couldn't reach your email");
         }
     }
 
@@ -78,10 +83,7 @@ public class EmailReportInteractor implements EmailReportInputBoundary {
 
             return true;
         }
-        catch (AddressException ae) {
-            return false;
-        }
-        catch (MessagingException me) {
+        catch (Exception e) {
             return false;
         }
     }
@@ -92,27 +94,19 @@ public class EmailReportInteractor implements EmailReportInputBoundary {
      * @return the game data formatted to be easily readable
      */
     public String emailFromData(String[][] gameData) {
-        String email = String.join("      ", GameReportDAOConstants.STATISTIC_LABELS);
+        String[] statisticLabels = GameReportDAOConstants.getStatisticLabels();
+        String[] columnSpacing = GameReportDAOConstants.getColumnSpacing();
+
+        String email = String.join("      ", statisticLabels);
 
         for (int i = 0; i < gameData.length; i++) {
-            email += "\n" + (i + 1) + GameReportDAOConstants.COLUMN_SPACING[0];
+            email += "\n" + (i + 1) + columnSpacing[0];
 
-            for (int j = 1; j < GameReportDAOConstants.STATISTIC_LABELS.length; j++) {
-                email += gameData[i][j - 1] + GameReportDAOConstants.COLUMN_SPACING[j];
+            for (int j = 1; j < statisticLabels.length; j++) {
+                email += gameData[i][j - 1] + columnSpacing[j];
             }
         }
 
         return email;
-    }
-
-    /**
-     * Adds spaces to the right of a string to make it the desired length.
-     * @param s the string to be padded
-     * @param n the length the string should be padded to
-     * @return the string padded to the desired length
-     */
-    public static String padRight(String s, int n) {
-        n += n;
-        return String.format("%-" + n + "s", s);
     }
 }

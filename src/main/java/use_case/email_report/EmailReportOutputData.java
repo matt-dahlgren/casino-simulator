@@ -4,15 +4,11 @@ package use_case.email_report;
  * Output Data for the game report use case.
  */
 public class EmailReportOutputData {
-    private final int gameNum;
-    private final String[][] gameStats;
+    private final String feedback;
 
-    public EmailReportOutputData(int gameNum, String[][] gameStats) {
-        this.gameNum = gameNum;
-        this.gameStats = gameStats;
+    public EmailReportOutputData(String feedback) {
+        this.feedback = feedback;
     }
 
-    public int getGameNum() { return gameNum; }
-
-    public String[][] getGameStats() { return gameStats; }
+    public String getFeedback() { return feedback; }
 }

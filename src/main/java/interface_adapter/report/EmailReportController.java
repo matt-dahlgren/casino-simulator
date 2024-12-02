@@ -15,11 +15,10 @@ public class EmailReportController {
 
     /**
      * Executes the email game report use case.
-     * @param email the email that the user wants to send the game report to
      * @param gameNum the number of the game whose report the user wants to see
      */
-    public void execute(String email, int gameNum) {
-        final EmailReportInputData emailReportInputData = new EmailReportInputData(email, gameNum);
+    public void execute(int gameNum) {
+        final EmailReportInputData emailReportInputData = new EmailReportInputData(gameNum);
         emailReportUseCaseInteractor.execute(emailReportInputData);
     }
 }
