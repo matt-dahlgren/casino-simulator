@@ -3,6 +3,8 @@ package use_cases.setup_use_case;
 import data_access.APIDataAccessObject;
 import data_access.GameDataAccessObject;
 import org.junit.jupiter.api.Test;
+import use_case.freeplay.FreePlayDA;
+import use_case.freeplay.GameDataAccess;
 import use_case.freeplay.setup.*;
 
 
@@ -15,8 +17,8 @@ public class SetupInteractorTest {
      */
     @Test
     void linkDealerTest() {
-        SetupDeckDataAccessInterface deckRepository = new APIDataAccessObject();
-        SetupGameDataAccessInterface gameRepository = new GameDataAccessObject();
+        FreePlayDA deckRepository = new APIDataAccessObject();
+        GameDataAccess gameRepository = new GameDataAccessObject();
 
         SetupOutputBoundary successPresenter = new SetupOutputBoundary() {
             @Override
@@ -49,8 +51,8 @@ public class SetupInteractorTest {
      */
     @Test
     void linkUserPlayerTest() {
-        SetupDeckDataAccessInterface deckRepository = new APIDataAccessObject();
-        SetupGameDataAccessInterface gameRepository = new GameDataAccessObject();
+        FreePlayDA deckRepository = new APIDataAccessObject();
+        GameDataAccess gameRepository = new GameDataAccessObject();
 
         SetupOutputBoundary successPresenter = new SetupOutputBoundary() {
             @Override

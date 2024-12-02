@@ -17,5 +17,9 @@ public class UserPlayer extends Player {
     }
 
     public void setHand(ArrayList<Card> hand) {}
+
+    public void add(Card card) {
+        hand.add(card);
+    }
 }
 

@@ -1,33 +1,51 @@
-package interface_adapter.freeplay.setup;
+package interface_adapter.freePlay.setup;
+
+import java.util.ArrayList;
 
 public class SetupState {
-    private String dealerCardOne="";
-    private String dealerCardTwo="";
-    private String playerCardOne="";
-    private String playerCardTwo="";
+    private ArrayList<String> dealerHand;
+    private ArrayList<String> playerHand;
+    private int score;
+    private String outcome;
 
-    public String getDealerCardOne(){
-        return dealerCardOne;
+    public SetupState() {}
+
+    public SetupState(SetupState copy) {
+        dealerHand = copy.dealerHand;
+        playerHand = copy.playerHand;
+        score = copy.score;
+        outcome = copy.outcome;
     }
-    public String getDealerCardTwo(){
-        return dealerCardTwo;
+
+    public ArrayList<String> getPlayerHand() {
+        return playerHand;
     }
-    public String getPlayerCardOne(){
-        return playerCardOne;
+
+    public ArrayList<String> getDealerHand() {
+        return dealerHand;
     }
-    public String getPlayerCardTwo(){
-        return playerCardTwo;
+
+    public void setDealerHand(ArrayList<String> DealerHand) {
+        this.dealerHand = DealerHand;
     }
-    public void setDealerCardOne(String firstDealerCard){
-        this.dealerCardOne=firstDealerCard;
+
+    public void setPlayerHand(ArrayList<String> PlayerHand) {
+        this.playerHand = PlayerHand;
     }
-    public void setDealerCardTwo(String secondDealerCard){
-        this.dealerCardTwo=secondDealerCard;
+
+    public int getScore() {
+        return score;
     }
-    public void setPlayerCardOne(String firstPlayerCard){
-        this.playerCardOne=firstPlayerCard;
+
+    public void setScore(int score) {
+        this.score = score;
     }
-    public void setPlayerCardTwo(String secondPlayerCard){
-        this.playerCardTwo=secondPlayerCard;
+
+    public String getOutcome() {
+        return outcome;
+    }
+
+    public void setOutcome(String outcome) {
+        this.outcome = outcome;
     }
 }

@@ -1,7 +1,10 @@
-package interface_adapter.freeplay.setup;
+package interface_adapter.freePlay.setup;
 
 import use_case.freeplay.setup.SetupInputBoundary;
 
+/**
+ * The controller for the Setup Use Case.
+ */
 public class SetupController {
     private final SetupInputBoundary setupInteractor;
 
@@ -9,13 +12,6 @@ public class SetupController {
         this.setupInteractor = setupInteractor;
     }
 
-    public void execute_setup() {
-        setupInteractor.execute();
-    }
-
-    public void switchToHitView() {
-        setupInteractor.switchToHitView();
-    }
 
     public void switchToDealerAfterStandView() {
         setupInteractor.switchToDealerAfterStandView();
@@ -23,5 +19,12 @@ public class SetupController {
 
     public void switchToMainMenuView() {
         setupInteractor.switchToMainMenuView();
+    }
+
+    /**
+     * Execute the setup use case. No need for parameters.
+     */
+    public void execute() {
+        setupInteractor.execute();
     }
 }
