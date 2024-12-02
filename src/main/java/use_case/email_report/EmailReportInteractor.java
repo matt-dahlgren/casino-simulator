@@ -1,6 +1,5 @@
 package use_case.email_report;
 
-import data_access.AccountInfoDAO;
 import use_case.endgame_report.GameReportDataAccessInterface;
 import data_access.GameReportDAOConstants;
 import use_case.signup.SignupUserDataAccessInterface;

@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 import static data_access.GameReportDAOConstants.*;
-import static use_case.probability.ProbabilityConstants.BLACKJACK;
 
 /**
  * The DAO for game summary data. Assumes that data is stored in the following format:
@@ -29,6 +28,8 @@ public class GameReportDataAccessObject implements GameReportDataAccessInterface
     private final ArrayList<String[][]> gameSummaries; // Each element of gameSummaries corresponds to one game
     // The first index of an element of an element of gameSummaries corresponds to a round number
     // The second index corresponds to the statistic of interest (e.g. moveQuality)
+
+    private static final int BLACKJACK = 21;
 
     public GameReportDataAccessObject(String username) throws FileNotFoundException {
         String csvPath = "src/main/java/user_data/" + username + ".csv";
