@@ -18,4 +18,10 @@ public interface HitOutputBoundary {
     void prepareBustView(String message);
 
     void prepareExitView(String message);
+
+    void switchToHitView();
+
+    void switchToDealerAfterStandView();
+
+    void switchToMainMenuView();
 }
