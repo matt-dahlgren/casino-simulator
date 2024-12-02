@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
+import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
 
 /**
  * This is the dealing view for the learn mode use case.

@@ -13,10 +13,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
+
 
 public class ObjectiveView extends JPanel implements ActionListener, PropertyChangeListener {
     private LearnModeController learnModeController;
-    public static final Color TABLECOLOUR = new Color(42, 99, 39);
 
     public ObjectiveView(ObjectiveViewModel objectiveViewModel, DealingViewModel dealingViewModel, MovesViewModel movesViewModel) {
         objectiveViewModel.addPropertyChangeListener(this);

@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
+import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
 
 public class HitView extends JPanel implements ActionListener, PropertyChangeListener {
     private HitController hitController;
@@ -96,6 +96,7 @@ public class HitView extends JPanel implements ActionListener, PropertyChangeLis
 
         hitController.execute();
         ArrayList<String> playerCards = hitViewModel.PLAYER_HAND;
+        ArrayList<String> dealerCards = hitViewModel.DEALER_HAND;
 //        String dealerCardOneURL = setupViewModel.DEALER_ONE;
 //        String dealerCardTwoURL = setupViewModel.DEALER_TWO;
 //
