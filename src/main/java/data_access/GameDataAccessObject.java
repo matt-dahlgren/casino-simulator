@@ -4,7 +4,6 @@ import entities.Dealer;
 import entities.Player;
 import entities.UserPlayer;
 import use_case.freeplay.GameDataAccess;
-import use_case.freeplay.setup.SetupGameDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +12,7 @@ import java.util.Map;
 /**
  * Game Data woohoo
  */
-public class GameDataAccessObject implements GameDataAccess, SetupGameDataAccessInterface {
+public class GameDataAccessObject implements GameDataAccess {
     UserPlayer userPlayer;
     Dealer dealer;
     ArrayList<Player> computerPlayers;
@@ -22,17 +21,14 @@ public class GameDataAccessObject implements GameDataAccess, SetupGameDataAccess
     Map<Integer, Integer> standProbability;
     Map<Integer, Integer> handScore;
 
-    public GameDataAccessObject() {
-        this.hitProbability = new HashMap<>();
-        this.standProbability = new HashMap<>();
-        this.handScore = new HashMap<>();
-    }
-
     public GameDataAccessObject(UserPlayer userPlayer, Dealer dealer, String deckID, ArrayList<Player> computerPlayers) {
         this.userPlayer = userPlayer;
         this.dealer = dealer;
         this.deckID = deckID;
         this.computerPlayers = computerPlayers;
+        this.hitProbability = new HashMap<>();
+        this.standProbability = new HashMap<>();
+        this.handScore = new HashMap<>();
     }
 
     /**

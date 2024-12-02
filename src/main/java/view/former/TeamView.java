@@ -1,4 +1,4 @@
-package view;
+package view.former;
 
 import entities.*;
 import interface_adapter.team_use_case.TeamController;

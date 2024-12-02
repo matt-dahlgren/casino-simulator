@@ -1,4 +1,4 @@
-package use_case.assisted_mode.hit.probability;
+package use_case.assisted_mode.game.probability;
 
 import java.util.Map;
 

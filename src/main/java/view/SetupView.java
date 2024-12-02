@@ -1,9 +1,9 @@
 package view;
 
-import interface_adapter.freeplay.hit.HitViewModel;
-import interface_adapter.freeplay.setup.SetupController;
-import interface_adapter.freeplay.setup.SetupState;
-import interface_adapter.freeplay.setup.SetupViewModel;
+import interface_adapter.freePlay.newhit.NewHitController;
+import interface_adapter.freePlay.setup.SetupController;
+import interface_adapter.freePlay.setup.SetupState;
+import interface_adapter.freePlay.setup.SetupViewModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,16 +15,27 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Arrays;
 
-import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
+import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
+
 
 public class SetupView extends JPanel implements ActionListener, PropertyChangeListener {
-    private SetupController setupController;
+    private final String viewName = "setup";
 
-    public SetupView(SetupViewModel setupViewModel, HitViewModel hitViewModel) {
+    private SetupController setupController;
+    private NewHitController hitController;
+
+    private final SetupViewModel setupViewModel;
+
+    private final JPanel dealerPanel;
+    private final JPanel playerPanel;
+
+    private int SCORE = 0;
+
+    public SetupView(SetupViewModel setupViewModel) {
+        this.setupViewModel = setupViewModel;
         setupViewModel.addPropertyChangeListener(this);
-        hitViewModel.addPropertyChangeListener(this);
 
         setBackground(TABLECOLOUR);
 
@@ -54,12 +65,16 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         hitButton.setSize(40, 30);
         movesPanel.add(hitButton, constraints);
         // HIT BUTTON ACTION LISTENER
-        hitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setupController.switchToHitView();
-            }
-        });
+        hitButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(hitButton)) {
+                            hitController.execute();
+                        }
+                    }
+                }
+        );
+
 
         // STAND BUTTON
         constraints.gridx = 0;
@@ -82,6 +97,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         quitGameButton.setFont(font);
         movesPanel.setBackground(TABLECOLOUR);
         movesPanel.add(quitGameButton, constraints);
+
         // QUIT BUTTON ACTION LISTENER
         quitGameButton.addActionListener(new ActionListener() {
             @Override
@@ -90,46 +106,14 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
             }
         });
 
-
-        setupController.execute_setup();
-        String dealerCardOneURL = setupViewModel.DEALER_ONE;
-        String dealerCardTwoURL = setupViewModel.DEALER_TWO;
-        String playerCardOneURL = setupViewModel.PLAYER_ONE;
-        String playerCardTwoURL = setupViewModel.PLAYER_TWO;
-
-        ArrayList<String> playerCards = new ArrayList<>();
-        playerCards.add(playerCardOneURL);
-        playerCards.add(playerCardTwoURL);
-
-        ArrayList<String> dealerCards = new ArrayList<>();
-        dealerCards.add(dealerCardOneURL);
-        dealerCards.add(dealerCardTwoURL);
-
         // add code to display image URLs here
         JPanel cardPanel = new JPanel(new BorderLayout());
         cardPanel.setBackground(TABLECOLOUR);
 
-        JPanel playerPanel = new JPanel(new FlowLayout());
+        this.playerPanel = new JPanel(new FlowLayout());
         playerPanel.setBackground(TABLECOLOUR);
 
-        // Build the viewing of the Players Hand
-        for (String card : playerCards) {
-            try {
-                URL imageUrl = new URL(card);
-                BufferedImage image = ImageIO.read(imageUrl);
-                ImageIcon icon = new ImageIcon(image);
-                JLabel imageLabel = new JLabel(icon);
-
-                playerPanel.add(imageLabel);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                JLabel errorLabel = new JLabel("Failed to load image.");
-                errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                cardPanel.add(errorLabel, BorderLayout.CENTER);
-            }}
-
-            JPanel dealerPanel = new FlippedDealerCards(dealerCards);
+        this.dealerPanel = new JPanel(new FlowLayout());
 
         cardPanel.add(playerPanel, BorderLayout.SOUTH);
         cardPanel.add(dealerPanel, BorderLayout.NORTH);
@@ -143,7 +127,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         playerScorePanel.setBackground(TABLECOLOUR);
 
         JLabel playerScoreLabel =
-                new JLabel("<html><font color = 'white'>Your Score: " + "0" + "</font></html>");
+                new JLabel("<html><font color = 'white'>Your Score: " + SCORE + "</font></html>");
         playerScoreLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
         playerScoreLabel.setSize(50, 100);
 
@@ -152,16 +136,101 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         add(playerScorePanel, BorderLayout.SOUTH);
 
         }
+
     public void propertyChange(PropertyChangeEvent evt) {
-        final SetupState state = (SetupState) evt.getNewValue();
-        JOptionPane.showMessageDialog(this, "Setup state change.");
-    }
+
+        // Happens by default when setup use case happens
+        if (evt.getPropertyName().equals("state")) {
+            final SetupState state = (SetupState) evt.getNewValue();
+
+            SCORE = state.getScore();
+
+            for (String card : state.getPlayerHand()) {
+                try {
+                    URL imageUrl = new URL(card);
+                    BufferedImage image = ImageIO.read(imageUrl);
+                    ImageIcon icon = new ImageIcon(image);
+                    JLabel imageLabel = new JLabel(icon);
+
+                    playerPanel.add(imageLabel);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JLabel errorLabel = new JLabel("Failed to load image.");
+                    errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    playerPanel.add(errorLabel, BorderLayout.CENTER);
+                }}
+
+            for (String card : state.getDealerHand()) {
+                try {
+                    URL imageUrl = new URL(card);
+                    BufferedImage image = ImageIO.read(imageUrl);
+                    ImageIcon icon = new ImageIcon(image);
+                    JLabel imageLabel = new JLabel(icon);
+
+                    dealerPanel.add(imageLabel);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JLabel errorLabel = new JLabel("Failed to load image.");
+                    errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    dealerPanel.add(errorLabel, BorderLayout.CENTER);
+                }}
+            }
+
+        // Occurs when hit use case happens.
+        else if (evt.getPropertyName().equals("hit")) {
+            final SetupState state = (SetupState) evt.getNewValue();
+
+            SCORE = state.getScore();
+
+            int componentCount = playerPanel.getComponentCount();
+            int handSize = state.getPlayerHand().size();
+
+            for (int i = componentCount; i < handSize; i++) {
+                try {
+                    URL imageUrl = new URL(state.getPlayerHand().get(i));
+                    BufferedImage image = ImageIO.read(imageUrl);
+                    ImageIcon icon = new ImageIcon(image);
+                    JLabel imageLabel = new JLabel(icon);
+
+                    playerPanel.add(imageLabel);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JLabel errorLabel = new JLabel("Failed to load image.");
+                    errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    playerPanel.add(errorLabel, BorderLayout.CENTER);
+                }
+            }
+            //Reloads the page, allows the new cards to be updated to it
+            this.revalidate();
+        }
+
+        else if (evt.getPropertyName().equals("stand")) {
+            final SetupState state = (SetupState) evt.getNewValue();
+        }
+
+        }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
     }
 
+    public String getViewName() {
+        return viewName;
+    }
+
+    public void setSetupController(SetupController controller) {
+        this.setupController = controller;
+    }
+
+    public void setHitController(NewHitController controller) {
+        System.out.println("New Controller added!");
+        this.hitController = controller;
+    }
 }
 
 

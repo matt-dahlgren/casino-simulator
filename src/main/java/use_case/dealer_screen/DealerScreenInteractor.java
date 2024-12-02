@@ -7,7 +7,7 @@ import entities.Card;
 
 import java.util.ArrayList;
 
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.BLACKJACK;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.BLACKJACK;
 
 /**
  * The interactor for the FreePlayStand UseCase, it is assumed that at this point this player has not Bust.
@@ -111,7 +111,7 @@ public class DealerScreenInteractor implements DealerScreenInputBoundary {
         int dealerScore = this.dealerHandScore();
         int playerScore = this.playerHandScore();
 
-        boolean gameWin = (dealerScore > BLACKJACK) || playerScore >= dealerScore;
+        boolean gameWin = playerScore <= BLACKJACK && ((dealerScore > BLACKJACK) || playerScore >= dealerScore);
 
         ArrayList<String> cardStrings = new ArrayList<>();
 
