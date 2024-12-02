@@ -6,6 +6,7 @@ public class SetupState {
     private ArrayList<String> dealerHand;
     private ArrayList<String> playerHand;
     private int score;
+    private String outcome;
 
     public SetupState() {}
 
@@ -13,6 +14,7 @@ public class SetupState {
         dealerHand = copy.dealerHand;
         playerHand = copy.playerHand;
         score = copy.score;
+        outcome = copy.outcome;
     }
 
     public ArrayList<String> getPlayerHand() {
@@ -37,5 +39,13 @@ public class SetupState {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public String getOutcome() {
+        return outcome;
+    }
+
+    public void setOutcome(String outcome) {
+        this.outcome = outcome;
     }
 }

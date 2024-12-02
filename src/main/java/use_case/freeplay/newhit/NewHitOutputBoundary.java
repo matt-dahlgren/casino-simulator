@@ -6,4 +6,6 @@ public interface NewHitOutputBoundary {
      * @param outputData the output data
      */
     void prepareSuccessView(NewHitOutputData outputData);
+
+    void prepareBustView(String s);
 }

@@ -47,6 +47,13 @@ public class NewHitInteractor implements NewHitInputBoundary {
             hitPresenter.prepareSuccessView(outputData);
         }
 
+        if (getScore(player.getHand()) == 21) {
+            hitPresenter.prepareBustView("Winner!");
+        }
+        else {
+            hitPresenter.prepareBustView("Bust! You're Over 21");
+        }
+
 
     }
 

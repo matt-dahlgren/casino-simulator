@@ -15,6 +15,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 
 import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
 
@@ -69,7 +70,6 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(hitButton)) {
                             hitController.execute();
-                            System.out.println("Button succesfully clicked");
                         }
                     }
                 }
@@ -140,8 +140,13 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         }
 
     public void propertyChange(PropertyChangeEvent evt) {
+
+        // Happens by default when setup use case happens
         if (evt.getPropertyName().equals("state")) {
             final SetupState state = (SetupState) evt.getNewValue();
+
+            SCORE = state.getScore();
+
             for (String card : state.getPlayerHand()) {
                 try {
                     URL imageUrl = new URL(card);
@@ -175,8 +180,11 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
                 }}
             }
 
+        // Occurs when hit use case happens.
         else if (evt.getPropertyName().equals("hit")) {
             final SetupState state = (SetupState) evt.getNewValue();
+
+            SCORE = state.getScore();
 
             int componentCount = playerPanel.getComponentCount();
             int handSize = state.getPlayerHand().size();

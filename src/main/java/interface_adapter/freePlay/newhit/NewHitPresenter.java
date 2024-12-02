@@ -19,7 +19,6 @@ public class NewHitPresenter implements NewHitOutputBoundary {
 
     @Override
     public void prepareSuccessView(NewHitOutputData outputData) {
-        setupViewModel.firePropertyChanged("hit");
 
         SetupState setupState = setupViewModel.getState();
         setupState.setPlayerHand(outputData.getUserPlayerHand());
@@ -27,7 +26,17 @@ public class NewHitPresenter implements NewHitOutputBoundary {
 
         setupViewModel.firePropertyChanged("hit");
 
+    }
 
-        System.out.println("Success NewHitPresenter Success view prepared!");
+    /**
+     * Used for displaying the end of the game, either a WINNER or YOU BUSTED screen.
+     * @param outcome the string with the details from the NewHitInteractor
+     */
+    @Override
+    public void prepareBustView(String outcome) {
+        SetupState setupState = setupViewModel.getState();
+        setupState.setOutcome(outcome);
+
+        setupViewModel.firePropertyChanged("display result");
     }
 }
