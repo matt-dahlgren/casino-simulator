@@ -12,9 +12,6 @@ public class SetupController {
         this.setupInteractor = setupInteractor;
     }
 
-    public void switchToHitView() {
-        setupInteractor.switchToHitView();
-    }
 
     public void switchToDealerAfterStandView() {
         setupInteractor.switchToDealerAfterStandView();

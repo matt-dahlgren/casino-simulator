@@ -25,6 +25,9 @@
 //
 //    private final String viewName = "hit view";
 //
+//    private final JPanel dealerPanel;
+//    private final JPanel playerPanel;
+//
 //    public HitView(HitViewModel hitViewModel) {
 //        hitViewModel.addPropertyChangeListener(this);
 //
@@ -92,49 +95,19 @@
 //            }
 //        });
 //
-//
-//        // NEED TO ADD SOMETHING FOR PLAYER AND DEALER CARDS
-//
-//
-//
-////        ArrayList<String> playerCards = hitViewModel.PLAYER_HAND;
-////        ArrayList<String> dealerCards = hitViewModel.DEALER_HAND;
-////        String dealerCardOneURL = setupViewModel.DEALER_ONE;
-////        String dealerCardTwoURL = setupViewModel.DEALER_TWO;
-////
-////        ArrayList<String> dealerCards = new ArrayList<>();
-////        dealerCards.add(dealerCardOneURL);
-////        dealerCards.add(dealerCardTwoURL);
-//
 //        // add code to display image URLs here
 //        JPanel cardPanel = new JPanel(new BorderLayout());
 //        cardPanel.setBackground(TABLECOLOUR);
 //
-//        JPanel playerPanel = new JPanel(new FlowLayout());
+//        this.playerPanel = new JPanel(new FlowLayout());
 //        playerPanel.setBackground(TABLECOLOUR);
 //
-//        //TODO Here edit
-//        // Build the viewing of the Players Hand
-////        for (String card : playerCards) {
-////            try {
-////                URL imageUrl = new URL(card);
-////                BufferedImage image = ImageIO.read(imageUrl);
-////                ImageIcon icon = new ImageIcon(image);
-////                JLabel imageLabel = new JLabel(icon);
-////
-////                playerPanel.add(imageLabel);
-////
-////            } catch (IOException e) {
-////                e.printStackTrace();
-////                JLabel errorLabel = new JLabel("Failed to load image.");
-////                errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-////                cardPanel.add(errorLabel, BorderLayout.CENTER);
-////            }}
-////
+//        this.dealerPanel = new JPanel(new FlowLayout());
+//
 ////        JPanel dealerPanel = new FlippedDealerCards(dealerCards);
-////
-////        cardPanel.add(playerPanel, BorderLayout.SOUTH);
-////        cardPanel.add(dealerPanel, BorderLayout.NORTH);
+//
+//        cardPanel.add(playerPanel, BorderLayout.SOUTH);
+//        cardPanel.add(dealerPanel, BorderLayout.NORTH);
 //
 //        add(cardPanel, BorderLayout.CENTER);
 //
@@ -144,10 +117,8 @@
 //        JPanel playerScorePanel = new JPanel(new FlowLayout());
 //        playerScorePanel.setBackground(TABLECOLOUR);
 //
-//        int val = hitController.getHandVal();
-//
 //        JLabel playerScoreLabel =
-//                new JLabel("<html><font color = 'white'>Your Score: " + val + "</font></html>");
+//                new JLabel("<html><font color = 'white'>Your Score: " + 50 + "</font></html>");
 //        playerScoreLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
 //        playerScoreLabel.setSize(50, 100);
 //
@@ -157,8 +128,42 @@
 //
 //    }
 //    public void propertyChange(PropertyChangeEvent evt) {
-//        final HitState state = (HitState) evt.getNewValue();
-//        JOptionPane.showMessageDialog(this, "Hit state change.");
+//        if (evt.getPropertyName().equals("state")) {
+//            final HitState state = (HitState) evt.getNewValue();
+//            for (String card : state.getPlayerHand()) {
+//                try {
+//                    URL imageUrl = new URL(card);
+//                    BufferedImage image = ImageIO.read(imageUrl);
+//                    ImageIcon icon = new ImageIcon(image);
+//                    JLabel imageLabel = new JLabel(icon);
+//
+//                    playerPanel.add(imageLabel);
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    JLabel errorLabel = new JLabel("Failed to load image.");
+//                    errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+//                    playerPanel.add(errorLabel, BorderLayout.CENTER);
+//                }}
+//
+//            for (String card : state.getDealerHand()) {
+//                try {
+//                    URL imageUrl = new URL(card);
+//                    BufferedImage image = ImageIO.read(imageUrl);
+//                    ImageIcon icon = new ImageIcon(image);
+//                    JLabel imageLabel = new JLabel(icon);
+//
+//                    dealerPanel.add(imageLabel);
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    JLabel errorLabel = new JLabel("Failed to load image.");
+//                    errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+//                    dealerPanel.add(errorLabel, BorderLayout.CENTER);
+//                }}
+//            JOptionPane.showMessageDialog(this, "Hit state change.");
+//
+//        }
 //    }
 //
 //    @Override
@@ -174,7 +179,7 @@
 //        this.hitController = controller;
 //    }
 //}
-//
+
 
 
 

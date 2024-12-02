@@ -63,10 +63,6 @@ public class SetupInteractor implements SetupInputBoundary {
         setupPresenter.prepareSuccessView(setupOutputData);
     }
 
-    @Override
-    public void switchToHitView() {
-        setupPresenter.switchToHitView();
-    }
 
     @Override
     public void switchToDealerAfterStandView() {

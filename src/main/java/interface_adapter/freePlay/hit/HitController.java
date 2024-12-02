@@ -32,8 +32,7 @@ public class HitController {
         hitInteractor.switchToMainMenuView();
     }
 
-    public int getHandVal() {
-        return hitInteractor.getHandVal();
+    public void executeSetuptoHit() {
+        hitInteractor.executeSetuptoHit();
     }
-
 }

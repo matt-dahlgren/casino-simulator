@@ -32,7 +32,7 @@ public class Main {
                 .addMainMenuView()
                 .addSetupView()
                 .addSetupUseCase()
-//                .addHitUseCase()
+                .addHitUseCase()
                 .build();
 
         application.pack();

@@ -2,7 +2,6 @@ package interface_adapter.freePlay.hit;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.freePlay.setup.SetupViewModel;
-import interface_adapter.main_menu.MainMenuViewModel;
 import use_case.freeplay.hit.HitOutputBoundary;
 import use_case.freeplay.hit.HitOutputData;
 
@@ -11,12 +10,12 @@ import java.util.ArrayList;
 public class HitPresenter implements HitOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     HitViewModel hitViewModel;
-    MainMenuViewModel mainMenuViewModel;
+    SetupViewModel setupViewModel;
 
-    public HitPresenter(ViewManagerModel viewManagerModel, MainMenuViewModel mainMenuViewModel, HitViewModel hitView) {
+    public HitPresenter(ViewManagerModel viewManagerModel, SetupViewModel setupViewModel, HitViewModel hitView) {
         this.viewManagerModel = viewManagerModel;
         this.hitViewModel = hitView;
-        this.mainMenuViewModel = mainMenuViewModel;
+        this.setupViewModel = setupViewModel;
 
     }
 
@@ -57,8 +56,21 @@ public class HitPresenter implements HitOutputBoundary {
 
     }
 
+    /**
+     * Prepare hit view from the setup view via the hit use case.
+     */
     @Override
-    public void switchToHitView() {
+    public void switchToHitView(HitOutputData outputData) {
+        ArrayList<String> dealerHand = outputData.getDealerHandImages();
+        ArrayList<String> playerHand = outputData.getPlayerHandImages();
+        final HitState hitState = hitViewModel.getState();
+
+        hitState.setDealerHand(dealerHand);
+        hitState.setPlayerHand(playerHand);
+
+        hitViewModel.setState(hitState);
+        hitViewModel.firePropertyChanged();
+
         viewManagerModel.setState(hitViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
@@ -71,7 +83,7 @@ public class HitPresenter implements HitOutputBoundary {
 
     @Override
     public void switchToMainMenuView() {
-        viewManagerModel.setState(mainMenuViewModel.getViewName());
+        viewManagerModel.setState(setupViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

@@ -6,15 +6,6 @@ public class HitState {
     private ArrayList<String> playerCards;
     private ArrayList<String> dealerCards;
 
-    public HitState(ArrayList<String> playerCards, ArrayList<String> dealerCards) {
-        this.playerCards = playerCards;
-        this.dealerCards = dealerCards;
-    }
-
-    public HitState() {
-
-    }
-
     public ArrayList<String> getPlayerHand() {
         return this.playerCards;
     }

@@ -16,8 +16,9 @@ public class SetupOutputData {
      * @param userPlayerHand the list of all the image links for the images of the userPlayer's hand.
      */
     public SetupOutputData(ArrayList<String> dealerHand, ArrayList<String> userPlayerHand) {
-        this.dealerHand = dealerHand;
+//        this.dealerHand = dealerHand;
         this.userPlayerHand = userPlayerHand;
+        this.dealerHand = dealerHand;
     }
 
     public ArrayList<String> getDealerHand() {return this.dealerHand;}

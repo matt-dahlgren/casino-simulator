@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.freePlay.newhit.NewHitController;
 import interface_adapter.freePlay.setup.SetupController;
 import interface_adapter.freePlay.setup.SetupState;
 import interface_adapter.freePlay.setup.SetupViewModel;
@@ -14,7 +15,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 
 import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
 
@@ -23,11 +23,15 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
     private final String viewName = "setup";
 
     private SetupController setupController;
+    private NewHitController hitController;
+
+    private final SetupViewModel setupViewModel;
 
     private final JPanel dealerPanel;
     private final JPanel playerPanel;
 
     public SetupView(SetupViewModel setupViewModel) {
+        this.setupViewModel = setupViewModel;
         setupViewModel.addPropertyChangeListener(this);
 
         setBackground(TABLECOLOUR);
@@ -58,12 +62,17 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         hitButton.setSize(40, 30);
         movesPanel.add(hitButton, constraints);
         // HIT BUTTON ACTION LISTENER
-        hitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setupController.switchToHitView();
-            }
-        });
+        hitButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(hitButton)) {
+                            hitController.execute();
+                            System.out.println("Button succesfully clicked");
+                        }
+                    }
+                }
+        );
+
 
         // STAND BUTTON
         constraints.gridx = 0;
@@ -86,6 +95,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         quitGameButton.setFont(font);
         movesPanel.setBackground(TABLECOLOUR);
         movesPanel.add(quitGameButton, constraints);
+
         // QUIT BUTTON ACTION LISTENER
         quitGameButton.addActionListener(new ActionListener() {
             @Override
@@ -162,6 +172,30 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
                     dealerPanel.add(errorLabel, BorderLayout.CENTER);
                 }}
             }
+        else if (evt.getPropertyName().equals("hit")) {
+            final SetupState state = (SetupState) evt.getNewValue();
+            int componentCount = playerPanel.getComponentCount();
+            int handSize = state.getPlayerHand().size();
+
+            for (int i = componentCount; i < handSize; i++) {
+                try {
+                    URL imageUrl = new URL(state.getPlayerHand().get(i));
+                    BufferedImage image = ImageIO.read(imageUrl);
+                    ImageIcon icon = new ImageIcon(image);
+                    JLabel imageLabel = new JLabel(icon);
+
+                    playerPanel.add(imageLabel);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JLabel errorLabel = new JLabel("Failed to load image.");
+                    errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    playerPanel.add(errorLabel, BorderLayout.CENTER);
+                }
+            }
+            //Reloads the page, allows the new cards to be updated to it
+            this.revalidate();
+        }
 
         }
 
@@ -177,6 +211,11 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
 
     public void setSetupController(SetupController controller) {
         this.setupController = controller;
+    }
+
+    public void setHitController(NewHitController controller) {
+        System.out.println("New Controller added!");
+        this.hitController = controller;
     }
 }
 

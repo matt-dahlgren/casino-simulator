@@ -3,16 +3,15 @@ package app;
 import data_access.APIDataAccessObject;
 import data_access.GameDataAccessObject;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.freePlay.hit.HitController;
-import interface_adapter.freePlay.hit.HitPresenter;
+import interface_adapter.freePlay.newhit.NewHitController;
+import interface_adapter.freePlay.newhit.NewHitPresenter;
 import interface_adapter.freePlay.setup.SetupController;
 import interface_adapter.freePlay.setup.SetupPresenter;
 import interface_adapter.freePlay.setup.SetupViewModel;
 import interface_adapter.main_menu.MainMenuViewModel;
-import interface_adapter.freePlay.hit.HitViewModel;
-import use_case.freeplay.hit.HitInputBoundary;
-import use_case.freeplay.hit.HitOutputBoundary;
-import use_case.freeplay.hit.HitUseCaseInteractor;
+import use_case.freeplay.newhit.NewHitInputBoundary;
+import use_case.freeplay.newhit.NewHitInteractor;
+import use_case.freeplay.newhit.NewHitOutputBoundary;
 import use_case.freeplay.setup.SetupInputBoundary;
 import use_case.freeplay.setup.SetupInteractor;
 import use_case.freeplay.setup.SetupOutputBoundary;
@@ -42,12 +41,10 @@ public class AppBuilder {
     //Views
     private MainMenuView mainMenuView;
     private SetupView setupView;
-//    private HitView hitView;
 
     //View Models
     private MainMenuViewModel mainMenuViewModel;
     private SetupViewModel setupViewModel;
-    private HitViewModel hitViewModel;
 
 
     public AppBuilder() {
@@ -68,17 +65,6 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Hit view to the application
-     * @return this builder
-     */
-//    public AppBuilder addHitView() {
-//        hitViewModel = new HitViewModel();
-//        hitView = new HitView(hitViewModel);
-//        cardPanel.add(hitView, hitView.getViewName());
-//        return this;
-//    }
-
-    /**
      * Adds the Setup view to the application.
      * @return this builder
      */
@@ -96,7 +82,7 @@ public class AppBuilder {
      * @return this builder.
      */
     public AppBuilder addSetupUseCase() {
-        final SetupOutputBoundary setupOutputBoundary = new SetupPresenter(viewManagerModel, mainMenuViewModel, setupViewModel, hitViewModel);
+        final SetupOutputBoundary setupOutputBoundary = new SetupPresenter(viewManagerModel, mainMenuViewModel, setupViewModel);
 
         final SetupInputBoundary setupInteractor = new SetupInteractor(gameDAO, APIDAO, setupOutputBoundary);
 
@@ -109,15 +95,19 @@ public class AppBuilder {
      * Adds the Hit Use Case to the application.
      * @return this builder
      */
-//    public AppBuilder addHitUseCase() {
-//        final HitOutputBoundary hitOutputBoundary = new HitPresenter(viewManagerModel, iewModel, hitViewModel);
-//
-//        final HitInputBoundary hitInteractor = new HitUseCaseInteractor(APIDAO, gameDAO, hitOutputBoundary);
-//
-//        final HitController controller = new HitController(hitInteractor);
-//        hitView.setHitController(controller);
-//        return this;
-//    }
+    public AppBuilder addHitUseCase() {
+        final NewHitOutputBoundary hitOutputBoundary =
+                new NewHitPresenter(setupViewModel);
+
+        final NewHitInputBoundary newHitInteractor =
+                new NewHitInteractor(APIDAO, gameDAO, hitOutputBoundary);
+
+        final NewHitController controller =
+                new NewHitController(newHitInteractor);
+
+        setupView.setHitController(controller);
+        return this;
+    }
 
     /**
      * Creates the JFrame for the application and initially sets the Signup View to be displayed.

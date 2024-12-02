@@ -4,14 +4,12 @@ package use_case.freeplay.hit;
  * Use case interactor for hit use case
  */
 
-import entities.Card;
-import entities.CardFactory;
-import entities.Player;
-import entities.UserPlayer;
+import entities.*;
 import use_case.freeplay.FreePlayDA;
 import use_case.freeplay.GameDataAccess;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class HitUseCaseInteractor implements HitInputBoundary {
     private final FreePlayDA freePlayDataAccessObject;
@@ -44,11 +42,9 @@ public class HitUseCaseInteractor implements HitInputBoundary {
             HitOutputData outputData = new HitOutputData(makeImages(playerHand),
                     makeImages(gameDAO.getDealer().getHand()));
             hitPresenter.prepareSuccessView(outputData);
-        }
-        else if ((getHandValue(playerHand)).equals(21)) {
+        } else if ((getHandValue(playerHand)).equals(21)) {
             hitPresenter.prepareExitView("Winner!");
-        }
-        else {
+        } else {
             //bust
             hitPresenter.prepareBustView("Bust! You're over 21");
         }
@@ -56,7 +52,35 @@ public class HitUseCaseInteractor implements HitInputBoundary {
 
     @Override
     public void switchToHitView() {
-        hitPresenter.switchToHitView();
+
+    }
+
+    @Override
+    public void executeSetuptoHit() {
+        UserPlayer player = gameDAO.getPlayer();
+        Dealer dealer = gameDAO.getDealer();
+
+        ArrayList<Card> playerHand = player.getHand();
+        ArrayList<Card> dealerHand = dealer.getHand();
+
+        playerHand.add(freePlayDataAccessObject.getCard(gameDAO.getDeckID()));
+        player.setHand(playerHand);
+
+        gameDAO.setPlayer(player);
+
+        final HitOutputData outputData = new HitOutputData(makeImages(dealerHand), makeImages(playerHand));
+
+
+        if (getHandValue(playerHand) == 21) {
+            hitPresenter.prepareBustView("Winner!");
+        }
+        else if (canHit(getHandValue(playerHand))) {
+            hitPresenter.switchToHitView(outputData);
+        }
+        else {
+            hitPresenter.prepareBustView("Bust! You're over 21");
+        }
+
     }
 
     @Override
@@ -69,28 +93,14 @@ public class HitUseCaseInteractor implements HitInputBoundary {
         hitPresenter.switchToMainMenuView();
     }
 
-    @Override
-    public int getHandVal() {
-        UserPlayer player = gameDAO.getPlayer();
-        ArrayList<Card> playerHand = player.getHand();
-        int valOfHand = 0;
-        for (Card card : playerHand) {
-            valOfHand += card.getValue();
-        }
-        return valOfHand;
-    }
-
-    @Override
-    public void execute_setup() {
-
-    }
 
     /**
      * Helper function that makes array with image links
+     *
      * @param hand the hand list
      * @return list of strings with links
      */
-    private ArrayList<String> makeImages (ArrayList<Card> hand) {
+    private ArrayList<String> makeImages(ArrayList<Card> hand) {
         ArrayList<String> images = new ArrayList<>();
         for (Card card : hand) {
             images.add(card.getImage());
@@ -100,6 +110,7 @@ public class HitUseCaseInteractor implements HitInputBoundary {
 
     /**
      * Helper function that checks if player hand vals sum to < 21
+     *
      * @param handVal value of player hand
      * @return True if less than 21, if = 21 they win, false if bust
      */
@@ -109,8 +120,17 @@ public class HitUseCaseInteractor implements HitInputBoundary {
 
     private Integer getHandValue(ArrayList<Card> hand) {
         int valOfHand = 0;
+        int aces = 0;
         for (Card card : hand) {
             valOfHand += card.getValue();
+            if (Objects.equals(card.getRank(), "ACE")) {
+                aces += 1;
+            }
+
+            while (valOfHand > 21 && aces > 0) {
+                valOfHand -= 10;
+            }
+
         }
         return valOfHand;
     }

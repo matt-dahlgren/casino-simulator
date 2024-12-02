@@ -1,8 +1,6 @@
 package interface_adapter.freePlay.setup;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.freePlay.setup.SetupViewModel;
-import interface_adapter.freePlay.hit.HitViewModel;
 import interface_adapter.main_menu.MainMenuViewModel;
 import use_case.freeplay.setup.SetupOutputBoundary;
 import use_case.freeplay.setup.SetupOutputData;
@@ -16,17 +14,14 @@ import java.util.ArrayList;
 public class SetupPresenter implements SetupOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     SetupViewModel setupViewModel;
-    HitViewModel hitViewModel;
     MainMenuViewModel mainMenuViewModel;
 
     public SetupPresenter(ViewManagerModel viewManagerModel,
                           MainMenuViewModel mainMenuViewModel,
-                          SetupViewModel setupViewModel,
-                          HitViewModel hitViewModel) {
+                          SetupViewModel setupViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.mainMenuViewModel = mainMenuViewModel;
         this.setupViewModel = setupViewModel;
-        this.hitViewModel = hitViewModel;
     }
 
     /**
@@ -54,12 +49,6 @@ public class SetupPresenter implements SetupOutputBoundary {
     @Override
     public void prepareFailView(String errorMessage) {
 
-    }
-
-    @Override
-    public void switchToHitView() {
-        viewManagerModel.setState(hitViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
     }
 
     @Override

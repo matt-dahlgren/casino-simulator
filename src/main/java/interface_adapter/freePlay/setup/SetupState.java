@@ -3,22 +3,29 @@ package interface_adapter.freePlay.setup;
 import java.util.ArrayList;
 
 public class SetupState {
-    private ArrayList<String> DealerHand;
-    private ArrayList<String> PlayerHand;
+    private ArrayList<String> dealerHand;
+    private ArrayList<String> playerHand;
+
+    public SetupState() {}
+
+    public SetupState(SetupState copy) {
+        dealerHand = copy.dealerHand;
+        playerHand = copy.playerHand;
+    }
 
     public ArrayList<String> getPlayerHand() {
-        return PlayerHand;
+        return playerHand;
     }
 
     public ArrayList<String> getDealerHand() {
-        return DealerHand;
+        return dealerHand;
     }
 
     public void setDealerHand(ArrayList<String> DealerHand) {
-        this.DealerHand = DealerHand;
+        this.dealerHand = DealerHand;
     }
 
     public void setPlayerHand(ArrayList<String> PlayerHand) {
-        this.PlayerHand = PlayerHand;
+        this.playerHand = PlayerHand;
     }
 }
