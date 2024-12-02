@@ -12,4 +12,6 @@ public interface LearnModeInputBoundary {
     void switchToDealingView();
 
     void switchToObjectiveView();
+
+    void switchToMainMenuView();
 }

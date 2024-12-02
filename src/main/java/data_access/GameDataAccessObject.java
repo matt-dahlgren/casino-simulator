@@ -32,7 +32,6 @@ public class GameDataAccessObject implements GameDataAccess, SetupGameDataAccess
         this.handScore = new HashMap<>();
     }
 
-
     /**
      * Gets the user player
      * @return player
