@@ -1,4 +1,4 @@
-package use_case.assisted_mode.hit.probability;
+package use_case.assisted_mode.game.probability;
 
 import data_access.GameDataAccessObject;
 import entities.Card;
@@ -7,11 +7,11 @@ import entities.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.BLACKJACK;
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.fullDeck;
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.sampleDeck;
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.SCENARIO;
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.WINS;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.BLACKJACK;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.fullDeck;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.sampleDeck;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.SCENARIO;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.WINS;
 
 // To reduce runtime of this algorithm, all cards of similar value (bar Ace) are recognized to be the same, and outcomes
 // are multiplied by their frequency as one king's branching possibilities will be the same as another king, queen,

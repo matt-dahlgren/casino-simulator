@@ -1,38 +1,44 @@
 package use_case.login;
 
+import data_access.AccountInfoDAO;
 import entities.User;
 
 /**
- * The Login Interactor.
+ * Log in interactor
  */
-public class LoginInteractor implements LoginInputBoundary {
-    private final LoginUserDataAccessInterface userDataAccessObject;
+public class LoginInteractor implements LoginInputBoundary{
+    private final AccountInfoDAO userDAO;
     private final LoginOutputBoundary loginPresenter;
 
-    public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface,
-                           LoginOutputBoundary loginOutputBoundary) {
-        this.userDataAccessObject = userDataAccessInterface;
-        this.loginPresenter = loginOutputBoundary;
+    public LoginInteractor(AccountInfoDAO userDAO, LoginOutputBoundary loginPresenter) {
+        this.userDAO = userDAO;
+        this.loginPresenter = loginPresenter;
     }
 
+
+    /**
+     * Executes the login use case.
+     *
+     * @param loginInputData the input data
+     */
     @Override
     public void execute(LoginInputData loginInputData) {
         final String username = loginInputData.getUsername();
         final String password = loginInputData.getPassword();
-        if (!userDataAccessObject.existsByName(username)) {
+        if (!userDAO.userExists(username)) {
             loginPresenter.prepareFailView(username + ": Account does not exist.");
         }
         else {
-            final String pwd = userDataAccessObject.get(username).getPassword();
+            final String pwd = userDAO.getUser(username).getPassword();
             if (!password.equals(pwd)) {
                 loginPresenter.prepareFailView("Incorrect password for \"" + username + "\".");
             }
             else {
 
-                final User user = userDataAccessObject.get(loginInputData.getUsername());
+                final User user = userDAO.getUser(loginInputData.getUsername());
 
-                userDataAccessObject.setCurrentUsername(user.getName());
-                final LoginOutputData loginOutputData = new LoginOutputData(user.getName(), false);
+                userDAO.setCurrentUser(user.getUsername());
+                final LoginOutputData loginOutputData = new LoginOutputData(user.getUsername());
                 loginPresenter.prepareSuccessView(loginOutputData);
             }
         }

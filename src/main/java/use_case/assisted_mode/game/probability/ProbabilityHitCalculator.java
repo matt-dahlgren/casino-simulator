@@ -1,4 +1,4 @@
-package use_case.assisted_mode.hit.probability;
+package use_case.assisted_mode.game.probability;
 
 import data_access.GameDataAccessObject;
 import entities.Card;
@@ -8,15 +8,15 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.BLACKJACK;
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.BUST;
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.fullDeck;
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.sampleDeck;
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.SCENARIO;
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.WINS;
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.values;
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.INITIALSCORE;
-import static use_case.assisted_mode.hit.probability.ProbabilityConstants.ACETOONE;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.BLACKJACK;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.BUST;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.fullDeck;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.sampleDeck;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.SCENARIO;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.WINS;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.values;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.INITIALSCORE;
+import static use_case.assisted_mode.game.probability.ProbabilityConstants.ACETOONE;
 
 // To reduce runtime of this algorithm, all cards of similar value (bar Ace) are recognized to be the same, and outcomes
 // are multiplied by their frequency as one king's branching possibilities will be the same as another king, queen,
@@ -74,8 +74,8 @@ public class ProbabilityHitCalculator implements ProbabilityInteractorInterface 
         Collection<Integer> possibleScores = possibleOutcomes.keySet();
 
         Map<String, Float> summationWinsGames = new HashMap<>();
-        summationWinsGames.put(SCENARIO, 1.0f);
-        summationWinsGames.put(WINS, 1.0f);
+        summationWinsGames.put(SCENARIO, 0.0f);
+        summationWinsGames.put(WINS, 0.0f);
 
         if (possibleOutcomes.get(INITIALSCORE) >= BLACKJACK) {
             return 0;
