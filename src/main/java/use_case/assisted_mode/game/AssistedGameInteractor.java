@@ -1,7 +1,6 @@
 package use_case.assisted_mode.game;
 
-import data_access.APIDataAccessObject;
-import data_access.GameDataAccessObject;
+import data_access.*;
 import entities.Card;
 import entities.Dealer;
 import entities.Player;
@@ -19,11 +18,16 @@ public class AssistedGameInteractor implements AssistedGameInputDataBoundary {
 
     private final GameDataAccessObject gameDataAccessObject;
     private final AssistedGameOutputDataBoundary assistedHitOutputDataBoundary;
+    private final AccountInfoDAO accountInfoDAO;
+    private final GameReportDataAccessObject gameReportDAO;
 
     public AssistedGameInteractor(GameDataAccessObject gameDataAccessObject,
-                                  AssistedGameOutputDataBoundary assistedHitOutputDataBoundary) {
+                                  AssistedGameOutputDataBoundary assistedHitOutputDataBoundary,
+                                  AccountInfoDAO accountInfoDAO, GameReportDataAccessObject gameReportDAO) {
         this.gameDataAccessObject = gameDataAccessObject;
         this.assistedHitOutputDataBoundary = assistedHitOutputDataBoundary;
+        this.accountInfoDAO = accountInfoDAO;
+        this.gameReportDAO = gameReportDAO;
     }
 
     /**
@@ -131,6 +135,10 @@ public class AssistedGameInteractor implements AssistedGameInputDataBoundary {
         int handscore = standCalculator.handScore(standCalculator.getUserCards());
 
         if (handscore >= 21) {
+            gameReportDAO.updateGameData(gameDataAccessObject.getHitProbability(),
+                    gameDataAccessObject.getStandProbability(), gameDataAccessObject.getHandScore(),
+                    gameDataAccessObject.getPlayer(), accountInfoDAO.getCurrentUser());
+
             assistedHitOutputDataBoundary.prepareAssistedStand(getAssistedStandOutputData(standCalculator.execute(),
                     handscore));
         }
@@ -180,8 +188,14 @@ public class AssistedGameInteractor implements AssistedGameInputDataBoundary {
         pullToSeventeen();
         ProbabilityStandCalculator standCalculator = new ProbabilityStandCalculator(gameDataAccessObject);
         int handscore = standCalculator.handScore(standCalculator.getUserCards());
+
+        gameReportDAO.updateGameData(gameDataAccessObject.getHitProbability(),
+                gameDataAccessObject.getStandProbability(), gameDataAccessObject.getHandScore(),
+                gameDataAccessObject.getPlayer(), accountInfoDAO.getCurrentUser());
+
         assistedHitOutputDataBoundary.prepareAssistedStand(getAssistedStandOutputData(standCalculator.execute(),
                 handscore));
+
     }
 
     @Override

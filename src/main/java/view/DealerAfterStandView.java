@@ -1,6 +1,9 @@
 package view;
 
+import interface_adapter.assisted_mode.AssistedModeState;
 import interface_adapter.dealer_screen.DealerScreenViewModel;
+import interface_adapter.report.GameReportController;
+import interface_adapter.report.ReportViewModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -8,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
@@ -18,10 +22,16 @@ import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLEC
 public class DealerAfterStandView extends JPanel implements ActionListener, PropertyChangeListener {
 
     static final String TIMES = "Times New Roman";
-    DealerScreenViewModel viewModel;
+    private final DealerScreenViewModel viewModel;
+    private final ReportViewModel reportViewModel;
+    private GameReportController gameReportController;
 
-    public DealerAfterStandView(DealerScreenViewModel viewModel) {
+    public DealerAfterStandView(DealerScreenViewModel viewModel, ReportViewModel reportViewModel) {
         this.viewModel = viewModel;
+        this.reportViewModel = reportViewModel;
+
+        viewModel.addPropertyChangeListener(this);
+        reportViewModel.addPropertyChangeListener(this);
 
         int dealerScore = viewModel.getState().getDealerScore();
         int playerScore = viewModel.getState().getPlayerScore();
@@ -100,9 +110,21 @@ public class DealerAfterStandView extends JPanel implements ActionListener, Prop
         toGameReview.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO ADD
+                gameReportController.execute()
             }
         }
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        final AssistedModeState state = (AssistedModeState) evt.getNewValue();
+        JOptionPane.showMessageDialog(this, "Objective property change");
 
     }
 

@@ -12,6 +12,7 @@ public class DealerScreenState {
     private int playerScore;
     private ArrayList<String> cardImages;
     private boolean playerWin;
+    private String numGame;
 
     @Override
     public String toString() {
@@ -48,5 +49,12 @@ public class DealerScreenState {
 
     public boolean getPlayerWin() {
         return playerWin;
+    }
+
+    public void setNumGame(String numGame) {
+        this.numGame = numGame;
+    }
+    public String getNumGame() {
+        return numGame;
     }
 }

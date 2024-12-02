@@ -9,4 +9,8 @@ public interface DealerScreenInputBoundary {
      * Execute the FreePlayStand Use case.
      */
     void execute();
+
 }
+
+
+
