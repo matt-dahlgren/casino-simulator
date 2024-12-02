@@ -13,7 +13,7 @@ import use_case.freeplay.GameDataAccess;
 
 import java.util.ArrayList;
 
-public class HitUseCaseInteractor {
+public class HitUseCaseInteractor implements HitInputBoundary {
     private final FreePlayDA freePlayDataAccessObject;
     private final GameDataAccess gameDAO;
     private final HitOutputBoundary hitPresenter;
@@ -33,7 +33,7 @@ public class HitUseCaseInteractor {
         ArrayList<Card> playerHand = player.getHand();
 
         //if the player can take their turn
-        if (canHit(getHandVal(playerHand))) {
+        if (canHit(getHandValue(playerHand))) {
             //hit branch
             //add card to player hand
             playerHand.add(freePlayDataAccessObject.getCard(gameDAO.getDeckID()));
@@ -45,13 +45,39 @@ public class HitUseCaseInteractor {
             HitOutputData outputData = new HitOutputData(makeImages(playerHand));
             hitPresenter.prepareSuccessView(outputData);
         }
-        else if ((getHandVal(playerHand)).equals(21)) {
+        else if ((getHandValue(playerHand)).equals(21)) {
             hitPresenter.prepareExitView("Winner!");
         }
         else {
             //bust
             hitPresenter.prepareBustView("Bust! You're over 21");
         }
+    }
+
+    @Override
+    public void switchToHitView() {
+        hitPresenter.switchToHitView();
+    }
+
+    @Override
+    public void switchToDealerAfterStandView() {
+        hitPresenter.switchToDealerAfterStandView();
+    }
+
+    @Override
+    public void switchToMainMenuView() {
+        hitPresenter.switchToMainMenuView();
+    }
+
+    @Override
+    public int getHandVal() {
+        UserPlayer player = gameDAO.getPlayer();
+        ArrayList<Card> playerHand = player.getHand();
+        int valOfHand = 0;
+        for (Card card : playerHand) {
+            valOfHand += card.getValue();
+        }
+        return valOfHand;
     }
 
     /**
@@ -76,7 +102,7 @@ public class HitUseCaseInteractor {
         return handVal < 21;
     }
 
-    private Integer getHandVal(ArrayList<Card> hand) {
+    private Integer getHandValue(ArrayList<Card> hand) {
         int valOfHand = 0;
         for (Card card : hand) {
             valOfHand += card.getValue();

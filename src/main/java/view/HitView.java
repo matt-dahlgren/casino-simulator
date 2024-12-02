@@ -1,5 +1,7 @@
 package view;
 
+import interface_adapter.freeplay.hit.HitController;
+import interface_adapter.freeplay.hit.HitState;
 import interface_adapter.freeplay.hit.HitViewModel;
 import interface_adapter.freeplay.setup.SetupController;
 import interface_adapter.freeplay.setup.SetupState;
@@ -19,10 +21,10 @@ import java.util.ArrayList;
 
 import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
 
-public class SetupView extends JPanel implements ActionListener, PropertyChangeListener {
-    private SetupController setupController;
+public class HitView extends JPanel implements ActionListener, PropertyChangeListener {
+    private HitController hitController;
 
-    public SetupView(SetupViewModel setupViewModel, HitViewModel hitViewModel) {
+    public HitView(SetupViewModel setupViewModel, HitViewModel hitViewModel) {
         setupViewModel.addPropertyChangeListener(this);
         hitViewModel.addPropertyChangeListener(this);
 
@@ -57,7 +59,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         hitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setupController.switchToHitView();
+                hitController.switchToHitView();
             }
         });
 
@@ -71,7 +73,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         standButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setupController.switchToDealerAfterStandView();
+                hitController.switchToDealerAfterStandView();
             }
         });
 
@@ -86,24 +88,20 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         quitGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setupController.switchToMainMenuView();
+                hitController.switchToMainMenuView();
             }
         });
 
+        // NEED TO ADD SOMETHING FOR DEALER CARDS
 
-        setupController.execute_setup();
-        String dealerCardOneURL = setupViewModel.DEALER_ONE;
-        String dealerCardTwoURL = setupViewModel.DEALER_TWO;
-        String playerCardOneURL = setupViewModel.PLAYER_ONE;
-        String playerCardTwoURL = setupViewModel.PLAYER_TWO;
-
-        ArrayList<String> playerCards = new ArrayList<>();
-        playerCards.add(playerCardOneURL);
-        playerCards.add(playerCardTwoURL);
-
-        ArrayList<String> dealerCards = new ArrayList<>();
-        dealerCards.add(dealerCardOneURL);
-        dealerCards.add(dealerCardTwoURL);
+        hitController.execute();
+        ArrayList<String> playerCards = hitViewModel.PLAYER_HAND;
+//        String dealerCardOneURL = setupViewModel.DEALER_ONE;
+//        String dealerCardTwoURL = setupViewModel.DEALER_TWO;
+//
+//        ArrayList<String> dealerCards = new ArrayList<>();
+//        dealerCards.add(dealerCardOneURL);
+//        dealerCards.add(dealerCardTwoURL);
 
         // add code to display image URLs here
         JPanel cardPanel = new JPanel(new BorderLayout());
@@ -129,7 +127,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
                 cardPanel.add(errorLabel, BorderLayout.CENTER);
             }}
 
-            JPanel dealerPanel = new FlippedDealerCards(dealerCards);
+        JPanel dealerPanel = new FlippedDealerCards(dealerCards);
 
         cardPanel.add(playerPanel, BorderLayout.SOUTH);
         cardPanel.add(dealerPanel, BorderLayout.NORTH);
@@ -142,8 +140,10 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         JPanel playerScorePanel = new JPanel(new FlowLayout());
         playerScorePanel.setBackground(TABLECOLOUR);
 
+        int val = hitController.getHandVal();
+
         JLabel playerScoreLabel =
-                new JLabel("<html><font color = 'white'>Your Score: " + "0" + "</font></html>");
+                new JLabel("<html><font color = 'white'>Your Score: " + val + "</font></html>");
         playerScoreLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
         playerScoreLabel.setSize(50, 100);
 
@@ -151,10 +151,10 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
 
         add(playerScorePanel, BorderLayout.SOUTH);
 
-        }
+    }
     public void propertyChange(PropertyChangeEvent evt) {
-        final SetupState state = (SetupState) evt.getNewValue();
-        JOptionPane.showMessageDialog(this, "Setup state change.");
+        final HitState state = (HitState) evt.getNewValue();
+        JOptionPane.showMessageDialog(this, "Hit state change.");
     }
 
     @Override
