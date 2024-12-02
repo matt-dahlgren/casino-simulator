@@ -21,4 +21,6 @@ public interface User {
      * @return email
      */
     String getEmail();
+
+    String getName();
 }

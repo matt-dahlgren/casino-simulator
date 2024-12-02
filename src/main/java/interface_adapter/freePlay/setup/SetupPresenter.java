@@ -1,10 +1,7 @@
-package interface_adapter.freeplay.setup;
+package interface_adapter.freePlay.setup;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.freeplay.hit.HitViewModel;
-import interface_adapter.freeplay.stand.FreePlayStandViewModel;
 import interface_adapter.main_menu.MainMenuViewModel;
-import interface_adapter.team_use_case.TeamViewModel;
 import use_case.freeplay.setup.SetupOutputBoundary;
 import use_case.freeplay.setup.SetupOutputData;
 
@@ -17,12 +14,14 @@ import java.util.ArrayList;
 public class SetupPresenter implements SetupOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     SetupViewModel setupViewModel;
-    HitViewModel hitViewModel;
-    FreePlayStandViewModel freePlayStandViewModel;
     MainMenuViewModel mainMenuViewModel;
 
-    public SetupPresenter(ViewManagerModel viewManagerModel) {
+    public SetupPresenter(ViewManagerModel viewManagerModel,
+                          MainMenuViewModel mainMenuViewModel,
+                          SetupViewModel setupViewModel) {
         this.viewManagerModel = viewManagerModel;
+        this.mainMenuViewModel = mainMenuViewModel;
+        this.setupViewModel = setupViewModel;
     }
 
     /**
@@ -36,10 +35,8 @@ public class SetupPresenter implements SetupOutputBoundary {
         ArrayList<String> playerHand = outputData.getUserPlayerHand();
         final SetupState setupState = setupViewModel.getState();
 
-        setupState.setDealerCardOne(dealerHand.get(0));
-        setupState.setDealerCardTwo(dealerHand.get(1));
-        setupState.setPlayerCardOne(playerHand.get(0));
-        setupState.setPlayerCardTwo(playerHand.get(1));
+        setupState.setDealerHand(dealerHand);
+        setupState.setPlayerHand(playerHand);
 
         setupViewModel.setState(setupState);
         setupViewModel.firePropertyChanged();
@@ -55,15 +52,9 @@ public class SetupPresenter implements SetupOutputBoundary {
     }
 
     @Override
-    public void switchToHitView() {
-        viewManagerModel.setState(hitViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-    }
-
-    @Override
     public void switchToDealerAfterStandView() {
-        viewManagerModel.setState(freePlayStandViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+//        viewManagerModel.setState(freePlayStandViewModel.getViewName());
+//        viewManagerModel.firePropertyChanged();
     }
 
     @Override

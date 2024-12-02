@@ -19,7 +19,7 @@ public interface HitOutputBoundary {
 
     void prepareExitView(String message);
 
-    void switchToHitView();
+    void switchToHitView(HitOutputData outputData);
 
     void switchToDealerAfterStandView();
 

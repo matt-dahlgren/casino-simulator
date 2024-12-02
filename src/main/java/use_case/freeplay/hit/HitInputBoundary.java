@@ -5,9 +5,10 @@ public interface HitInputBoundary {
 
     void switchToHitView();
 
+    void executeSetuptoHit();
+
     void switchToDealerAfterStandView();
 
     void switchToMainMenuView();
 
-    int getHandVal();
 }

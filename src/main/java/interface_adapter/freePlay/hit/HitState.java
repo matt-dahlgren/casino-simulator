@@ -1,15 +1,10 @@
-package interface_adapter.freeplay.hit;
+package interface_adapter.freePlay.hit;
 
 import java.util.ArrayList;
 
 public class HitState {
     private ArrayList<String> playerCards;
     private ArrayList<String> dealerCards;
-
-    public HitState(ArrayList<String> playerCards, ArrayList<String> dealerCards) {
-        this.playerCards = playerCards;
-        this.dealerCards = dealerCards;
-    }
 
     public ArrayList<String> getPlayerHand() {
         return this.playerCards;

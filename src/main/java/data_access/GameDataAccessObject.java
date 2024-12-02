@@ -4,7 +4,6 @@ import entities.Dealer;
 import entities.Player;
 import entities.UserPlayer;
 import use_case.freeplay.GameDataAccess;
-import use_case.freeplay.setup.SetupGameDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +12,7 @@ import java.util.Map;
 /**
  * Game Data woohoo
  */
-public class GameDataAccessObject implements GameDataAccess, SetupGameDataAccessInterface {
+public class GameDataAccessObject implements GameDataAccess {
     UserPlayer userPlayer;
     Dealer dealer;
     ArrayList<Player> computerPlayers;
