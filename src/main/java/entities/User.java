@@ -11,7 +11,7 @@ public interface User {
     String getUsername();
 
     /**
-     * Return the password of the user
+     * Return the password of the user.
      * @return password
      */
     String getPassword();
@@ -22,5 +22,9 @@ public interface User {
      */
     String getEmail();
 
+    /**
+     * Get username.
+     * @return name
+     */
     String getName();
 }

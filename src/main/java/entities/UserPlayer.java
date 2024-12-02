@@ -12,12 +12,26 @@ public class UserPlayer extends Player {
         this.hand = hand;
     }
 
+    /**
+     * Returns hand.
+     * @return hand
+     */
     public ArrayList<Card> getHand() {
         return hand;
     }
 
-    public void setHand(ArrayList<Card> hand) {}
+    /**
+     * Updates hand.
+     * @param hand new hand
+     */
+    public void setHand(ArrayList<Card> hand) {
 
+    }
+
+    /**
+     * Adds a card.
+     * @param card object
+     */
     public void add(Card card) {
         hand.add(card);
     }
