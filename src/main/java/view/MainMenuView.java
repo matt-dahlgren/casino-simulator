@@ -94,7 +94,7 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
         freePlay.addActionListener(
                 evt -> {
                     if (evt.getSource().equals(freePlay)) {
-                        this.setupController.execute_setup();
+                        this.setupController.execute();
                     }
                 }
         );

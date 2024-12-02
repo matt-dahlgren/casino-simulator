@@ -1,4 +1,4 @@
-package interface_adapter.freePlay.setup;
+package interface_adapter.freeplay.setup;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.main_menu.MainMenuViewModel;
@@ -13,12 +13,12 @@ import java.util.ArrayList;
 
 public class SetupPresenter implements SetupOutputBoundary {
     private final ViewManagerModel viewManagerModel;
-    SetupViewModel setupViewModel;
+    interface_adapter.freeplay.setup.SetupViewModel setupViewModel;
     MainMenuViewModel mainMenuViewModel;
 
     public SetupPresenter(ViewManagerModel viewManagerModel,
                           MainMenuViewModel mainMenuViewModel,
-                          SetupViewModel setupViewModel) {
+                          interface_adapter.freeplay.setup.SetupViewModel setupViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.mainMenuViewModel = mainMenuViewModel;
         this.setupViewModel = setupViewModel;
