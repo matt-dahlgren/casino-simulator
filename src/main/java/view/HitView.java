@@ -92,11 +92,13 @@ public class HitView extends JPanel implements ActionListener, PropertyChangeLis
             }
         });
 
-        // NEED TO ADD SOMETHING FOR DEALER CARDS
 
-        hitController.execute();
-        ArrayList<String> playerCards = hitViewModel.PLAYER_HAND;
-        ArrayList<String> dealerCards = hitViewModel.DEALER_HAND;
+        // NEED TO ADD SOMETHING FOR PLAYER AND DEALER CARDS
+
+
+
+//        ArrayList<String> playerCards = hitViewModel.PLAYER_HAND;
+//        ArrayList<String> dealerCards = hitViewModel.DEALER_HAND;
 //        String dealerCardOneURL = setupViewModel.DEALER_ONE;
 //        String dealerCardTwoURL = setupViewModel.DEALER_TWO;
 //
@@ -111,27 +113,28 @@ public class HitView extends JPanel implements ActionListener, PropertyChangeLis
         JPanel playerPanel = new JPanel(new FlowLayout());
         playerPanel.setBackground(TABLECOLOUR);
 
+        //TODO Here edit
         // Build the viewing of the Players Hand
-        for (String card : playerCards) {
-            try {
-                URL imageUrl = new URL(card);
-                BufferedImage image = ImageIO.read(imageUrl);
-                ImageIcon icon = new ImageIcon(image);
-                JLabel imageLabel = new JLabel(icon);
-
-                playerPanel.add(imageLabel);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                JLabel errorLabel = new JLabel("Failed to load image.");
-                errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                cardPanel.add(errorLabel, BorderLayout.CENTER);
-            }}
-
-        JPanel dealerPanel = new FlippedDealerCards(dealerCards);
-
-        cardPanel.add(playerPanel, BorderLayout.SOUTH);
-        cardPanel.add(dealerPanel, BorderLayout.NORTH);
+//        for (String card : playerCards) {
+//            try {
+//                URL imageUrl = new URL(card);
+//                BufferedImage image = ImageIO.read(imageUrl);
+//                ImageIcon icon = new ImageIcon(image);
+//                JLabel imageLabel = new JLabel(icon);
+//
+//                playerPanel.add(imageLabel);
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                JLabel errorLabel = new JLabel("Failed to load image.");
+//                errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+//                cardPanel.add(errorLabel, BorderLayout.CENTER);
+//            }}
+//
+//        JPanel dealerPanel = new FlippedDealerCards(dealerCards);
+//
+//        cardPanel.add(playerPanel, BorderLayout.SOUTH);
+//        cardPanel.add(dealerPanel, BorderLayout.NORTH);
 
         add(cardPanel, BorderLayout.CENTER);
 
@@ -165,6 +168,10 @@ public class HitView extends JPanel implements ActionListener, PropertyChangeLis
 
     public String getViewName() {
         return viewName;
+    }
+
+    public void setHitController(HitController controller) {
+        this.hitController = controller;
     }
 }
 
