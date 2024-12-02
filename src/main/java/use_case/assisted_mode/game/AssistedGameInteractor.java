@@ -86,14 +86,7 @@ public class AssistedGameInteractor implements AssistedGameInputDataBoundary {
             playerVisibleCards.add(card.getImage());
         }
 
-        for (Card card: gameDataAccessObject.getDealer().getHand()) {
-            if (card.isVisible()) {
-                dealerVisibleCards.add(card.getImage());
-            }
-            else {
-                dealerVisibleCards.add("https://deckofcardsapi.com/static/img/back.png");
-            }
-        }
+        buildDealerInPlay(dealerVisibleCards);
 
         int dealerScore = handScore((gameDataAccessObject.getDealer()));
 
@@ -150,14 +143,7 @@ public class AssistedGameInteractor implements AssistedGameInputDataBoundary {
                 playerVisibleCards.add(card.getImage());
             }
 
-            for (Card card: gameDataAccessObject.getDealer().getHand()) {
-                if (card.isVisible()) {
-                    dealerVisibleCards.add(card.getImage());
-                }
-                else {
-                    dealerVisibleCards.add("https://deckofcardsapi.com/static/img/back.png");
-                }
-            }
+            buildDealerInPlay(dealerVisibleCards);
             int dealerScore = handScore((gameDataAccessObject.getDealer()));
             AssistedGameOutputData outputData = new AssistedGameOutputData(hitCalculator.execute(),
                     standCalculator.execute(), handscore, dealerScore, playerVisibleCards, dealerVisibleCards,
@@ -166,6 +152,20 @@ public class AssistedGameInteractor implements AssistedGameInputDataBoundary {
         }
     }
 
+    private void buildDealerInPlay(ArrayList<String> dealerVisibleCards) {
+        for (Card card: gameDataAccessObject.getDealer().getHand()) {
+            if (card.isVisible()) {
+                dealerVisibleCards.add(card.getImage());
+            }
+            else {
+                dealerVisibleCards.add("https://deckofcardsapi.com/static/img/back.png");
+            }
+        }
+    }
+
+    /**
+     * The dealer pulls cards from the Deck until they have a score of at least 17.
+     */
     private void pullToSeventeen() {
 
         APIDataAccessObject apiDataAccessObject = new APIDataAccessObject();
