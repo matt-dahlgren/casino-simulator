@@ -4,11 +4,11 @@ package entities;
  * Represents a card with a rank, suit, value, and visibility status.
  */
 public class Card {
-    final private String rank;
-    final private String suit;
+    private final String rank;
+    private final String suit;
     private int value;
     private boolean isVisible;
-    final private String image;
+    private final String image;
 
     public Card(String rank, String suit, String image) {
         this.suit = suit;
@@ -27,6 +27,10 @@ public class Card {
         }
     }
 
+    /**
+     * Gets the link for the image of the card.
+     * @return http link for the card image
+     */
     public String getImage() {
         return image;
     }
@@ -51,13 +55,17 @@ public class Card {
      * Get the value of the card (9, 10, 11, etc.).
      * @return The card's value.
      */
-    public int getValue() { return value; }
+    public int getValue() {
+        return value;
+    }
 
     /**
      * Determine if the card's information should be visible to the player.
      * @return Whether the card's information should be visible.
      */
-    public boolean isVisible() { return isVisible; }
+    public boolean isVisible() {
+        return isVisible;
+    }
 
     /**
      * Allows the value of an ace to be switched to 1 or 11.
@@ -73,8 +81,14 @@ public class Card {
      * Sets the visibility status of the card.
      * @param newValue represents whether the card should be visibile to the user.
      */
-    public void setVisible(boolean newValue) { isVisible = newValue; }
+    public void setVisible(boolean newValue) {
+        isVisible = newValue;
+    }
 
+    /**
+     * Allows card data to be expressed as a string.
+     * @return string output
+     */
     public String toString() {
         return "{suit=" + suit + ", rank=" + rank + ", value=" + value + ", isVisible=" + isVisible + "}";
     }

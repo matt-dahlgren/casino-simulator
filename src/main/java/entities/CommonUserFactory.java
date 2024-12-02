@@ -1,13 +1,16 @@
 package entities;
 
+/**
+ * Common user factory class.
+ */
 public class CommonUserFactory implements UserFactory {
 
     /**
-     * Create User
+     * Create User.
      *
-     * @param username
-     * @param email
-     * @param password
+     * @param username string
+     * @param email string
+     * @param password string
      */
     @Override
     public User create(String username, String email, String password) {

@@ -19,6 +19,7 @@ public class Player {
 
     /**
      * Allows the player to draw a card.
+     * @param newCard new card that needs to be added.
      */
     public void hit(Card newCard) {
         hand.add(newCard);
@@ -51,6 +52,10 @@ public class Player {
         return score;
     }
 
+    /**
+     * Gets the Hand.
+     * @return hand array
+     */
     public ArrayList<Card> getHand() {
         return hand;
     }

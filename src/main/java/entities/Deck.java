@@ -10,10 +10,18 @@ public class Deck {
         this.deckID = deckID;
     }
 
+    /**
+     * Gets the deck ID.
+     * @return deck ID
+     */
     public String getDeckID() {
         return deckID;
     }
 
+    /**
+     * Sets the deck ID.
+     * @param deckID deck ID
+     */
     public void setDeckID(String deckID) {
         this.deckID = deckID;
     }
