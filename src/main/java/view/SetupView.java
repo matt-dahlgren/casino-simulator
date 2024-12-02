@@ -115,8 +115,6 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
 
         this.dealerPanel = new JPanel(new FlowLayout());
 
-//        JPanel dealerPanel = new FlippedDealerCards(dealerCards);
-
         cardPanel.add(playerPanel, BorderLayout.SOUTH);
         cardPanel.add(dealerPanel, BorderLayout.NORTH);
 
