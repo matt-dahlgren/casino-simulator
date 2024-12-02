@@ -1,33 +1,24 @@
 package interface_adapter.freePlay.setup;
 
-public class SetupState {
-    private String dealerCardOne="";
-    private String dealerCardTwo="";
-    private String playerCardOne="";
-    private String playerCardTwo="";
+import java.util.ArrayList;
 
-    public String getDealerCardOne(){
-        return dealerCardOne;
+public class SetupState {
+    private ArrayList<String> DealerHand;
+    private ArrayList<String> PlayerHand;
+
+    public ArrayList<String> getPlayerHand() {
+        return PlayerHand;
     }
-    public String getDealerCardTwo(){
-        return dealerCardTwo;
+
+    public ArrayList<String> getDealerHand() {
+        return DealerHand;
     }
-    public String getPlayerCardOne(){
-        return playerCardOne;
+
+    public void setDealerHand(ArrayList<String> DealerHand) {
+        this.DealerHand = DealerHand;
     }
-    public String getPlayerCardTwo(){
-        return playerCardTwo;
-    }
-    public void setDealerCardOne(String firstDealerCard){
-        this.dealerCardOne=firstDealerCard;
-    }
-    public void setDealerCardTwo(String secondDealerCard){
-        this.dealerCardTwo=secondDealerCard;
-    }
-    public void setPlayerCardOne(String firstPlayerCard){
-        this.playerCardOne=firstPlayerCard;
-    }
-    public void setPlayerCardTwo(String secondPlayerCard){
-        this.playerCardTwo=secondPlayerCard;
+
+    public void setPlayerHand(ArrayList<String> PlayerHand) {
+        this.PlayerHand = PlayerHand;
     }
 }

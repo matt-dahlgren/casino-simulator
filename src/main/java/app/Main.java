@@ -30,8 +30,9 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                 .addMainMenuView()
-                .addHitView()
-                .addHitUseCase()
+                .addSetupView()
+                .addSetupUseCase()
+//                .addHitUseCase()
                 .build();
 
         application.pack();

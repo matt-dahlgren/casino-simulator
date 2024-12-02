@@ -8,7 +8,6 @@ public interface SetupInputBoundary {
     /**
      * Executes the setup use case.
      */
-
     void execute();
 
     void switchToHitView();

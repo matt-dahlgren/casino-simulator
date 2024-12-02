@@ -11,6 +11,10 @@ public class HitState {
         this.dealerCards = dealerCards;
     }
 
+    public HitState() {
+
+    }
+
     public ArrayList<String> getPlayerHand() {
         return this.playerCards;
     }

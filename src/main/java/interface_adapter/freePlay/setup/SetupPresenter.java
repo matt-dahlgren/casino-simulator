@@ -17,11 +17,16 @@ public class SetupPresenter implements SetupOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     SetupViewModel setupViewModel;
     HitViewModel hitViewModel;
-//    FreePlayStandViewModel freePlayStandViewModel;
     MainMenuViewModel mainMenuViewModel;
 
-    public SetupPresenter(ViewManagerModel viewManagerModel) {
+    public SetupPresenter(ViewManagerModel viewManagerModel,
+                          MainMenuViewModel mainMenuViewModel,
+                          SetupViewModel setupViewModel,
+                          HitViewModel hitViewModel) {
         this.viewManagerModel = viewManagerModel;
+        this.mainMenuViewModel = mainMenuViewModel;
+        this.setupViewModel = setupViewModel;
+        this.hitViewModel = hitViewModel;
     }
 
     /**
@@ -35,10 +40,8 @@ public class SetupPresenter implements SetupOutputBoundary {
         ArrayList<String> playerHand = outputData.getUserPlayerHand();
         final SetupState setupState = setupViewModel.getState();
 
-        setupState.setDealerCardOne(dealerHand.get(0));
-        setupState.setDealerCardTwo(dealerHand.get(1));
-        setupState.setPlayerCardOne(playerHand.get(0));
-        setupState.setPlayerCardTwo(playerHand.get(1));
+        setupState.setDealerHand(dealerHand);
+        setupState.setPlayerHand(playerHand);
 
         setupViewModel.setState(setupState);
         setupViewModel.firePropertyChanged();

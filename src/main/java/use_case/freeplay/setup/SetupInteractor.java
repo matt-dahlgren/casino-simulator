@@ -3,6 +3,8 @@ package use_case.freeplay.setup;
 import entities.Card;
 import entities.Dealer;
 import entities.UserPlayer;
+import use_case.freeplay.FreePlayDA;
+import use_case.freeplay.GameDataAccess;
 
 import java.util.ArrayList;
 
@@ -10,20 +12,21 @@ import java.util.ArrayList;
  * The Setup Interactor, does the main backend stuff with setting up the game through the Game Data Object.
  */
 public class SetupInteractor implements SetupInputBoundary {
-    private final SetupDeckDataAccessInterface deckDataObject;
+    private final FreePlayDA deckDataObject;
     private final SetupOutputBoundary setupPresenter;
-    private final SetupGameDataAccessInterface gameDataObject;
+    private final GameDataAccess gameDataObject;
 
-    public SetupInteractor(SetupGameDataAccessInterface gameDataAccessObject,
-                           SetupDeckDataAccessInterface setupDeckDataAccessInterface,
+    public SetupInteractor(GameDataAccess gameDataObject,
+                           FreePlayDA setupDeckDataAccessInterface,
                            SetupOutputBoundary setupPresenter) {
-        this.gameDataObject = gameDataAccessObject;
+        this.gameDataObject = gameDataObject;
         this.setupPresenter = setupPresenter;
         this.deckDataObject = setupDeckDataAccessInterface;
     }
 
     @Override
     public void execute() {
+        //Generates new Deck Object + gets a deck ID through the API
         String deckID = deckDataObject.getDeckID();
 
         ArrayList<Card> userPlayerHand = new ArrayList<>();
