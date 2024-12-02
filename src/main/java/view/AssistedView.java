@@ -1,22 +1,39 @@
 package view;
 
+import interface_adapter.assisted_mode.AssistedModeController;
+import interface_adapter.assisted_mode.AssistedModeState;
 import interface_adapter.assisted_mode.AssistedModeViewModel;
+import interface_adapter.dealer_screen.DealerScreenViewModel;
+import interface_adapter.learn_mode.ObjectiveState;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
 
 import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
 
-public class AssistedView extends JPanel{
-
+public class AssistedView extends JPanel implements ActionListener, PropertyChangeListener {
+    private AssistedModeController assistedModeController;
     private final AssistedModeViewModel assistedModeViewModel;
+    private final MainMenuView mainMenuView;
+    private final DealerScreenViewModel dealerScreenViewModel;
 
-    public AssistedView(AssistedModeViewModel assistedModeViewModel) {
+    public AssistedView(AssistedModeViewModel assistedModeViewModel, MainMenuView mainMenuView,
+                        DealerScreenViewModel dealerScreenViewModel) {
         this.assistedModeViewModel = assistedModeViewModel;
+        this.mainMenuView = mainMenuView;
+        this.dealerScreenViewModel = dealerScreenViewModel;
+
+        assistedModeViewModel.addPropertyChangeListener(this);
+        mainMenuView.addPropertyChangeListener(this);
+        dealerScreenViewModel.addPropertyChangeListener(this);
 
         setBackground(TABLECOLOUR);
 
@@ -51,12 +68,25 @@ public class AssistedView extends JPanel{
         hitButton.setPreferredSize(new Dimension(40, 30));
         buttonPanel.add(hitButton);
 
+        hitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                assistedModeController.assistedHit();
+            }
+        });
+
 
         // This button allows player to click Dealing and see how the cards are dealt in a BlackJack game
         JButton standButton = new JButton("Stand");
         standButton.setFont(font);
         buttonPanel.add(standButton);
 
+        standButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                assistedModeController.assistedStand();
+            }
+        });
 
         // This button allows player to click Moves and see what moves are possible in a BlackJack game
         JButton quitGameButton = new JButton("Quit");
@@ -64,6 +94,13 @@ public class AssistedView extends JPanel{
         movesPanel.setBackground(TABLECOLOUR);
         buttonPanel.add(quitGameButton);
         buttonPanel.setBackground(TABLECOLOUR);
+
+        quitGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                assistedModeController.mainMenu();
+            }
+        });
 
         subMovesPanel.add(buttonPanel);
         movesPanel.add(subMovesPanel);
@@ -150,4 +187,15 @@ public class AssistedView extends JPanel{
 
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        final AssistedModeState state = (AssistedModeState) evt.getNewValue();
+        JOptionPane.showMessageDialog(this, "Objective property change");
+
+    }
 }

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
 import static interface_adapter.probability.ProbabilityColourConstants.TABLECOLOUR;
 
 public class SetupView extends JPanel implements ActionListener, PropertyChangeListener {

@@ -5,15 +5,19 @@ import interface_adapter.dealer_screen.DealerScreenViewModel;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
 import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
 
-public class DealerAfterStandView extends JPanel {
+public class DealerAfterStandView extends JPanel implements ActionListener, PropertyChangeListener {
 
+    static final String TIMES = "Times New Roman";
     DealerScreenViewModel viewModel;
 
     public DealerAfterStandView(DealerScreenViewModel viewModel) {
@@ -36,30 +40,33 @@ public class DealerAfterStandView extends JPanel {
         setSize(1400, 800);
         setBackground(TABLECOLOUR);
 
-        JPanel titleCard = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel titleCard = new JPanel(new GridLayout(1,3));
+        JPanel fillerCard = new JPanel();
+        fillerCard.setBackground(TABLECOLOUR);
         titleCard.setBackground(TABLECOLOUR);
 
         JLabel dealerHandLabel =
                 new JLabel("<html><font color = 'white'>"+playerWinString+"</font></html>");
 
-        dealerHandLabel.setFont(new Font("Times New Roman", Font.BOLD, 36));
+        dealerHandLabel.setFont(new Font(TIMES, Font.BOLD, 36));
 
         JPanel scorePanel = new JPanel(new FlowLayout());
 
+        titleCard.add(fillerCard);
         titleCard.add(dealerHandLabel);
 
         add(titleCard, BorderLayout.NORTH);
 
         JLabel dealerLabel =
                 new JLabel("<html><font color = 'white'>Dealer's Score: " + dealerScore + "</font></html>");
-        dealerLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
+        dealerLabel.setFont(new Font(TIMES, Font.BOLD, 24));
 
         scorePanel.add(dealerLabel);
         scorePanel.setBackground(TABLECOLOUR);
 
         JLabel playerLabel =
                 new JLabel("<html><font color = 'white'>Player's Score: " + playerScore + "</font></html>");
-        playerLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
+        playerLabel.setFont(new Font(TIMES, Font.BOLD, 24));
 
         scorePanel.add(playerLabel);
 
@@ -86,6 +93,16 @@ public class DealerAfterStandView extends JPanel {
 
         add(cardPanel, BorderLayout.CENTER);
         add(scorePanel, BorderLayout.SOUTH);
+
+        JButton toGameReview = new JButton("End of Game Review");
+        titleCard.add(toGameReview);
+
+        toGameReview.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO ADD
+            }
+        }
 
     }
 

@@ -46,6 +46,7 @@ public class AssistedModeState {
         return dealerScore;
     }
 
+
     public int getPlayerScore() {
         return playerScore;
     }
