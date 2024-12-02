@@ -77,6 +77,13 @@ public class MovesView extends JPanel implements ActionListener, PropertyChangeL
         movesButton.setFont(buttonFont);
         instructionsPanel.add(movesButton, constraints);
 
+        mainMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                learnModeController.switchToMainMenuView();
+            }
+        });
+
         objectiveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
