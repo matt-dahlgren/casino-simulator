@@ -6,7 +6,7 @@ public class CommonUser implements User {
     private final String password;
     private final String email;
 
-    public CommonUser(String username, String password, String email) {
+    public CommonUser(String username, String email,String password) {
         this.email = email;
         this.username = username;
         this.password = password;
