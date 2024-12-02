@@ -13,6 +13,7 @@ public class DealerScreenState {
     private ArrayList<String> cardImages;
     private boolean playerWin;
     private String numGame;
+    private int gameType;
 
     @Override
     public String toString() {
@@ -56,5 +57,14 @@ public class DealerScreenState {
     }
     public String getNumGame() {
         return numGame;
+    }
+
+    // 0 is an assisted game while 1 is freeplay.
+    public void setGameType(int gameType) {
+        this.gameType = gameType;
+    }
+
+    public int getGameType() {
+        return gameType;
     }
 }

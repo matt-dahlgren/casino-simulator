@@ -26,6 +26,6 @@ public class AssistedModeSetupPresenter implements AssistedSetupOutputBoundary {
         assistedModeState.setStandWin(outputData.getStandWin());
         assistedModeState.setHitWin(outputData.getHitWin());
         assistedModeState.setPlayerScore(outputData.getPlayerScore());
-        assistedModeState.setDealerScore(outputData.get);
+        assistedModeState.setDealerScore(outputData.getDealer);
     }
 }

@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.assisted_mode.AssistedModeState;
+import interface_adapter.dealer_screen.DealerScreenController;
 import interface_adapter.dealer_screen.DealerScreenViewModel;
 import interface_adapter.report.GameReportController;
 import interface_adapter.report.ReportViewModel;
@@ -25,6 +26,7 @@ public class DealerAfterStandView extends JPanel implements ActionListener, Prop
     private final DealerScreenViewModel viewModel;
     private final ReportViewModel reportViewModel;
     private GameReportController gameReportController;
+    private DealerScreenController dealerScreenController;
 
     public DealerAfterStandView(DealerScreenViewModel viewModel, ReportViewModel reportViewModel) {
         this.viewModel = viewModel;
@@ -104,15 +106,26 @@ public class DealerAfterStandView extends JPanel implements ActionListener, Prop
         add(cardPanel, BorderLayout.CENTER);
         add(scorePanel, BorderLayout.SOUTH);
 
-        JButton toGameReview = new JButton("End of Game Review");
+        JButton toGameReview = new JButton("Continue");
         titleCard.add(toGameReview);
 
-        toGameReview.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gameReportController.execute()
-            }
+        if (viewModel.getState().getGameType() == 0) {
+            toGameReview.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    gameReportController.execute(viewModel.getState().getNumGame());
+                }
+            });
         }
+        else {
+            toGameReview.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dealerScreenController.toMainMenu();
+                }
+            });
+        }
+
 
     }
 

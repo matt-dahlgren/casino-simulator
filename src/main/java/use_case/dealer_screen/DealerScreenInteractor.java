@@ -108,6 +108,7 @@ public class DealerScreenInteractor implements DealerScreenInputBoundary {
     /**
      * Execute the FreePlayStand UsecCase
      */
+    @Override
     public void execute() {
 
         this.pullToSeventeen();
@@ -127,6 +128,11 @@ public class DealerScreenInteractor implements DealerScreenInputBoundary {
                 cardStrings, gameWin, String.valueOf(reportDataAccessObject.getNumGames()));
 
         outputPresenter.prepareStandView(outputData);
+    }
+
+    @Override
+    public void toMainMenu() {
+        outputPresenter.toMainView();
     }
 
 }

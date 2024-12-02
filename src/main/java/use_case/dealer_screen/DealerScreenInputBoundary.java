@@ -10,6 +10,10 @@ public interface DealerScreenInputBoundary {
      */
     void execute();
 
+    /**
+     * send this view to main menu.
+     */
+    void toMainMenu();
 }
 
 
