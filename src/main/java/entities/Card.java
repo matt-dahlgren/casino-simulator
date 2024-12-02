@@ -1,30 +1,34 @@
 package entities;
 
-import java.util.ArrayList;
-
 /**
  * Represents a card with a rank, suit, value, and visibility status.
  */
 public class Card {
-    private String rank;
-    private String suit;
+    final private String rank;
+    final private String suit;
     private int value;
     private boolean isVisible;
+    final private String image;
 
-    public Card(String rank, String suit) {
+    public Card(String rank, String suit, String image) {
         this.suit = suit;
-        this.rank = rank.substring(0, 1).toUpperCase();
-        isVisible = false;
+        this.rank = rank;
+        isVisible = true;
+        this.image = image;
 
-        if (this.rank.equals("J") || this.rank.equals("Q") || this.rank.equals("K")) {
+        if (this.rank.equals("JACK") || this.rank.equals("QUEEN") || this.rank.equals("KING")) {
             value = 10;
         }
-        else if (this.rank.equals("A")) {
+        else if (this.rank.equals("ACE")) {
             value = 11;
         }
         else {
             value = Integer.parseInt(this.rank);
         }
+    }
+
+    public String getImage() {
+        return image;
     }
 
     /**
@@ -60,7 +64,7 @@ public class Card {
      * @param newValue The new value of the ace.
      */
     public void setValue(int newValue) {
-        if (rank.equals("A") && (newValue == 11 || newValue == 1)) {
+        if (rank.equals("ACE") && (newValue == 11 || newValue == 1)) {
             value = newValue;
         }
     }

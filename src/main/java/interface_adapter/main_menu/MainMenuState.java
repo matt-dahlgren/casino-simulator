@@ -1,5 +1,7 @@
 package interface_adapter.main_menu;
 
+import app.Main;
+
 /**
  * The state for the Main Menu page's View Model.
  *
@@ -27,4 +29,5 @@ public class MainMenuState {
     public String toString() {
         return "MainMenuState";
     }
+
 }
