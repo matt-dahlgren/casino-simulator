@@ -9,7 +9,7 @@ public interface SignupUserDataAccessInterface {
      * Adds a new user to the system
      * @param user is the user that needs to be added
      */
-    void addUser(User user);
+    void addUser(User user) throws IOException;
 
     /**
      * Checks if the username is already linked to an existing account

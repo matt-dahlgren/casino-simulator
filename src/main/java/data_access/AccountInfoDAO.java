@@ -62,7 +62,7 @@ public class AccountInfoDAO implements SignupUserDataAccessInterface {
      * @param user the user to be added
      * @throws IOException exception with reading writing file
      */
-    public void addUser(User user){
+    public void addUser(User user) throws IOException {
         // Adds the user to the user map
         users.put(user.getUsername(), user);
 
@@ -72,7 +72,7 @@ public class AccountInfoDAO implements SignupUserDataAccessInterface {
             writer.write(user.getUsername() + "," + user.getPassword() + "," + user.getEmail() + "\n");
             writer.close();
 
-            
+
         }
         catch (IOException e) {
             e.printStackTrace();

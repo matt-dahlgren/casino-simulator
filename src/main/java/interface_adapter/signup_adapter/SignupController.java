@@ -16,7 +16,7 @@ public class SignupController {
         this.signupInteractor = signupInputBoundary;
     }
 
-    public void execute(String username, String email, String password, String repeatPassword) {
+    public void execute(String username, String email, String password, String repeatPassword) throws IOException {
         final SignupInputData signupInputData = new SignupInputData(username, email, password, repeatPassword);
 
         signupInteractor.execute(signupInputData);

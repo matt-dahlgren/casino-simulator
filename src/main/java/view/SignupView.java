@@ -63,12 +63,16 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                         if (evt.getSource().equals(signUp)) {
                             final SignupState currentState = signupViewModel.getState();
 
-                            signupController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getEmail(),
-                                    currentState.getPassword(),
-                                    currentState.getRepeatPassword()
-                            );
+                            try {
+                                signupController.execute(
+                                        currentState.getUsername(),
+                                        currentState.getEmail(),
+                                        currentState.getPassword(),
+                                        currentState.getRepeatPassword()
+                                );
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     }
                 }
@@ -233,6 +237,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(this, "How did we get here?")
+        JOptionPane.showMessageDialog(this, "How did we get here?");
     }
 }
