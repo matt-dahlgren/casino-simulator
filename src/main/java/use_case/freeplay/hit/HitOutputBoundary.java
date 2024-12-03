@@ -1,5 +1,7 @@
 package use_case.freeplay.hit;
 
+import use_case.freeplay.setup.SetupOutputData;
+
 /**
  * Output boundary
  */
@@ -21,7 +23,7 @@ public interface HitOutputBoundary {
 
     void switchToHitView(HitOutputData outputData);
 
-    void switchToDealerAfterStandView();
+    void switchToDealerAfterStandView(SetupOutputData outputData);
 
     void switchToMainMenuView();
 }
