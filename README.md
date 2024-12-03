@@ -40,6 +40,9 @@ Main Menu of the game. The aim of this mode is to be as inclusive as possible of
 levels of expertise!
 
 ### Assisted Mode
+Assisted Mode allows you to play Blackjack in a zero risk environment with active suggestions on whether hitting or
+standing is a better move for the player to make in the board's current state. This allows experienced blackjack players
+to train themselves, and giving less experienced players exposure to a new game with assistance. 
 
 ### Game Report
 
