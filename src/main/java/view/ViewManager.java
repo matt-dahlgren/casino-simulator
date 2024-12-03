@@ -21,6 +21,7 @@ public class ViewManager implements PropertyChangeListener {
         this.cardLayout = cardLayout;
         this.viewManagerModel = viewManagerModel;
         this.viewManagerModel.addPropertyChangeListener(this);
+        views.setLayout(cardLayout);
     }
 
     @Override
