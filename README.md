@@ -52,6 +52,12 @@ standing is a better move for the player to make in the board's current state. T
 to train themselves, and giving less experienced players exposure to a new game with assistance. 
 
 ### Game Report
+The game report allows you to see the quality of all your moves in Assisted Mode, and to compare that against the 
+quality of the potential moves they didn't take (i.e. if the player hit, they can see the quality of that move, 
+as well as the move quality of standing instead). The player can view game reports of any of their assisted games, 
+allowing them to track their progress. They can also recieve emails with the game reports, to keep for their own 
+reference.
+
 
 ### Probability Algorithm
 
