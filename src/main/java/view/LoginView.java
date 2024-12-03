@@ -1,8 +1,10 @@
 package view;
 
+import interface_adapter.learn_mode.ObjectiveState;
 import interface_adapter.login_adapter.LoginController;
 import interface_adapter.login_adapter.LoginState;
 import interface_adapter.login_adapter.LoginViewModel;
+import interface_adapter.main_menu.MainMenuState;
 import interface_adapter.main_menu.MainMenuViewModel;
 
 import javax.swing.*;
@@ -177,9 +179,16 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final LoginState state = (LoginState) evt.getNewValue();
-        setFields(state);
-        usernameErrorLabel.setText(state.getLoginError());
+        if (evt.getNewValue() instanceof LoginState) {
+            final LoginState state = (LoginState) evt.getNewValue();
+                setFields(state);
+                usernameErrorLabel.setText(state.getLoginError());
+            // Proceed with LoginState logic
+        } else {
+            final MainMenuState state = (MainMenuState) evt.getNewValue();
+        }
+
+//        final LoginState state = (LoginState) evt.getNewValue();
     }
 
     private void setFields(LoginState state) {
