@@ -1,4 +1,4 @@
-package use_case.setup_use_case;
+package use_case.setup;
 
 import data_access.APIDataAccessObject;
 import data_access.GameDataAccessObject;
