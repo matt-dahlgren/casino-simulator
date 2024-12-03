@@ -4,6 +4,8 @@ import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInputData;
 import use_case.signup.SignupInteractor;
 
+import java.io.IOException;
+
 /**
  * Controller for sign up use case
  */
@@ -14,7 +16,7 @@ public class SignupController {
         this.signupInteractor = signupInputBoundary;
     }
 
-    public void execute(String username, String email, String password, String repeatPassword) {
+    public void execute(String username, String email, String password, String repeatPassword) throws IOException {
         final SignupInputData signupInputData = new SignupInputData(username, email, password, repeatPassword);
         signupInteractor.execute(signupInputData);
     }

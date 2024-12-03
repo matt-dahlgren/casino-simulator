@@ -1,7 +1,6 @@
-package interface_adapter.freeplay.setup;
+package interface_adapter.free_play.setup;
 
 import interface_adapter.ViewModel;
-import interface_adapter.freeplay.setup.SetupState;
 
 public class SetupViewModel extends ViewModel<SetupState> {
 

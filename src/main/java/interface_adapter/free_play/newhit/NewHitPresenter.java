@@ -1,11 +1,9 @@
-package interface_adapter.freeplay.newhit;
+package interface_adapter.free_play.newhit;
 
-import interface_adapter.freeplay.setup.SetupState;
-import interface_adapter.freeplay.setup.SetupViewModel;
+import interface_adapter.free_play.setup.SetupState;
+import interface_adapter.free_play.setup.SetupViewModel;
 import use_case.freeplay.newhit.NewHitOutputBoundary;
 import use_case.freeplay.newhit.NewHitOutputData;
-
-import java.util.ArrayList;
 
 /**
  * The Presenter for the Hit Use Case...

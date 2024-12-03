@@ -2,7 +2,7 @@ package view;
 
 
 import interface_adapter.assisted_mode.AssistedModeController;
-import interface_adapter.freeplay.setup.SetupController;
+import interface_adapter.free_play.setup.SetupController;
 import interface_adapter.learn_mode.LearnModeController;
 import interface_adapter.logout_adapter.LogoutController;
 import interface_adapter.main_menu.MainMenuState;
