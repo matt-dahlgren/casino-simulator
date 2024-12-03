@@ -31,6 +31,7 @@ import use_case.freeplay.setup.SetupInputBoundary;
 import use_case.freeplay.setup.SetupInteractor;
 import use_case.freeplay.setup.SetupOutputBoundary;
 import use_case.signup.SignupInteractor;
+import use_case.
 import view.*;
 
 import data_access.*;
@@ -131,6 +132,17 @@ public class AppBuilder {
         setupViewModel = new SetupViewModel();
         setupView = new SetupView(setupViewModel);
         cardPanel.add(setupView, setupView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Report view to the application.
+     * @return this builder
+     */
+    public AppBuilder addReportView() {
+        reportViewModel = new ReportViewModel();
+        reportView = new ReportView(reportViewModel);
+        cardPanel.add(reportView, reportView.getViewName());
         return this;
     }
 
@@ -297,6 +309,11 @@ public class AppBuilder {
         final LearnModeInputBoundary learnModeInteractor = new LearnModeInteractor(learnModeOutputBoundary);
         final LearnModeController controller = new LearnModeController(learnModeInteractor);
         movesView.setLearnModeController(controller);
+        return this;
+    }
+
+    public AppBuilder addReportUseCase() {
+        // TODO Am i supposed to use email_report or endgame_report in use case? (the one that corresponds to report view)
         return this;
     }
 
