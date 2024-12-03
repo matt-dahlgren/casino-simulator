@@ -3,8 +3,8 @@ package view;
 import interface_adapter.assisted_mode.AssistedModeController;
 import interface_adapter.assisted_mode.AssistedModeState;
 import interface_adapter.assisted_mode.AssistedModeViewModel;
+import interface_adapter.assisted_mode.setup.AssistedModeSetupController;
 import interface_adapter.dealer_screen.DealerScreenViewModel;
-import interface_adapter.learn_mode.ObjectiveState;
 import interface_adapter.main_menu.MainMenuViewModel;
 
 import javax.imageio.ImageIO;
@@ -198,5 +198,13 @@ public class AssistedView extends JPanel implements ActionListener, PropertyChan
         final AssistedModeState state = (AssistedModeState) evt.getNewValue();
         JOptionPane.showMessageDialog(this, "Objective property change");
 
+    }
+
+    public String getViewName() {
+        return "Assisted";
+    }
+
+    public void setAssistedModeController(AssistedModeController controller) {
+        this.assistedModeController = controller;
     }
 }
