@@ -17,7 +17,7 @@ public class ProbabilityTest {
     public static String deckID = "Filler";
     public static ArrayList<Player> computers = new ArrayList<>();
     @Test
-    public void testWinProbability() {
+    void testWinProbability() {
         ArrayList<Card> hand = new ArrayList<>();
         ArrayList<Card> hand2 = new ArrayList<>();
         hand.add(new Card("10", "Hearts", "https://deckofcardsapi.com/static/img/back.png"));
@@ -36,5 +36,27 @@ public class ProbabilityTest {
 
         System.out.println("Win probability for Player One: " + probability);
         assertTrue(probability == 100);
+    }
+
+    @Test
+    void testLoseProbability() {ArrayList<Card> hand = new ArrayList<>();
+        ArrayList<Card> hand2 = new ArrayList<>();
+        hand.add(new Card("10", "Hearts", "https://deckofcardsapi.com/static/img/back.png"));
+        hand.add(new Card("10", "Spades", "https://deckofcardsapi.com/static/img/back.png"));
+        hand.add(new Card("2", "Spade", "https://deckofcardsapi.com/static/img/back.png"));
+
+        hand2.add(new Card("JACK", "Hearts", "https://deckofcardsapi.com/static/img/back.png"));
+        hand2.add(new Card("QUEEN", "Spades", "https://deckofcardsapi.com/static/img/back.png"));
+
+        UserPlayer playerOne = new UserPlayer(hand);
+        Dealer dealerOne = new Dealer(hand);
+
+        GameDataAccessObject gameTest = new GameDataAccessObject(playerOne, dealerOne,deckID, computers);
+        ProbabilityStandCalculator testCalculator = new ProbabilityStandCalculator(gameTest);
+
+        int probability = testCalculator.standProbability();
+
+        System.out.println("Win probability for Player One: " + probability);
+        assertTrue(probability == 0);
     }
 }
