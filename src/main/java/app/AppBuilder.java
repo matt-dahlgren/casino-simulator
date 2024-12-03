@@ -58,7 +58,8 @@ public class AppBuilder {
 
     //Data Access Objects
     private final APIDataAccessObject APIDAO = new APIDataAccessObject();
-    private final GameDataAccessObject gameDAO = new GameDataAccessObject(userPlayer, dealer, "", new ArrayList<>()); //TODO Confirm empty string for deckID
+    private final GameDataAccessObject gameDAO = new GameDataAccessObject(userPlayer, dealer, "",
+            new ArrayList<>());
     private final AccountInfoDAO accountInfoDAO = new AccountInfoDAO();
     private final GameReportDataAccessObject gameReportDAO = new GameReportDataAccessObject();
     private UserFactory userFactory;
@@ -284,7 +285,9 @@ public class AppBuilder {
     public AppBuilder addDealerScreenUseCase() {
         final DealerScreenOutputDataBoundary dealerScreenPresenter = new DealerScreenPresenter(viewManagerModel, dealerScreenViewModel, mainMenuViewModel);
 
-        final DealerScreenInputBoundary dealerScreenInteractor = new DealerScreenInteractor(gameDAO, dealerScreenPresenter, gameReportDAO);
+        ArrayList<String> cards = new ArrayList<>();
+
+        final DealerScreenInputBoundary dealerScreenInteractor = new DealerScreenInteractor(gameDAO, dealerScreenPresenter, gameReportDAO, cards);
 
         final DealerScreenController controller = new DealerScreenController(dealerScreenInteractor);
 
