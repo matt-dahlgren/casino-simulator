@@ -23,7 +23,7 @@ public class SignupInteractor implements SignupInputBoundary {
      * @param signupInputData is the input data containing account info
      */
     @Override
-    public void execute(SignupInputData signupInputData) throws IOException {
+    public void execute(SignupInputData signupInputData) {
         if (userDAO.userExists(signupInputData.getUsername())) {
             //fail view, username already exists
             userPresenter.prepareFailView("User already exists");
@@ -43,5 +43,10 @@ public class SignupInteractor implements SignupInputBoundary {
         }
 
 
+    }
+
+    @Override
+    public void switchToLoginView() {
+        userPresenter.switchToLoginView();
     }
 }

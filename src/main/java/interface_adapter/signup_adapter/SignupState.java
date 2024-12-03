@@ -11,6 +11,7 @@ public class SignupState {
     private String passwordError;
     private String repeatPassword = "";
     private String repeatPasswordError;
+    private String email = "";
 
     public String getUsername() {
         return username;
@@ -66,7 +67,15 @@ public class SignupState {
                 + "username='" + username + '\''
                 + ", password='" + password + '\''
                 + ", repeatPassword='" + repeatPassword + '\''
+                + ", Email='" + email + '\''
                 + '}';
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
