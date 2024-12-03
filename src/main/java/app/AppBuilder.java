@@ -31,7 +31,6 @@ import use_case.freeplay.setup.SetupInputBoundary;
 import use_case.freeplay.setup.SetupInteractor;
 import use_case.freeplay.setup.SetupOutputBoundary;
 import use_case.signup.SignupInteractor;
-import use_case.
 import view.*;
 
 import data_access.*;
@@ -39,7 +38,6 @@ import data_access.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
-import java.nio.channels.SeekableByteChannel;
 import entities.*;
 
 /**
@@ -54,12 +52,12 @@ public class AppBuilder {
     private final ImageIcon img = new ImageIcon("resources/images/icon.png");
 
     // Entities
-    private final UserPlayer userPlayer = new UserPlayer(); // TODO Where do I get the arg from?
-
+    private final UserPlayer userPlayer = new UserPlayer(); // TODO Where do I get "hand" from?
+    private final Dealer dealer = new Dealer(); // TODO Where do I get "hand" from?
 
     //Data Access Objects
     private final APIDataAccessObject APIDAO = new APIDataAccessObject();
-    private final GameDataAccessObject gameDAO = new GameDataAccessObject(userPlayer); // TODO Where do I get the other 3 args from?
+    private final GameDataAccessObject gameDAO = new GameDataAccessObject(userPlayer, dealer); // TODO Where do i get "hand" and "computer players from?"
     private final AccountInfoDAO accountInfoDAO = new AccountInfoDAO();
     private final GameReportDataAccessObject gameReportDAO = new GameReportDataAccessObject();
     private UserFactory userFactory;
@@ -232,9 +230,14 @@ public class AppBuilder {
      */
     public AppBuilder addSignupUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(signupViewModel, loginViewModel, viewManagerModel);
-
+        userFactory = new UserFactory() {
+            @Override
+            public User create(String username, String email, String password) {
+                return null;
+            }
+        };
+        // TODO Ask team if user factory should be empty to start with? or f
         final SignupInputBoundary signupInteractor = new SignupInteractor(accountInfoDAO, signupOutputBoundary, userFactory);
-        // TODO Make sure user factory works
         final SignupController controller = new SignupController(signupInteractor);
         signupView.setSignupController(controller);
         // TODO The code in SignupView does NOT use SignupController... verify this is what you want
