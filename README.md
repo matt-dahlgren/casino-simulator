@@ -1,9 +1,35 @@
-# Blackjack Simulator
+# *Blackjack Simulator*
 Country Toad's CSC207 Group Project
+
+Featuring Clean Architecture and SOLID!
 
 ### by Matthew Dahlgren: matt-dahlgren, Jacob Lisogurski: Jac0b-Beep, Pooja Mangra: 04mangra, Andriy Shkvorets: atStarling, Sonia Vaidya: soniavaidya05
 
-Featuring Clean Architecture and SOLID!
+1[Features](#features)
+
+2[App Launching Instructions](#app-launching-instructions)
+
+3[Design Process](#design-process)
+    - [Entities](#entities)
+    - [Use Cases](#use-cases)
+
+3[Explanation of Classes (in General)](#explanation-of-classes-in-general)
+    - [App Builder](#app-builder)
+    - [Views](#views)
+    - [Controllers](#controllers)
+    - [Presenters](#presenters)
+
+4[Game Modes and Features](#game-modes-and-features)
+    - [Game Report](#game-report)
+    - [Learning Mode](#learning-mode)
+    - [Assisted Mode](#assisted-mode)
+    - [Probability Algorithm](#probability-algorithm)
+
+5[Test Coverage](#test-coverage)
+
+6[Images](#images)
+
+7[Resource Credits](#resource-credits)
 
 ## Features
 - A functioning app that allows you to play simple Blackjack!
@@ -13,8 +39,12 @@ Featuring Clean Architecture and SOLID!
 - A better than average UI!
 
 ## App Launching Instructions
-- Run with Java 22. Built and Tested with Amazon Corretto 11.0.24.
+- Run with Java 22. Built and Tested with Amazon Corretto 11.0.24 on macOS Sequoia, Windows 10, and Windows 11.
+- Requires [JavaMail] //TODO PLEASE INCLUDE LINK
 - Run [Main.java](./src/main/java/app/Main.java)
+
+Luckily, the only issues that may arise with launching the app are with JavaMail. As JavaMail needs to be installed
+in Intellji in order to send emails, it cannot be simply imported.
 
 ## Design Process:
 In the beginning, we created CRC cards to determine which classes we'd need in the final product. Although we expanded
