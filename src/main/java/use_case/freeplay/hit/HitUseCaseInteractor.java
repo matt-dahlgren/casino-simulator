@@ -26,26 +26,28 @@ public class HitUseCaseInteractor implements HitInputBoundary {
      * Executes hit
      */
     public void execute() {
-        //get player hand
+        // get player hand
         UserPlayer player = gameDAO.getPlayer();
         ArrayList<Card> playerHand = player.getHand();
 
-        //add card to player hand
+        // add card to player hand
         playerHand.add(freePlayDataAccessObject.getCard(gameDAO.getDeckID()));
         player.setHand(playerHand);
-        //update player
+        // update player
         gameDAO.setPlayer(player);
 
-        //checking if they've bust or won
+        // checking if they've bust or won
         if (canHit(getHandValue(playerHand))) {
-            //successful hit, success view
+            // successful hit, success view
             HitOutputData outputData = new HitOutputData(makeImages(playerHand),
                     makeImages(gameDAO.getDealer().getHand()));
             hitPresenter.prepareSuccessView(outputData);
-        } else if ((getHandValue(playerHand)).equals(21)) {
+        }
+        else if (getHandValue(playerHand).equals(21)) {
             hitPresenter.prepareExitView("Winner!");
-        } else {
-            //bust
+        }
+        else {
+            // bust
             hitPresenter.prepareBustView("Bust! You're over 21");
         }
     }
@@ -70,7 +72,6 @@ public class HitUseCaseInteractor implements HitInputBoundary {
 
         final HitOutputData outputData = new HitOutputData(makeImages(dealerHand), makeImages(playerHand));
 
-
         if (getHandValue(playerHand) == 21) {
             hitPresenter.prepareBustView("Winner!");
         }
@@ -93,9 +94,8 @@ public class HitUseCaseInteractor implements HitInputBoundary {
         hitPresenter.switchToMainMenuView();
     }
 
-
     /**
-     * Helper function that makes array with image links
+     * Helper function that makes array with image links.
      *
      * @param hand the hand list
      * @return list of strings with links
@@ -109,7 +109,7 @@ public class HitUseCaseInteractor implements HitInputBoundary {
     }
 
     /**
-     * Helper function that checks if player hand vals sum to < 21
+     * Helper function that checks if player hand vals sum to < 21.
      *
      * @param handVal value of player hand
      * @return True if less than 21, if = 21 they win, false if bust
