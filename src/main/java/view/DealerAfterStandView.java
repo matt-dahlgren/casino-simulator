@@ -141,4 +141,11 @@ public class DealerAfterStandView extends JPanel implements ActionListener, Prop
 
     }
 
+    public void setDealerScreenController(DealerScreenController controller) {
+        dealerScreenController = controller;
+    }
+
+    public String getViewName() {
+        return "DealerAfterStand";
+    }
 }

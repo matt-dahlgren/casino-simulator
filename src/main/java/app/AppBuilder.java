@@ -8,13 +8,14 @@ import interface_adapter.dealer_screen.DealerScreenViewModel;
 import interface_adapter.freePlay.newhit.NewHitController;
 import interface_adapter.freeplay.newhit.NewHitPresenter;
 import interface_adapter.freeplay.setup.SetupController;
-import interface_adapter.freeplay.setup.SetupPresenter;
 import interface_adapter.freeplay.setup.SetupViewModel;
 import interface_adapter.learn_mode.*;
 import interface_adapter.main_menu.MainMenuViewModel;
+import interface_adapter.report.ReportViewModel;
 import interface_adapter.signup_adapter.*;
 import interface_adapter.login_adapter.*;
 import interface_adapter.dealer_screen.*;
+import interface_adapter.freeplay.*;
 import use_case.dealer_screen.DealerScreenInputBoundary;
 import use_case.dealer_screen.DealerScreenInteractor;
 import use_case.dealer_screen.DealerScreenOutputDataBoundary;
@@ -59,6 +60,7 @@ public class AppBuilder {
     private final APIDataAccessObject APIDAO = new APIDataAccessObject();
     private final GameDataAccessObject gameDAO = new GameDataAccessObject(userPlayer); // TODO Where do I get the other 3 args from?
     private final AccountInfoDAO accountInfoDAO = new AccountInfoDAO();
+    private final GameReportDataAccessObject gameReportDAO = new GameReportDataAccessObject();
     private UserFactory userFactory;
 
     //Views
@@ -70,6 +72,7 @@ public class AppBuilder {
     private MovesView movesView;
     private DealingView dealingView;
     private DealerAfterStandView dealerAfterStandView;
+    private ReportView reportView;
 
     //View Models
     private MainMenuViewModel mainMenuViewModel;
@@ -80,6 +83,7 @@ public class AppBuilder {
     private DealingViewModel dealingViewModel;
     private MovesViewModel movesViewModel;
     private DealerScreenViewModel dealerScreenViewModel;
+    private ReportViewModel reportViewModel;
 
     public AppBuilder() throws FileNotFoundException {
     }
@@ -136,7 +140,7 @@ public class AppBuilder {
      */
     public AppBuilder addDealerAfterStandView() {
         dealerScreenViewModel = new DealerScreenViewModel();
-        dealerAfterStandView = new DealerAfterStandView(dealerScreenViewModel);
+        dealerAfterStandView = new DealerAfterStandView(dealerScreenViewModel, new ReportViewModel());
         cardPanel.add(dealerAfterStandView, dealerAfterStandView.getViewName());
         return this;
     }
@@ -230,7 +234,7 @@ public class AppBuilder {
      * @return this builder.
      */
     public AppBuilder addSetupUseCase() {
-        final SetupOutputBoundary setupOutputBoundary = new SetupPresenter(viewManagerModel, mainMenuViewModel, setupViewModel);
+        final SetupOutputBoundary setupOutputBoundary = new interface_adapter.freePlay.setup.SetupPresenter(viewManagerModel, mainMenuViewModel, setupViewModel, dealerScreenViewModel);
 
         final SetupInputBoundary setupInteractor = new SetupInteractor(gameDAO, APIDAO, setupOutputBoundary);
 
@@ -262,13 +266,13 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addDealerScreenUseCase() {
-        final DealerScreenOutputDataBoundary dealerScreenPresenter = new DealerScreenPresenter(dealerScreenViewModel);
+        final DealerScreenOutputDataBoundary dealerScreenPresenter = new DealerScreenPresenter(viewManagerModel, dealerScreenViewModel, mainMenuViewModel);
 
-        final DealerScreenInputBoundary dealerScreenInteractor = new DealerScreenInteractor(dealerScreenPresenter);
+        final DealerScreenInputBoundary dealerScreenInteractor = new DealerScreenInteractor(gameDAO, dealerScreenPresenter, gameReportDAO);
 
         final DealerScreenController controller = new DealerScreenController(dealerScreenInteractor);
 
-        dealerAfterStandView.setDealerScreenController(controller); // TODO need to pull first to see if Matt already added this
+        dealerAfterStandView.setDealerScreenController(controller);
         return this;
     }
 
