@@ -1,4 +1,4 @@
-# casino-simulator
+# Blackjack Simulator
 Country Toad's CSC207 Group Project
 
 ### by Matthew Dahlgren: matt-dahlgren, Jacob Lisogurski: Jac0b-Beep, Pooja Mangra: 04mangra, Andriy Shkvorets: atStarling, Sonia Vaidya: soniavaidya05
@@ -13,7 +13,7 @@ Featuring Clean Architecture and SOLID!
 - A better than average UI!
 
 ## App Launching Instructions
-- Run with Java 11. Built and Tested with Amazon Corretto 11.0.24.
+- Run with Java 22. Built and Tested with Amazon Corretto 11.0.24.
 - Run [Main.java](./src/main/java/app/Main.java)
 
 ## Design Process:
@@ -34,40 +34,50 @@ Each *Use Case* corresponds to an action that the player "chooses" to take withi
 a game begins, a Setup Use Case is run which creates the dealer, userPlayer, fetches a new DeckID from the API through
 an interface, and fills the empty [GameDataAccessObject](./src/main/java/data_access/GameDataAccessObject.java) which we use to process the gameplay through the hit and stand interactors.
 
-# WE MAY CHANGE THIS, PLEASE UPDATE IF NEEDED, ALSO INCLUDE INFO ON THE FREEPLAY STATE, FREEPLAY CONTROLLER, AND MAYBE PRESENTER WHEN FINISHED!!!
 In all 3 of our FreePlay use cases, the output data is always an ArrayList of the links of the images of both the
 player's and dealer's hands, which allow the FreePlay presenter (after going through their respective OutputBoundaries),
-to display that data visually on the screen. 
+to display that data visually on the screen. To simplify the application, we condensed the view into only two to make
+things easier to update, without needing to refresh everything all at once.
 
-[App Builder](./src/main/java/app/AppBuilder.java) combines all our use cases and views into a single JFrame application,
-as well as setting all the basic visual aspects such as the dimensions of the launched application, and the icon.
+## Explanation of Classes (in General)
+[App Builder](./src/main/java/app/AppBuilder.java) combines all our use cases and views into a single JFrame application, 
+and sets the dimensions, icon, etc. of the app. By using an App Builder, we can implement our use cases and views using
+the *Open-closed principle* of SOLID, saving us loads of headaches by being able to add one thing at a time. Here begins
+the complex set of interface adapters existing between the user and the use cases themselves, adhering strictly to
+*Clean Architecture*. No direct contact to the use cases or entities are made here.
 
-The [Views](./src/main/java/view) visually displays all the different screens, as well as including the individual
-design features that we use to construct the views (such as the LabelTextPanel in Lab 5). These views retrieve any use
-specific information from their respective ViewModels (which themselves get information from their respective states).
-Otherwise, the views contain their use case buttons, whose actionListeners are determined by their respective use cases'
-controllers executes with information from the view's respective view model.
+The [Views*](./src/main/java/view) another "frameworks and drivers" of *Clean Architecture*, they, more or less, just
+display the data they receive, create the screen's GUI, and utilise controllers to create functioning buttons. Through
+their respective view models, who extend the functionality of the Views by acting as a medium between them and the
+state, which is responsible for storing the mutable objects needed for creating the display.
 
-# Discuss Game Report, Learning Mode, Assisted Mode, and Probability Stuff!!!
+*Note that there are also design elements used for visuals, like LabelTextPanel from Lab 5.
 
-Since our program uses several views and has quite a lot of varying classes, there's still a few classes that weren't 
-discussed, but feel free to look at their Java Docs for more information.
+The Controllers are the real backbone of the application, facilitating communication between the views and use case
+interactors. After executing a controller method from the view with whatever input information is needed, the method
+is parsed through a interface adapter medium before landing at the use case interactor. By doing this process, we
+implement *all 5 principles of SOLID,* making our code much more readable, module, cleaner, and easier to implement
+gradually. Once the input data arrives at the interactors, we can program the actual use cases, implementing all the
+application business rules we need.
+
+The Presenters are the opposite of the controllers, they take the output data from the interactors and proceed
+to update the view model and subsequently notify the view that new changes have been made.
+
+Although this entire process could be done through the 
+
+
+## Discuss Game Report, Learning Mode, Assisted Mode, and Probability Stuff!!!
 
 ## Test Coverage
 
 Below is our test coverage for our program. [INSERT TEST COVERAGE DETAILS HERE ONCE WE'RE FINISHED WITH THEM]
 
-In our tests, we did not test the visual UI elements as they are best manually tested.
+In our tests, we did not test the visual UI elements as they are best manually tested. Unfortunately, our tests don't
+have perfect coverage as we were crunching the code of our program. However, the most important elements are tested.
 
 ## Images
 Insert a bunch of images of us doing things with an explanation of what they are
 
-
-## Other Things to Mention:
-
-As we didn't fully understand Clean Architecture and SOLID; our code was a bit of a mess for the first few weeks. 
-For example, the entire FreePlay mode was a single use case before we chose to divide it into the 3 we have now. 
-Within the first week, we had developed an atrociously anti-Clean Architecture version of Blackjack which played okay.
 
 ## Resource Credits
  Card Images and API Data from the Deck of Cards API - https://deckofcardsapi.com/
