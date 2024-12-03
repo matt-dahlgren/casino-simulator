@@ -21,10 +21,10 @@ public class ProbabilityTest {
         ArrayList<Card> hand = new ArrayList<>();
         ArrayList<Card> hand2 = new ArrayList<>();
         hand.add(new Card("10", "Hearts", "https://deckofcardsapi.com/static/img/back.png"));
-        hand.add(new Card("A", "Spades", "https://deckofcardsapi.com/static/img/back.png"));
+        hand.add(new Card("ACE", "Spades", "https://deckofcardsapi.com/static/img/back.png"));
 
-        hand2.add(new Card("J", "Hearts", "https://deckofcardsapi.com/static/img/back.png"));
-        hand2.add(new Card("Q", "Spades", "https://deckofcardsapi.com/static/img/back.png"));
+        hand2.add(new Card("JACK", "Hearts", "https://deckofcardsapi.com/static/img/back.png"));
+        hand2.add(new Card("QUEEN", "Spades", "https://deckofcardsapi.com/static/img/back.png"));
 
         UserPlayer playerOne = new UserPlayer(hand);
         Dealer dealerOne = new Dealer(hand);
@@ -35,6 +35,6 @@ public class ProbabilityTest {
         int probability = testCalculator.standProbability();
 
         System.out.println("Win probability for Player One: " + probability);
-        assertTrue(probability >= 0 && probability <= 1, "Probability should be between 0 and 1");
+        assertTrue(probability == 100);
     }
 }

@@ -1,17 +1,15 @@
-package interface_adapter.freeplay.hit;
+package interface_adapter.free_play.hit;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.freeplay.setup.SetupViewModel;
-import interface_adapter.freeplay.*;
+import interface_adapter.free_play.setup.SetupViewModel;
 import use_case.freeplay.hit.HitOutputBoundary;
 import use_case.freeplay.hit.HitOutputData;
-import interface_adapter.*;
 
 import java.util.ArrayList;
 
 public class HitPresenter implements HitOutputBoundary {
     private final ViewManagerModel viewManagerModel;
-    HitViewModel hitViewModel;
+    interface_adapter.free_play.hit.HitViewModel hitViewModel;
     SetupViewModel setupViewModel;
 
     public HitPresenter(ViewManagerModel viewManagerModel, SetupViewModel setupViewModel, HitViewModel hitView) {
@@ -65,7 +63,7 @@ public class HitPresenter implements HitOutputBoundary {
     public void switchToHitView(HitOutputData outputData) {
         ArrayList<String> dealerHand = outputData.getDealerHandImages();
         ArrayList<String> playerHand = outputData.getPlayerHandImages();
-        final interface_adapter.freePlay.hit.HitState hitState = hitViewModel.getState();
+        final HitState hitState = hitViewModel.getState();
 
         hitState.setDealerHand(dealerHand);
         hitState.setPlayerHand(playerHand);

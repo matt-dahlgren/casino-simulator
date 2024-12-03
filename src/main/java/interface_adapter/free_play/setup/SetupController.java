@@ -1,4 +1,4 @@
-package interface_adapter.freeplay.setup;
+package interface_adapter.free_play.setup;
 
 import use_case.freeplay.setup.SetupInputBoundary;
 

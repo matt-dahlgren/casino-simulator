@@ -3,6 +3,8 @@ package use_case.signup;
 import entities.User;
 import entities.UserFactory;
 
+import java.io.IOException;
+
 public class SignupInteractor implements SignupInputBoundary {
     private final SignupUserDataAccessInterface userDAO;
     private final SignupOutputBoundary userPresenter;
@@ -21,7 +23,7 @@ public class SignupInteractor implements SignupInputBoundary {
      * @param signupInputData is the input data containing account info
      */
     @Override
-    public void execute(SignupInputData signupInputData) {
+    public void execute(SignupInputData signupInputData) throws IOException {
         if (userDAO.userExists(signupInputData.getUsername())) {
             //fail view, username already exists
             userPresenter.prepareFailView("User already exists");

@@ -9,9 +9,9 @@ import interface_adapter.assisted_mode.AssistedModeHitPresenter;
 import interface_adapter.assisted_mode.AssistedModeViewModel;
 import interface_adapter.dealer_screen.DealerScreenViewModel;
 import interface_adapter.freePlay.newhit.NewHitController;
-import interface_adapter.freeplay.newhit.NewHitPresenter;
-import interface_adapter.freeplay.setup.SetupController;
-import interface_adapter.freeplay.setup.SetupViewModel;
+import interface_adapter.free_play.newhit.NewHitPresenter;
+import interface_adapter.free_play.setup.SetupController;
+import interface_adapter.free_play.setup.SetupViewModel;
 import interface_adapter.learn_mode.*;
 import interface_adapter.main_menu.MainMenuViewModel;
 import interface_adapter.report.ReportViewModel;
@@ -68,7 +68,8 @@ public class AppBuilder {
 
     //Data Access Objects
     private final APIDataAccessObject APIDAO = new APIDataAccessObject();
-    private final GameDataAccessObject gameDAO = new GameDataAccessObject(userPlayer, dealer, "", new ArrayList<>()); //TODO Confirm empty string for deckID
+    private final GameDataAccessObject gameDAO = new GameDataAccessObject(userPlayer, dealer, "",
+            new ArrayList<>());
     private final AccountInfoDAO accountInfoDAO = new AccountInfoDAO();
     private final GameReportDataAccessObject gameReportDAO = new GameReportDataAccessObject();
     private UserFactory userFactory;
@@ -296,7 +297,9 @@ public class AppBuilder {
     public AppBuilder addDealerScreenUseCase() {
         final DealerScreenOutputDataBoundary dealerScreenPresenter = new DealerScreenPresenter(viewManagerModel, dealerScreenViewModel, mainMenuViewModel);
 
-        final DealerScreenInputBoundary dealerScreenInteractor = new DealerScreenInteractor(gameDAO, dealerScreenPresenter, gameReportDAO);
+        ArrayList<String> cards = new ArrayList<>();
+
+        final DealerScreenInputBoundary dealerScreenInteractor = new DealerScreenInteractor(gameDAO, dealerScreenPresenter, gameReportDAO, cards);
 
         final DealerScreenController controller = new DealerScreenController(dealerScreenInteractor);
 

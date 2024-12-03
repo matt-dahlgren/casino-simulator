@@ -1,7 +1,6 @@
-package interface_adapter.freePlay.hit;
+package interface_adapter.free_play.hit;
 
 import interface_adapter.ViewModel;
-import interface_adapter.freePlay.hit.HitState;
 
 import java.util.ArrayList;
 

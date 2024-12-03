@@ -1,9 +1,9 @@
 package view;
 
 import interface_adapter.freePlay.newhit.NewHitController;
-import interface_adapter.freeplay.setup.SetupController;
-import interface_adapter.freeplay.setup.SetupState;
-import interface_adapter.freeplay.setup.SetupViewModel;
+import interface_adapter.free_play.setup.SetupController;
+import interface_adapter.free_play.setup.SetupState;
+import interface_adapter.free_play.setup.SetupViewModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,7 +15,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 
 import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
 
