@@ -378,7 +378,8 @@ public class AppBuilder {
     }
 
     public AppBuilder addGameReportUseCase() {
-        final GameReportOutputBoundary gameReportOutputBoundary = new GameReportPresenter(reportViewModel, viewManagerModel);
+        final GameReportOutputBoundary gameReportOutputBoundary = new GameReportPresenter(reportViewModel,
+                viewManagerModel, mainMenuViewModel);
         final GameReportInputBoundary gameReportInteractor = new GameReportInteractor(gameReportDAO, gameReportOutputBoundary);
         final GameReportController controller = new GameReportController(gameReportInteractor);
         reportView.setGameReportController(controller);
