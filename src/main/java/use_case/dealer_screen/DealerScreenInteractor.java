@@ -3,6 +3,7 @@ package use_case.dealer_screen;
 import data_access.GameDataAccessObject;
 import data_access.APIDataAccessObject;
 
+import data_access.GameReportDataAccessObject;
 import entities.Card;
 
 import java.util.ArrayList;
@@ -16,11 +17,14 @@ public class DealerScreenInteractor implements DealerScreenInputBoundary {
 
     private final GameDataAccessObject gameDataAccessObject;
     private final DealerScreenOutputDataBoundary outputPresenter;
+    private final GameReportDataAccessObject reportDataAccessObject;
 
     public DealerScreenInteractor(GameDataAccessObject gameDataAccessObject,
-                                  DealerScreenOutputDataBoundary outputPresenter) {
+                                  DealerScreenOutputDataBoundary outputPresenter,
+                                  GameReportDataAccessObject reportDataAccessObject) {
         this.gameDataAccessObject = gameDataAccessObject;
         this.outputPresenter = outputPresenter;
+        this.reportDataAccessObject = reportDataAccessObject;
     }
 
     /**
@@ -29,7 +33,7 @@ public class DealerScreenInteractor implements DealerScreenInputBoundary {
      * the smallest possible score.
      * @return an integer representing the score of your current hand.
      */
-    private int dealerHandScore () {
+    private int dealerHandScore() {
 
         int result = 0;
         int aceCount = 0;
@@ -104,6 +108,7 @@ public class DealerScreenInteractor implements DealerScreenInputBoundary {
     /**
      * Execute the FreePlayStand UsecCase
      */
+    @Override
     public void execute() {
 
         this.pullToSeventeen();
@@ -120,8 +125,14 @@ public class DealerScreenInteractor implements DealerScreenInputBoundary {
         }
 
         DealerScreenOutputData outputData = new DealerScreenOutputData(dealerScore, playerScore,
-                cardStrings, gameWin);
+                cardStrings, gameWin, String.valueOf(reportDataAccessObject.getNumGames()));
 
         outputPresenter.prepareStandView(outputData);
     }
+
+    @Override
+    public void toMainMenu() {
+        outputPresenter.toMainView();
+    }
+
 }

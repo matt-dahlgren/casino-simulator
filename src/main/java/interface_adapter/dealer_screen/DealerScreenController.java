@@ -16,4 +16,8 @@ public class DealerScreenController {
     public void execute() {
         freePlayStandInteractor.execute();
     }
+
+    public void toMainMenu() {
+        freePlayStandInteractor.toMainMenu();
+    }
 }

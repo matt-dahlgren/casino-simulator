@@ -9,4 +9,12 @@ public interface DealerScreenInputBoundary {
      * Execute the FreePlayStand Use case.
      */
     void execute();
+
+    /**
+     * send this view to main menu.
+     */
+    void toMainMenu();
 }
+
+
+

@@ -26,4 +26,8 @@ public interface GameDataAccess {
     void updateStandProbability(int score);
 
     void updateHandScore(int score);
+
+    Map<Integer, Integer> getHitProbability();
+    Map<Integer, Integer> getStandProbability();
+    Map<Integer, Integer> getHandScore();
 }

@@ -15,7 +15,7 @@ public class AssistedSetUpOutputData {
     private final int playerScore;
     private final ArrayList<String> playerCards;
     private final ArrayList<String> dealerCards;
-    //TODO: Jacob's DAO
+
     public AssistedSetUpOutputData(GameDataAccessObject gameDataAccessObject, int hitWin, int standWin, int playerScore,
                                    ArrayList<String> playerCards, ArrayList<String> dealerCards) {
         this.gameDataAccessObject = gameDataAccessObject;

@@ -12,7 +12,7 @@ public class AssistedModeSetupPresenter implements AssistedSetupOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final AssistedModeViewModel assistedModeViewModel;
 
-    public AssistedModeHitPresenter(ViewManagerModel viewModel, AssistedModeViewModel assistedViewModel) {
+    public AssistedModeSetupPresenter(ViewManagerModel viewModel, AssistedModeViewModel assistedViewModel) {
         this.viewManagerModel = viewModel;
         this.assistedModeViewModel = assistedViewModel;
 
@@ -26,6 +26,11 @@ public class AssistedModeSetupPresenter implements AssistedSetupOutputBoundary {
         assistedModeState.setStandWin(outputData.getStandWin());
         assistedModeState.setHitWin(outputData.getHitWin());
         assistedModeState.setPlayerScore(outputData.getPlayerScore());
-        assistedModeState.setDealerScore(outputData.get);
+
+        assistedModeViewModel.setState(assistedModeState);
+        assistedModeViewModel.firePropertyChanged();
+
+        viewManagerModel.setState(assistedModeViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }

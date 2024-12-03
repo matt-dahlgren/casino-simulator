@@ -1,7 +1,6 @@
 package use_case.assisted_mode.game;
 
-import data_access.APIDataAccessObject;
-import data_access.GameDataAccessObject;
+import data_access.*;
 import entities.Card;
 import entities.Dealer;
 import entities.Player;
@@ -19,11 +18,16 @@ public class AssistedGameInteractor implements AssistedGameInputDataBoundary {
 
     private final GameDataAccessObject gameDataAccessObject;
     private final AssistedGameOutputDataBoundary assistedHitOutputDataBoundary;
+    private final AccountInfoDAO accountInfoDAO;
+    private final GameReportDataAccessObject gameReportDAO;
 
     public AssistedGameInteractor(GameDataAccessObject gameDataAccessObject,
-                                  AssistedGameOutputDataBoundary assistedHitOutputDataBoundary) {
+                                  AssistedGameOutputDataBoundary assistedHitOutputDataBoundary,
+                                  AccountInfoDAO accountInfoDAO, GameReportDataAccessObject gameReportDAO) {
         this.gameDataAccessObject = gameDataAccessObject;
         this.assistedHitOutputDataBoundary = assistedHitOutputDataBoundary;
+        this.accountInfoDAO = accountInfoDAO;
+        this.gameReportDAO = gameReportDAO;
     }
 
     /**
@@ -86,14 +90,7 @@ public class AssistedGameInteractor implements AssistedGameInputDataBoundary {
             playerVisibleCards.add(card.getImage());
         }
 
-        for (Card card: gameDataAccessObject.getDealer().getHand()) {
-            if (card.isVisible()) {
-                dealerVisibleCards.add(card.getImage());
-            }
-            else {
-                dealerVisibleCards.add("https://deckofcardsapi.com/static/img/back.png");
-            }
-        }
+        buildDealerInPlay(dealerVisibleCards);
 
         int dealerScore = handScore((gameDataAccessObject.getDealer()));
 
@@ -138,6 +135,10 @@ public class AssistedGameInteractor implements AssistedGameInputDataBoundary {
         int handscore = standCalculator.handScore(standCalculator.getUserCards());
 
         if (handscore >= 21) {
+            gameReportDAO.updateGameData(gameDataAccessObject.getHitProbability(),
+                    gameDataAccessObject.getStandProbability(), gameDataAccessObject.getHandScore(),
+                    gameDataAccessObject.getPlayer(), accountInfoDAO.getCurrentUser());
+
             assistedHitOutputDataBoundary.prepareAssistedStand(getAssistedStandOutputData(standCalculator.execute(),
                     handscore));
         }
@@ -150,14 +151,7 @@ public class AssistedGameInteractor implements AssistedGameInputDataBoundary {
                 playerVisibleCards.add(card.getImage());
             }
 
-            for (Card card: gameDataAccessObject.getDealer().getHand()) {
-                if (card.isVisible()) {
-                    dealerVisibleCards.add(card.getImage());
-                }
-                else {
-                    dealerVisibleCards.add("https://deckofcardsapi.com/static/img/back.png");
-                }
-            }
+            buildDealerInPlay(dealerVisibleCards);
             int dealerScore = handScore((gameDataAccessObject.getDealer()));
             AssistedGameOutputData outputData = new AssistedGameOutputData(hitCalculator.execute(),
                     standCalculator.execute(), handscore, dealerScore, playerVisibleCards, dealerVisibleCards,
@@ -166,6 +160,20 @@ public class AssistedGameInteractor implements AssistedGameInputDataBoundary {
         }
     }
 
+    private void buildDealerInPlay(ArrayList<String> dealerVisibleCards) {
+        for (Card card: gameDataAccessObject.getDealer().getHand()) {
+            if (card.isVisible()) {
+                dealerVisibleCards.add(card.getImage());
+            }
+            else {
+                dealerVisibleCards.add("https://deckofcardsapi.com/static/img/back.png");
+            }
+        }
+    }
+
+    /**
+     * The dealer pulls cards from the Deck until they have a score of at least 17.
+     */
     private void pullToSeventeen() {
 
         APIDataAccessObject apiDataAccessObject = new APIDataAccessObject();
@@ -180,8 +188,14 @@ public class AssistedGameInteractor implements AssistedGameInputDataBoundary {
         pullToSeventeen();
         ProbabilityStandCalculator standCalculator = new ProbabilityStandCalculator(gameDataAccessObject);
         int handscore = standCalculator.handScore(standCalculator.getUserCards());
+
+        gameReportDAO.updateGameData(gameDataAccessObject.getHitProbability(),
+                gameDataAccessObject.getStandProbability(), gameDataAccessObject.getHandScore(),
+                gameDataAccessObject.getPlayer(), accountInfoDAO.getCurrentUser());
+
         assistedHitOutputDataBoundary.prepareAssistedStand(getAssistedStandOutputData(standCalculator.execute(),
                 handscore));
+
     }
 
     @Override
