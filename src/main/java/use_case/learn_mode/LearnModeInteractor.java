@@ -1,7 +1,7 @@
 package use_case.learn_mode;
 import use_case.learn_mode.LearnModeOutputBoundary;
 
-public class LearnModeInteractor {
+public class LearnModeInteractor implements LearnModeInputBoundary {
     LearnModeOutputBoundary learnModePresenter;
 
     public LearnModeInteractor(LearnModeOutputBoundary learnModePresenter) {

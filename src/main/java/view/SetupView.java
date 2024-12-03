@@ -1,9 +1,9 @@
 package view;
 
 import interface_adapter.freePlay.newhit.NewHitController;
-import interface_adapter.freePlay.setup.SetupController;
-import interface_adapter.freePlay.setup.SetupState;
-import interface_adapter.freePlay.setup.SetupViewModel;
+import interface_adapter.freeplay.setup.SetupController;
+import interface_adapter.freeplay.setup.SetupState;
+import interface_adapter.freeplay.setup.SetupViewModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
