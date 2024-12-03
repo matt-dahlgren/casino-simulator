@@ -6,12 +6,14 @@ import interface_adapter.signup_adapter.SignupPresenter;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SignupInteractorTest {
 
     @Test
-    void successTest() {
+    void successTest() throws FileNotFoundException {
         SignupUserDataAccessInterface accountRepo = new AccountInfoDAO();
 
         SignupInputData inputData = new SignupInputData(
@@ -42,7 +44,7 @@ public class SignupInteractorTest {
     }
 
     @Test
-    void failPasswordMismatchTest() {
+    void failPasswordMismatchTest() throws FileNotFoundException {
         SignupUserDataAccessInterface accountRepo = new AccountInfoDAO();
 
         SignupInputData inputData = new SignupInputData("bob", "bob@gmail.com", "bob1", "notbob1");
