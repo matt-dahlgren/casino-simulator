@@ -3,6 +3,7 @@ package view;
 import interface_adapter.assisted_mode.AssistedModeController;
 import interface_adapter.assisted_mode.AssistedModeState;
 import interface_adapter.assisted_mode.AssistedModeViewModel;
+import interface_adapter.assisted_mode.setup.AssistedModeSetupController;
 import interface_adapter.dealer_screen.DealerScreenViewModel;
 import interface_adapter.main_menu.MainMenuViewModel;
 
@@ -201,5 +202,4 @@ public class AssistedView extends JPanel implements ActionListener, PropertyChan
 
     public String getViewName() {
         return "Assisted";
-    }
-}
+    }}
