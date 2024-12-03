@@ -1,42 +1,46 @@
 # *Blackjack Simulator*
-Country Toad's CSC207 Group Project
+## Country Toad's CSC207 Group Project
 
-Featuring Clean Architecture and SOLID!
+#### by Matthew Dahlgren: matt-dahlgren, Jacob Lisogurski: Jac0b-Beep, Pooja Mangra: 04mangra, Andriy Shkvorets: atStarling, Sonia Vaidya: soniavaidya05
 
-### by Matthew Dahlgren: matt-dahlgren, Jacob Lisogurski: Jac0b-Beep, Pooja Mangra: 04mangra, Andriy Shkvorets: atStarling, Sonia Vaidya: soniavaidya05
+*1* [Game Modes and Features:](#game-modes-and-features)
+- [Features](#features)
+- [Learning Mode](#learning-mode)
+- [Assisted Mode](#assisted-mode)
+- [Game Report](#game-report)
+- [Probability Algorithm](#probability-algorithm)
 
-1[Features](#features)
+*2* [App Launching Instructions:](#app-launching-instructions)
 
-2[App Launching Instructions](#app-launching-instructions)
+*3* [Design Process](#design-process)
 
-3[Design Process](#design-process)
-    - [Entities](#entities)
-    - [Use Cases](#use-cases)
+*4* [Explanation of Classes (in General)](#explanation-of-classes-in-general)
 
-3[Explanation of Classes (in General)](#explanation-of-classes-in-general)
-    - [App Builder](#app-builder)
-    - [Views](#views)
-    - [Controllers](#controllers)
-    - [Presenters](#presenters)
+*5* [Test Coverage](#test-coverage)
 
-4[Game Modes and Features](#game-modes-and-features)
-    - [Game Report](#game-report)
-    - [Learning Mode](#learning-mode)
-    - [Assisted Mode](#assisted-mode)
-    - [Probability Algorithm](#probability-algorithm)
+*6* [Images](#images)
 
-5[Test Coverage](#test-coverage)
+*7* [Contribution](#contribution)
 
-6[Images](#images)
+*8* [Resource Credits](#resource-credits)
 
-7[Resource Credits](#resource-credits)
-
-## Features
+## Game Modes and Features
+### Features
 - A functioning app that allows you to play simple Blackjack!
 - Assisted Mode that tells you the optimal decision to take during your turn, featuring a complex probability algorithm!
 - Learn Mode: to learn how to play Blackjack!
 - Emailed Post-Game reports using the email you signed up with!
 - A better than average UI!
+
+//TODO Include explanations of the following
+### Learning Mode
+
+### Assisted Mode
+
+### Game Report
+
+### Probability Algorithm
+
 
 ## App Launching Instructions
 - Run with Java 22. Built and Tested with Amazon Corretto 11.0.24 on macOS Sequoia, Windows 10, and Windows 11.
@@ -62,7 +66,8 @@ After finishing the entities, we moved on to our [use cases](./src/main/java/use
 Each *Use Case* corresponds to an action that the player "chooses" to take within the application. While the 
 [free play use cases](./src/main/java/use_case/freeplay) are use cases directly relevant to the game play itself. When
 a game begins, a Setup Use Case is run which creates the dealer, userPlayer, fetches a new DeckID from the API through
-an interface, and fills the empty [GameDataAccessObject](./src/main/java/data_access/GameDataAccessObject.java) which we use to process the gameplay through the hit and stand interactors.
+an interface, and fills the empty [GameDataAccessObject](./src/main/java/data_access/GameDataAccessObject.java) which 
+we use to process the gameplay through the hit and stand interactors.
 
 In all 3 of our FreePlay use cases, the output data is always an ArrayList of the links of the images of both the
 player's and dealer's hands, which allow the FreePlay presenter (after going through their respective OutputBoundaries),
@@ -93,13 +98,12 @@ application business rules we need.
 The Presenters are the opposite of the controllers, they take the output data from the interactors and proceed
 to update the view model and subsequently notify the view that new changes have been made.
 
-Although this entire process could be done through the 
-
-
-## Discuss Game Report, Learning Mode, Assisted Mode, and Probability Stuff!!!
+Although this entire process could be done through solely a single view, the disobedience to Clean Architecture and
+SOLID would make it very difficult to run without having the entire program assembled all at once. As well as
+making it a nightmare to independently test sections of code, make modifications, or understanding what the code
+is actually doing.
 
 ## Test Coverage
-
 Below is our test coverage for our program. [INSERT TEST COVERAGE DETAILS HERE ONCE WE'RE FINISHED WITH THEM]
 
 In our tests, we did not test the visual UI elements as they are best manually tested. Unfortunately, our tests don't
@@ -107,6 +111,14 @@ have perfect coverage as we were crunching the code of our program. However, the
 
 ## Images
 Insert a bunch of images of us doing things with an explanation of what they are
+
+## Contribution
+As this was an assignment done for our CSC207 course and was a demonstration of what we could achieve given the course
+material, public contributions are closed. However, if you wish to make a fork, you can! Nothing special is needed
+except the requirements listed in the app launching instructions. We would recommend making nice and clean merge
+requests for when you work on that fork, so that your main branch doesn't accidentally end up broken. Always use
+SOLID and Clean Architecture in adherence to our existing code! Ensure that merged contributions actually expand on
+the app rather than break it down.
 
 
 ## Resource Credits
