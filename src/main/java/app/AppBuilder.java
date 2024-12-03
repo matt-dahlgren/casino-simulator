@@ -14,7 +14,7 @@ import interface_adapter.free_play.setup.SetupController;
 import interface_adapter.free_play.setup.SetupViewModel;
 import interface_adapter.learn_mode.*;
 import interface_adapter.main_menu.MainMenuViewModel;
-import interface_adapter.report.ReportViewModel;
+import interface_adapter.report.*;
 import interface_adapter.signup_adapter.*;
 import interface_adapter.login_adapter.*;
 import interface_adapter.dealer_screen.*;
@@ -28,6 +28,12 @@ import use_case.assisted_mode.setup.AssistedSetupOutputBoundary;
 import use_case.dealer_screen.DealerScreenInputBoundary;
 import use_case.dealer_screen.DealerScreenInteractor;
 import use_case.dealer_screen.DealerScreenOutputDataBoundary;
+import use_case.email_report.EmailReportInputBoundary;
+import use_case.email_report.EmailReportInteractor;
+import use_case.email_report.EmailReportOutputBoundary;
+import use_case.endgame_report.GameReportInputBoundary;
+import use_case.endgame_report.GameReportInteractor;
+import use_case.endgame_report.GameReportOutputBoundary;
 import use_case.learn_mode.LearnModeInputBoundary;
 import use_case.learn_mode.LearnModeInteractor;
 import use_case.learn_mode.LearnModeOutputBoundary;
@@ -160,16 +166,16 @@ public class AppBuilder {
         return this;
     }
 
-//    /**
-//     * Adds the Report view to the application.
-//     * @return this builder
-//     */
-//    public AppBuilder addReportView() {
-//        reportViewModel = new ReportViewModel();
-//        reportView = new ReportView(reportViewModel);
-//        cardPanel.add(reportView, reportView.getViewName());
-//        return this;
-//    }
+    /**
+     * Adds the Report view to the application.
+     * @return this builder
+     */
+    public AppBuilder addReportView() {
+        reportViewModel = new ReportViewModel();
+        reportView = new ReportView(reportViewModel);
+        cardPanel.add(reportView, reportView.getViewName());
+        return this;
+    }
 
     /**
      * Adds the DealerAfterStand view to the application.
@@ -359,10 +365,22 @@ public class AppBuilder {
         return this;
     }
 
-//    public AppBuilder addReportUseCase() {
-//        // TODO Am i supposed to use email_report or endgame_report in use case? (the one that corresponds to report view)
-//        return this;
-//    }
+    public AppBuilder addEmailReportUseCase() {
+        final EmailReportOutputBoundary emailReportOutputBoundary = new EmailReportPresenter(reportViewModel, viewManagerModel);
+        final EmailReportInputBoundary emailReportInteractor = new EmailReportInteractor(gameReportDAO, emailReportOutputBoundary, accountInfoDAO);
+        final EmailReportController controller = new EmailReportController(emailReportInteractor);
+        reportView.setEmailReportController(controller);
+        return this;
+    }
+
+    public AppBuilder addGameReportUseCase() {
+        final GameReportOutputBoundary gameReportOutputBoundary = new GameReportPresenter(reportViewModel,
+                viewManagerModel, mainMenuViewModel);
+        final GameReportInputBoundary gameReportInteractor = new GameReportInteractor(gameReportDAO, gameReportOutputBoundary);
+        final GameReportController controller = new GameReportController(gameReportInteractor);
+        reportView.setGameReportController(controller);
+        return this;
+    }
 
     /**
      * Creates the JFrame for the application and initially sets the Signup View to be displayed.

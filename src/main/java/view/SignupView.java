@@ -58,7 +58,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
 
-
         signUp.addActionListener(
                 new ActionListener() {
                     /**

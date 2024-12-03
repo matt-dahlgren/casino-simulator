@@ -5,10 +5,9 @@
 
 **1** [Game Modes and Features:](#game-modes-and-features)
 - [Features](#features)
-- [Learning Mode](#learning-mode)
+- [Player Account](#player-account)
 - [Assisted Mode](#assisted-mode)
 - [Game Report](#game-report)
-- [Probability Algorithm](#probability-algorithm)
 
 **2** [App Launching Instructions:](#app-launching-instructions)
 
@@ -32,23 +31,38 @@
 - Emailed Post-Game reports using the email you signed up with!
 - A better than average UI!
 
-//TODO Include explanations of the following
-### Learning Mode
+### Player Account
+Signing up for an account allows you create a unique, password protected account on the application. Your
+account will have a username and password and will be linked to your email address so you can receive reports
+about your Blackjack gameplay experience. Once you're done playing, you can log out. This allows you to keep your saved
+games separate from others who may be sharing your device. 
+
+### Learn Mode
+Learn Mode allows you to learn about how to play BlackJack. You can toggle between different concepts, like the 
+objective of the game, how dealing works, and what kinds of moves you can do. You can navigate to Learn Mode from the 
+Main Menu of the game. The aim of this mode is to be as inclusive as possible of players with different 
+levels of expertise!
 
 ### Assisted Mode
+Assisted Mode allows you to play Blackjack in a zero risk environment with active suggestions on whether hitting or
+standing is a better move for the player to make in the board's current state. This allows experienced blackjack players
+to train themselves, and giving less experienced players exposure to a new game with assistance. 
 
 ### Game Report
-
-### Probability Algorithm
-
+The game report allows you to see the quality of all your moves in Assisted Mode, and to compare that against the 
+quality of the potential moves they didn't take (i.e. if the player hit, they can see the quality of that move, 
+as well as the move quality of standing instead). The player can view game reports of any of their assisted games, 
+allowing them to track their progress. They can also recieve emails with the game reports, to keep for their own 
+reference.
 
 ## App Launching Instructions
 - Run with Java 22. Built and Tested with Amazon Corretto 11.0.24 on macOS Sequoia, Windows 10, and Windows 11.
-- Requires [JavaMail] //TODO PLEASE INCLUDE LINK
+- Utilize Maven to install needed dependacies.
 - Run [Main.java](./src/main/java/app/Main.java)
 
-Luckily, the only issues that may arise with launching the app are with JavaMail. As JavaMail needs to be installed
-in Intellji in order to send emails, it cannot be simply imported.
+Luckily, the only issues that may arise are with Maven. If the app refuses to build, navigate to Maven in your 
+Setting's Build Tools, select "Runner" and then tick the checkbox to delegate IDE build/run actions to Maven.
+Also, consider reloading your pom.xml file if you have issues.
 
 ## Design Process:
 In the beginning, we created CRC cards to determine which classes we'd need in the final product. Although we expanded

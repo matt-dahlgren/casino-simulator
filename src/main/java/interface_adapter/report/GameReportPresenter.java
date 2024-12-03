@@ -1,6 +1,9 @@
 package interface_adapter.report;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.login_adapter.LoginViewModel;
+import interface_adapter.main_menu.MainMenuState;
+import interface_adapter.main_menu.MainMenuViewModel;
 import use_case.endgame_report.GameReportOutputBoundary;
 import use_case.endgame_report.GameReportOutputData;
 
@@ -10,10 +13,13 @@ import use_case.endgame_report.GameReportOutputData;
 public class GameReportPresenter implements GameReportOutputBoundary {
     private final ReportViewModel reportViewModel;
     private final ViewManagerModel viewManagerModel;
+    private final LoginViewModel mainMenuViewModel;
 
-    public GameReportPresenter(ReportViewModel reportViewModel, ViewManagerModel viewManagerModel) {
+    public GameReportPresenter(ReportViewModel reportViewModel, ViewManagerModel viewManagerModel,
+                               MainMenuViewModel mainMenuViewModel) {
         this.reportViewModel = reportViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.mainMenuViewModel = mainMenuViewModel;
     }
 
     @Override
@@ -40,8 +46,7 @@ public class GameReportPresenter implements GameReportOutputBoundary {
 
     @Override
     public void switchToMainMenuView() {
-        // TODO
-        viewManagerModel.setState(reportViewModel.getViewName());
+        viewManagerModel.setState(mainMenuViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

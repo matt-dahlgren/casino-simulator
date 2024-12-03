@@ -43,6 +43,14 @@ public class Main {
                 .addDealerAfterStandView()
                 .addDealerScreenUseCase()
 
+                .addAssistedView()
+                .addAssistedSetupUseCase()
+                .addAssistedGameUseCase()
+
+                .addReportView()
+                .addGameReportUseCase()
+                .addEmailReportUseCase()
+
                 .addObjectiveView()
                 .addObjectiveLearnModeUseCase()
                 .addDealingView()
