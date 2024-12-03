@@ -24,5 +24,9 @@ public class LoginController {
 
         loginInputBoundary.execute(loginInputData);
     }
+
+    public void switchToMainMenuView() {
+        loginInputBoundary.switchToMainMenuView();
+    }
 }
 

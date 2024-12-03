@@ -71,6 +71,8 @@ public class AccountInfoDAO implements SignupUserDataAccessInterface {
             FileWriter writer = new FileWriter(dataPath, true);
             writer.write(user.getUsername() + "," + user.getPassword() + "," + user.getEmail() + "\n");
             writer.close();
+
+
         }
         catch (IOException e) {
             e.printStackTrace();

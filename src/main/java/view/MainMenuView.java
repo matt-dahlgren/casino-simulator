@@ -158,7 +158,7 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
 
 
     public String getViewName() {
-        return "Main Menu";
+        return "main menu";
     }
 
 

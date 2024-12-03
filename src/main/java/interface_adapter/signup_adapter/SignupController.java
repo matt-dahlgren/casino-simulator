@@ -18,6 +18,14 @@ public class SignupController {
 
     public void execute(String username, String email, String password, String repeatPassword) throws IOException {
         final SignupInputData signupInputData = new SignupInputData(username, email, password, repeatPassword);
+
         signupInteractor.execute(signupInputData);
+    }
+
+    /**
+     * Executes the "switch to LoginView" use case.
+     */
+    public void switchToLoginView() {
+        signupInteractor.switchToLoginView();
     }
 }

@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.dealer_screen.DealerScreenViewModel;
 import interface_adapter.freePlay.newhit.NewHitController;
 import interface_adapter.free_play.setup.SetupController;
 import interface_adapter.free_play.setup.SetupState;
@@ -21,6 +22,7 @@ import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLEC
 
 public class SetupView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "setup";
+    private final DealerScreenViewModel dealerScreenViewModel;
 
     private SetupController setupController;
     private NewHitController hitController;
@@ -32,8 +34,10 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
 
     private int SCORE = 0;
 
-    public SetupView(SetupViewModel setupViewModel) {
+    public SetupView(SetupViewModel setupViewModel, DealerScreenViewModel dealerScreenViewModel) {
         this.setupViewModel = setupViewModel;
+        this.dealerScreenViewModel = dealerScreenViewModel;
+
         setupViewModel.addPropertyChangeListener(this);
 
         setBackground(TABLECOLOUR);
@@ -85,7 +89,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         standButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setupController.switchToDealerAfterStandView();
+                hitController.switchToDealerAfterStandView();
             }
         });
 

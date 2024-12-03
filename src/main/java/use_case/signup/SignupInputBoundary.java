@@ -11,4 +11,10 @@ public interface SignupInputBoundary {
      * @param signupInputData is the input data containing account info
      */
     void execute(SignupInputData signupInputData) throws IOException;
+
+    /**
+     * Executes the switch to login view.
+     */
+    void switchToLoginView();
 }
+

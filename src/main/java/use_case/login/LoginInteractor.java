@@ -42,4 +42,8 @@ public class LoginInteractor implements LoginInputBoundary {
             }
         }
     }
+
+    public void switchToMainMenuView() {
+        loginPresenter.switchToMainMenuView();
+    }
 }

@@ -78,7 +78,7 @@ public class AppBuilder {
             new ArrayList<>());
     private final AccountInfoDAO accountInfoDAO = new AccountInfoDAO();
     private final GameReportDataAccessObject gameReportDAO = new GameReportDataAccessObject();
-    private UserFactory userFactory;
+    private UserFactory userFactory = new CommonUserFactory();
 
     //Views
     private MainMenuView mainMenuView;
@@ -115,7 +115,8 @@ public class AppBuilder {
      */
     public AppBuilder addSignUpView() {
         signupViewModel = new SignupViewModel();
-        signupView = new SignupView(signupViewModel);
+        loginViewModel = new LoginViewModel();
+        signupView = new SignupView(signupViewModel, loginViewModel);
         cardPanel.add(signupView, signupView.getViewName());
         return this;
     }
@@ -126,7 +127,8 @@ public class AppBuilder {
      */
     public AppBuilder addLoginView() {
         loginViewModel = new LoginViewModel();
-        loginView = new LoginView(loginViewModel);
+        mainMenuViewModel = new MainMenuViewModel();
+        loginView = new LoginView(loginViewModel, mainMenuViewModel);
         cardPanel.add(loginView, loginView.getViewName());
         return this;
     }
@@ -148,7 +150,7 @@ public class AppBuilder {
      */
     public AppBuilder addSetupView() {
         setupViewModel = new SetupViewModel();
-        setupView = new SetupView(setupViewModel);
+        setupView = new SetupView(setupViewModel, dealerScreenViewModel);
         cardPanel.add(setupView, setupView.getViewName());
         return this;
     }
@@ -253,17 +255,10 @@ public class AppBuilder {
      */
     public AppBuilder addSignupUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(signupViewModel, loginViewModel, viewManagerModel);
-        userFactory = new UserFactory() {
-            @Override
-            public User create(String username, String email, String password) {
-                return null;
-            }
-        };
-        // TODO Ask team if user factory should be empty to start with? or f
         final SignupInputBoundary signupInteractor = new SignupInteractor(accountInfoDAO, signupOutputBoundary, userFactory);
+
         final SignupController controller = new SignupController(signupInteractor);
         signupView.setSignupController(controller);
-        // TODO The code in SignupView does NOT use SignupController... verify this is what you want
         return this;
     }
 
@@ -286,6 +281,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addHitUseCase() {
+
         final NewHitOutputBoundary hitOutputBoundary = new NewHitPresenter(setupViewModel);
 
         final NewHitInputBoundary newHitInteractor = new NewHitInteractor(APIDAO, gameDAO, hitOutputBoundary);
