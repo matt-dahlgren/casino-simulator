@@ -4,9 +4,9 @@ import data_access.AccountInfoDAO;
 import entities.User;
 
 /**
- * Log in interactor
+ * Log in interactor.
  */
-public class LoginInteractor implements LoginInputBoundary{
+public class LoginInteractor implements LoginInputBoundary {
     private final AccountInfoDAO userDAO;
     private final LoginOutputBoundary loginPresenter;
 
@@ -14,7 +14,6 @@ public class LoginInteractor implements LoginInputBoundary{
         this.userDAO = userDAO;
         this.loginPresenter = loginPresenter;
     }
-
 
     /**
      * Executes the login use case.
