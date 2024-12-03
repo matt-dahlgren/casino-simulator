@@ -1,9 +1,11 @@
-package interface_adapter.freePlay.hit;
+package interface_adapter.freeplay.hit;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.freePlay.setup.SetupViewModel;
+import interface_adapter.freeplay.setup.SetupViewModel;
+import interface_adapter.freePlay.*;
 import use_case.freeplay.hit.HitOutputBoundary;
 import use_case.freeplay.hit.HitOutputData;
+import interface_adapter.*;
 
 import java.util.ArrayList;
 

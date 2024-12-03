@@ -29,10 +29,26 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
+                .addSignUpView()
+                .addSignupUseCase()
+
+                .addLoginView()
+                .addLoginUseCase()
+
                 .addMainMenuView()
+
                 .addSetupView()
                 .addSetupUseCase()
                 .addHitUseCase()
+                .addDealerAfterStandView()
+                .addDealerScreenUseCase()
+
+                .addObjectiveView()
+                .addObjectiveLearnModeUseCase()
+                .addDealingView()
+                .addDealingLearnModeUseCase()
+                .addMovesView()
+                .addMovesLearnModeUseCase()
                 .build();
 
         application.pack();
