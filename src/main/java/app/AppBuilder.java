@@ -315,7 +315,7 @@ public class AppBuilder {
 
         final AssistedModeSetupController controller = new AssistedModeSetupController(assistedSetupInteractor);
 
-        assistedView.setAssistedSetupController(controller);
+        mainMenuView.setAssistedModeSetupController(controller);
 
         return this;
     }

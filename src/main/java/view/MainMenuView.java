@@ -2,6 +2,7 @@ package view;
 
 
 import interface_adapter.assisted_mode.AssistedModeController;
+import interface_adapter.assisted_mode.setup.AssistedModeSetupController;
 import interface_adapter.freeplay.setup.SetupController;
 import interface_adapter.learn_mode.LearnModeController;
 import interface_adapter.logout_adapter.LogoutController;
@@ -25,7 +26,7 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
 
 
     // Locate all other controllers accessible from Main Menu as attributes
-    private AssistedModeController assistedController;
+    private AssistedModeSetupController assistedSetupController;
     private SetupController setupController;
     private LearnModeController learnController;
     private LogoutController logoutController;
@@ -85,7 +86,7 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
                 evt -> {
                     if (evt.getSource().equals(assisted)) {
                         // Get from matt
-                        this.assistedController.execute();
+                        this.assistedSetupController.execute();
                     }
                 }
         );
@@ -136,8 +137,8 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
     }
 
 
-    public void setAssistedController(AssistedModeController assistedController) {
-        this.assistedController = assistedController;
+    public void setAssistedController(AssistedModeSetupController assistedController) {
+        this.assistedSetupController = assistedController;
     }
 
 
@@ -164,5 +165,9 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
     @Override
     public void actionPerformed(ActionEvent e) {
         JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
+    }
+
+    public void setAssistedModeSetupController(AssistedModeSetupController controller) {
+        this.assistedSetupController = controller;
     }
 }
