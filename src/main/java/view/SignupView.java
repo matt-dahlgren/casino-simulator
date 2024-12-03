@@ -45,22 +45,13 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
 
-        signUp.addActionListener(
-                new ActionListener() {
-
-                    /**
-                     * Invoked when an action occurs.
-                     *
-                     * @param e the event to be processed
-                     */
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource() == signUp) {}
-                    }
-                }
-        );
+        signUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                signupController.execute();
+            }
+        });
     }
-
 
     /**
      * Invoked when an action occurs.

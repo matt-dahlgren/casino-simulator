@@ -5,6 +5,7 @@
 
 **1** [Game Modes and Features:](#game-modes-and-features)
 - [Features](#features)
+- [Player Account](#player-account)
 - [Learning Mode](#learning-mode)
 - [Assisted Mode](#assisted-mode)
 - [Game Report](#game-report)
@@ -33,6 +34,12 @@
 - A better than average UI!
 
 //TODO Include explanations of the following
+
+### Player Account
+Signing up for an account allows you create a unique, password protected account on the application. Your
+account will have a username and password and will be linked to your email address so you can receive reports
+about your Blackjack gameplay experience. Once you're done playing, you can log out. This allows you to keep your saved
+games separate from others who may be sharing your device. 
 ### Learn Mode
 Learn Mode allows you to learn about how to play BlackJack. You can toggle between different concepts, like the 
 objective of the game, how dealing works, and what kinds of moves you can do. You can navigate to Learn Mode from the 
