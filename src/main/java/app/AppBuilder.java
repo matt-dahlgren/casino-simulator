@@ -291,6 +291,15 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Assisted Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addAssistedUseCase() {
+        // TODO
+        return this;
+    }
+
     public AppBuilder addObjectiveLearnModeUseCase() {
         final LearnModeOutputBoundary learnModeOutputBoundary = new LearnModePresenter(viewManagerModel);
         final LearnModeInputBoundary learnModeInteractor = new LearnModeInteractor(learnModeOutputBoundary);
