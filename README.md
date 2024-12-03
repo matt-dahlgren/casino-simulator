@@ -33,7 +33,11 @@
 - A better than average UI!
 
 //TODO Include explanations of the following
-### Learning Mode
+### Learn Mode
+Learn Mode allows you to learn about how to play BlackJack. You can toggle between different concepts, like the 
+objective of the game, how dealing works, and what kinds of moves you can do. You can navigate to Learn Mode from the 
+Main Menu of the game. The aim of this mode is to be as inclusive as possible of players with different 
+levels of expertise!
 
 ### Assisted Mode
 
