@@ -4,6 +4,9 @@ import data_access.APIDataAccessObject;
 import data_access.GameDataAccessObject;
 import entities.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.assisted_mode.AssistedModeController;
+import interface_adapter.assisted_mode.AssistedModeHitPresenter;
+import interface_adapter.assisted_mode.AssistedModeViewModel;
 import interface_adapter.dealer_screen.DealerScreenViewModel;
 import interface_adapter.freePlay.newhit.NewHitController;
 import interface_adapter.freeplay.newhit.NewHitPresenter;
@@ -15,6 +18,13 @@ import interface_adapter.report.ReportViewModel;
 import interface_adapter.signup_adapter.*;
 import interface_adapter.login_adapter.*;
 import interface_adapter.dealer_screen.*;
+import interface_adapter.assisted_mode.setup.*;
+import use_case.assisted_mode.game.AssistedGameInputDataBoundary;
+import use_case.assisted_mode.game.AssistedGameInteractor;
+import use_case.assisted_mode.game.AssistedGameOutputDataBoundary;
+import use_case.assisted_mode.setup.AssistedSetupInputBoundary;
+import use_case.assisted_mode.setup.AssistedSetupInteractor;
+import use_case.assisted_mode.setup.AssistedSetupOutputBoundary;
 import use_case.dealer_screen.DealerScreenInputBoundary;
 import use_case.dealer_screen.DealerScreenInteractor;
 import use_case.dealer_screen.DealerScreenOutputDataBoundary;
@@ -73,6 +83,7 @@ public class AppBuilder {
     private DealingView dealingView;
     private DealerAfterStandView dealerAfterStandView;
     private ReportView reportView;
+    private AssistedView assistedView;
 
     //View Models
     private MainMenuViewModel mainMenuViewModel;
@@ -84,6 +95,7 @@ public class AppBuilder {
     private MovesViewModel movesViewModel;
     private DealerScreenViewModel dealerScreenViewModel;
     private ReportViewModel reportViewModel;
+    private AssistedModeViewModel assistedModeViewModel;
 
     public AppBuilder() throws FileNotFoundException {
     }
@@ -134,6 +146,17 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Assisted view to the application.
+     * @return this builder
+     */
+    public AppBuilder addAssistedView() {
+        assistedModeViewModel = new AssistedModeViewModel();
+        assistedView = new AssistedView(assistedModeViewModel, mainMenuViewModel, dealerScreenViewModel);
+        cardPanel.add(assistedView, assistedView.getViewName());
+        return this;
+    }
+
 //    /**
 //     * Adds the Report view to the application.
 //     * @return this builder
@@ -156,14 +179,6 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the Assisted view to the application.
-     * @return this builder
-     */
-//    public AppBuilder addAssistedView() {
-//        return this;
-//        // TODO w matt's implementation
-//    }
 
     /**
      * Adds the Objective view to the application.
@@ -264,14 +279,11 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addHitUseCase() {
-        final NewHitOutputBoundary hitOutputBoundary =
-                new NewHitPresenter(setupViewModel);
+        final NewHitOutputBoundary hitOutputBoundary = new NewHitPresenter(setupViewModel);
 
-        final NewHitInputBoundary newHitInteractor =
-                new NewHitInteractor(APIDAO, gameDAO, hitOutputBoundary);
+        final NewHitInputBoundary newHitInteractor = new NewHitInteractor(APIDAO, gameDAO, hitOutputBoundary);
 
-        final NewHitController controller =
-                new NewHitController(newHitInteractor);
+        final NewHitController controller = new NewHitController(newHitInteractor);
 
         setupView.setHitController(controller);
         return this;
@@ -292,14 +304,37 @@ public class AppBuilder {
         return this;
     }
 
-//    /**
-//     * Adds the Assisted Use Case to the application.
-//     * @return this builder
-//     */
-//    public AppBuilder addAssistedUseCase() {
-//        // TODO
-//        return this;
-//    }
+    /**
+     * Adds the Assisted Mode SETUP Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addAssistedSetupUseCase() {
+        final AssistedSetupOutputBoundary assistedSetupPresenter = new AssistedModeSetupPresenter(viewManagerModel, assistedModeViewModel);
+
+        final AssistedSetupInputBoundary assistedSetupInteractor = new AssistedSetupInteractor(assistedSetupPresenter, gameDAO);
+
+        final AssistedModeSetupController controller = new AssistedModeSetupController(assistedSetupInteractor);
+
+        assistedView.setAssistedSetupController(controller);
+
+        return this;
+    }
+
+    /**
+     * Adds the Assisted Mode GAME Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addAssistedGameUseCase() {
+        final AssistedGameOutputDataBoundary assistedGamePresenter = new AssistedModeHitPresenter(viewManagerModel, assistedModeViewModel, dealerScreenViewModel, mainMenuViewModel);
+
+        final AssistedGameInputDataBoundary assistedGameInteractor = new AssistedGameInteractor(gameDAO, assistedGamePresenter, accountInfoDAO, gameReportDAO);
+
+        final AssistedModeController controller = new AssistedModeController(assistedGameInteractor);
+
+        assistedView.setAssistedModeController(controller);
+
+        return this;
+    }
 
     public AppBuilder addObjectiveLearnModeUseCase() {
         final LearnModeOutputBoundary learnModeOutputBoundary = new LearnModePresenter(viewManagerModel);
