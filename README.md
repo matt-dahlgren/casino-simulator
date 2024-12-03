@@ -1,28 +1,28 @@
-# *Blackjack Simulator*
+# **Blackjack Simulator**
 ## Country Toad's CSC207 Group Project
 
 #### by Matthew Dahlgren: matt-dahlgren, Jacob Lisogurski: Jac0b-Beep, Pooja Mangra: 04mangra, Andriy Shkvorets: atStarling, Sonia Vaidya: soniavaidya05
 
-*1* [Game Modes and Features:](#game-modes-and-features)
+**1** [Game Modes and Features:](#game-modes-and-features)
 - [Features](#features)
 - [Learning Mode](#learning-mode)
 - [Assisted Mode](#assisted-mode)
 - [Game Report](#game-report)
 - [Probability Algorithm](#probability-algorithm)
 
-*2* [App Launching Instructions:](#app-launching-instructions)
+**2** [App Launching Instructions:](#app-launching-instructions)
 
-*3* [Design Process](#design-process)
+**3**[Design Process](#design-process)
 
-*4* [Explanation of Classes (in General)](#explanation-of-classes-in-general)
+**4** [Explanation of Classes (in General)](#explanation-of-classes-in-general)
 
-*5* [Test Coverage](#test-coverage)
+**5** [Test Coverage](#test-coverage)
 
-*6* [Images](#images)
+**6** [Images](#images)
 
-*7* [Contribution](#contribution)
+**7** [Contribution](#contribution)
 
-*8* [Resource Credits](#resource-credits)
+**8** [Resource Credits](#resource-credits)
 
 ## Game Modes and Features
 ### Features
