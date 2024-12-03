@@ -138,6 +138,17 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Assisted view to the application.
+     * @return this builder
+     */
+    public AppBuilder addAssistedView() {
+        assistedModeViewModel = new AssistedModeViewModel();
+        assistedView = new AssistedView(assistedModeViewModel, mainMenuViewModel, dealerScreenViewModel);
+        cardPanel.add(assistedView, assistedView.getViewName());
+        return this;
+    }
+
 //    /**
 //     * Adds the Report view to the application.
 //     * @return this builder
