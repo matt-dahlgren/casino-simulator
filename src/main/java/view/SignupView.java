@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.signup_adapter.SignupController;
 import interface_adapter.signup_adapter.SignupViewModel;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.beans.PropertyChangeListener;
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "sign up";
+    private SignupController signupController;
 
     private final SignupViewModel signupViewModel;
     private final JTextField usernameInputField = new JTextField(15);
@@ -79,5 +81,13 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+    }
+
+    public String getViewName() {
+        return viewName;
+    }
+
+    public void setSignupController(SignupController controller) {
+        this.signupController = controller;
     }
 }

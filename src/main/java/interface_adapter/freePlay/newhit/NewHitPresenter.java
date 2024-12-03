@@ -1,7 +1,7 @@
-package interface_adapter.freePlay.newhit;
+package interface_adapter.freeplay.newhit;
 
-import interface_adapter.freePlay.setup.SetupState;
-import interface_adapter.freePlay.setup.SetupViewModel;
+import interface_adapter.freeplay.setup.SetupState;
+import interface_adapter.freeplay.setup.SetupViewModel;
 import use_case.freeplay.newhit.NewHitOutputBoundary;
 import use_case.freeplay.newhit.NewHitOutputData;
 
