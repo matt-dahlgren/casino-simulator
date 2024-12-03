@@ -15,7 +15,6 @@ import interface_adapter.report.ReportViewModel;
 import interface_adapter.signup_adapter.*;
 import interface_adapter.login_adapter.*;
 import interface_adapter.dealer_screen.*;
-import interface_adapter.freeplay.*;
 import use_case.dealer_screen.DealerScreenInputBoundary;
 import use_case.dealer_screen.DealerScreenInteractor;
 import use_case.dealer_screen.DealerScreenOutputDataBoundary;
@@ -31,7 +30,6 @@ import use_case.freeplay.setup.SetupInputBoundary;
 import use_case.freeplay.setup.SetupInteractor;
 import use_case.freeplay.setup.SetupOutputBoundary;
 import use_case.signup.SignupInteractor;
-import use_case.
 import view.*;
 
 import data_access.*;
@@ -39,7 +37,8 @@ import data_access.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
-import java.nio.channels.SeekableByteChannel;
+import java.util.ArrayList;
+
 import entities.*;
 
 /**
@@ -54,12 +53,12 @@ public class AppBuilder {
     private final ImageIcon img = new ImageIcon("resources/images/icon.png");
 
     // Entities
-    private final UserPlayer userPlayer = new UserPlayer(); // TODO Where do I get the arg from?
-
+    private final UserPlayer userPlayer = new UserPlayer(new ArrayList<>());
+    private final Dealer dealer = new Dealer(new ArrayList<>());
 
     //Data Access Objects
     private final APIDataAccessObject APIDAO = new APIDataAccessObject();
-    private final GameDataAccessObject gameDAO = new GameDataAccessObject(userPlayer); // TODO Where do I get the other 3 args from?
+    private final GameDataAccessObject gameDAO = new GameDataAccessObject(userPlayer, dealer, "", new ArrayList<>()); //TODO Confirm empty string for deckID
     private final AccountInfoDAO accountInfoDAO = new AccountInfoDAO();
     private final GameReportDataAccessObject gameReportDAO = new GameReportDataAccessObject();
     private UserFactory userFactory;
@@ -135,16 +134,16 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the Report view to the application.
-     * @return this builder
-     */
-    public AppBuilder addReportView() {
-        reportViewModel = new ReportViewModel();
-        reportView = new ReportView(reportViewModel);
-        cardPanel.add(reportView, reportView.getViewName());
-        return this;
-    }
+//    /**
+//     * Adds the Report view to the application.
+//     * @return this builder
+//     */
+//    public AppBuilder addReportView() {
+//        reportViewModel = new ReportViewModel();
+//        reportView = new ReportView(reportViewModel);
+//        cardPanel.add(reportView, reportView.getViewName());
+//        return this;
+//    }
 
     /**
      * Adds the DealerAfterStand view to the application.
@@ -161,10 +160,10 @@ public class AppBuilder {
      * Adds the Assisted view to the application.
      * @return this builder
      */
-    public AppBuilder addAssistedView() {
-        return this;
-        // TODO w matt's implementation
-    }
+//    public AppBuilder addAssistedView() {
+//        return this;
+//        // TODO w matt's implementation
+//    }
 
     /**
      * Adds the Objective view to the application.
@@ -232,9 +231,14 @@ public class AppBuilder {
      */
     public AppBuilder addSignupUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(signupViewModel, loginViewModel, viewManagerModel);
-
+        userFactory = new UserFactory() {
+            @Override
+            public User create(String username, String email, String password) {
+                return null;
+            }
+        };
+        // TODO Ask team if user factory should be empty to start with? or f
         final SignupInputBoundary signupInteractor = new SignupInteractor(accountInfoDAO, signupOutputBoundary, userFactory);
-        // TODO Make sure user factory works
         final SignupController controller = new SignupController(signupInteractor);
         signupView.setSignupController(controller);
         // TODO The code in SignupView does NOT use SignupController... verify this is what you want
@@ -288,6 +292,15 @@ public class AppBuilder {
         return this;
     }
 
+//    /**
+//     * Adds the Assisted Use Case to the application.
+//     * @return this builder
+//     */
+//    public AppBuilder addAssistedUseCase() {
+//        // TODO
+//        return this;
+//    }
+
     public AppBuilder addObjectiveLearnModeUseCase() {
         final LearnModeOutputBoundary learnModeOutputBoundary = new LearnModePresenter(viewManagerModel);
         final LearnModeInputBoundary learnModeInteractor = new LearnModeInteractor(learnModeOutputBoundary);
@@ -312,10 +325,10 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addReportUseCase() {
-        // TODO Am i supposed to use email_report or endgame_report in use case? (the one that corresponds to report view)
-        return this;
-    }
+//    public AppBuilder addReportUseCase() {
+//        // TODO Am i supposed to use email_report or endgame_report in use case? (the one that corresponds to report view)
+//        return this;
+//    }
 
     /**
      * Creates the JFrame for the application and initially sets the Signup View to be displayed.
