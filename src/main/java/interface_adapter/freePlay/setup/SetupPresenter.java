@@ -1,6 +1,10 @@
 package interface_adapter.freePlay.setup;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.dealer_screen.DealerScreenState;
+import interface_adapter.dealer_screen.DealerScreenViewModel;
+import interface_adapter.freeplay.setup.SetupState;
+import interface_adapter.freeplay.setup.SetupViewModel;
 import interface_adapter.main_menu.MainMenuViewModel;
 import use_case.freeplay.setup.SetupOutputBoundary;
 import use_case.freeplay.setup.SetupOutputData;
@@ -13,15 +17,17 @@ import java.util.ArrayList;
 
 public class SetupPresenter implements SetupOutputBoundary {
     private final ViewManagerModel viewManagerModel;
+    private final DealerScreenViewModel dealerScreenViewModel;
     SetupViewModel setupViewModel;
     MainMenuViewModel mainMenuViewModel;
 
     public SetupPresenter(ViewManagerModel viewManagerModel,
                           MainMenuViewModel mainMenuViewModel,
-                          SetupViewModel setupViewModel) {
+                          SetupViewModel setupViewModel, DealerScreenViewModel dealerScreenViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.mainMenuViewModel = mainMenuViewModel;
         this.setupViewModel = setupViewModel;
+        this.dealerScreenViewModel = dealerScreenViewModel;
     }
 
     /**
@@ -52,9 +58,21 @@ public class SetupPresenter implements SetupOutputBoundary {
     }
 
     @Override
-    public void switchToDealerAfterStandView() {
-//        viewManagerModel.setState(freePlayStandViewModel.getViewName());
-//        viewManagerModel.firePropertyChanged();
+    public void switchToDealerAfterStandView(SetupOutputData outputData) {
+        final DealerScreenState dealerState = dealerScreenViewModel.getState();
+        dealerState.setGameType(1);
+        dealerState.setCardImages(outputData.getDealerHand());
+        dealerState.setDealerScore(outputData.getDealerScore());
+        dealerState.setPlayerScore(outputData.getPlayerScore());
+        dealerState.setPlayerWin(outputData.isWinGame());
+        dealerScreenViewModel.setState(dealerState);
+
+        this.dealerScreenViewModel.setState(dealerState);
+        this.dealerScreenViewModel.firePropertyChanged();
+
+        this.viewManagerModel.setState(dealerScreenViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
+
     }
 
     @Override

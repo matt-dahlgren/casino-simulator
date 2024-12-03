@@ -103,7 +103,7 @@ public class GameDataAccessObject implements GameDataAccess {
     }
 
     /**
-     * Returns a map of hit probability per turn.
+     * Updates a map of hit probability per turn.
      * @param score is the HitProbability Score of that turn.
      */
     @Override
@@ -112,7 +112,7 @@ public class GameDataAccessObject implements GameDataAccess {
     }
 
     /**
-     * Returns a map of stand probability per turn.
+     * Updates a map of stand probability per turn.
      * @param score is the StandProbability Score of that turn.
      */
     @Override
@@ -121,7 +121,7 @@ public class GameDataAccessObject implements GameDataAccess {
     }
 
     /**
-     * Returns a map of player hand score of turns of play.
+     * Updates a map of player hand score of turns of play.
      * @param score is the handscore of the player at that turn
      */
     @Override
@@ -129,4 +129,30 @@ public class GameDataAccessObject implements GameDataAccess {
         handScore.put(handScore.size() + 1, score);
     }
 
+    /**
+     * Returns a map of hit probability per turn.
+     * @return a map of <turns, probabilities>
+     */
+    @Override
+    public Map<Integer, Integer> getHitProbability() {
+        return hitProbability;
+    }
+
+    /**
+     * Returns a map of stand probability per turn.
+     * @return a map of <turns, probabilities>
+     */
+    @Override
+    public Map<Integer, Integer> getStandProbability() {
+        return standProbability;
+    }
+
+    /**
+     * Returns a map of handscores per turn.
+     * @return a map of <turns, handscores>
+     */
+    @Override
+    public Map<Integer, Integer> getHandScore() {
+        return handScore;
+    }
 }

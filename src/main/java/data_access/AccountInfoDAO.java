@@ -42,7 +42,7 @@ public class AccountInfoDAO implements SignupUserDataAccessInterface {
     }
 
     /**
-     * Set the currentUser
+     * Set the currentUser.
      * @param username is the username of the current user
      */
     public void setCurrentUser(String username) {
@@ -50,7 +50,7 @@ public class AccountInfoDAO implements SignupUserDataAccessInterface {
     }
 
     /**
-     * Gets the username of the currentUser
+     * Gets the username of the currentUser.
      * @return username
      */
     public String getCurrentUser() {
@@ -58,8 +58,9 @@ public class AccountInfoDAO implements SignupUserDataAccessInterface {
     }
 
     /**
-     * Adds a user
+     * Adds a user.
      * @param user the user to be added
+     * @throws IOException exception with reading writing file
      */
     public void addUser(User user) throws IOException {
         // Adds the user to the user map
@@ -94,7 +95,7 @@ public class AccountInfoDAO implements SignupUserDataAccessInterface {
     }
 
     /**
-     * Updates information about a user
+     * Updates information about a user.
      * @param user the user to be updated
      */
     public void updateUser(User user) throws IOException {

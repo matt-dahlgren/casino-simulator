@@ -1,4 +1,4 @@
-package use_case.freePlayMode;
+package data_access;
 
 
 import entities.Card;

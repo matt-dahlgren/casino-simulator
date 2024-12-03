@@ -14,7 +14,7 @@ public interface SetupOutputBoundary {
      */
     void prepareFailView(String errorMessage);
 
-    void switchToDealerAfterStandView();
+    void switchToDealerAfterStandView(SetupOutputData outputData);
 
     void switchToMainMenuView();
 }

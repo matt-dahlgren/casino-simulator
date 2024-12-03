@@ -5,6 +5,7 @@ import interface_adapter.assisted_mode.AssistedModeState;
 import interface_adapter.assisted_mode.AssistedModeViewModel;
 import interface_adapter.dealer_screen.DealerScreenViewModel;
 import interface_adapter.learn_mode.ObjectiveState;
+import interface_adapter.main_menu.MainMenuViewModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,10 +23,10 @@ import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLEC
 public class AssistedView extends JPanel implements ActionListener, PropertyChangeListener {
     private AssistedModeController assistedModeController;
     private final AssistedModeViewModel assistedModeViewModel;
-    private final MainMenuView mainMenuView;
+    private final MainMenuViewModel mainMenuView;
     private final DealerScreenViewModel dealerScreenViewModel;
 
-    public AssistedView(AssistedModeViewModel assistedModeViewModel, MainMenuView mainMenuView,
+    public AssistedView(AssistedModeViewModel assistedModeViewModel, MainMenuViewModel mainMenuView,
                         DealerScreenViewModel dealerScreenViewModel) {
         this.assistedModeViewModel = assistedModeViewModel;
         this.mainMenuView = mainMenuView;

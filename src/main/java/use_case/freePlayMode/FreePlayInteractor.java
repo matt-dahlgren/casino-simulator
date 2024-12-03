@@ -1,6 +1,7 @@
 package use_case.freePlayMode;
 
 import entities.*;
+import data_access.FreePlayDA;
 
 import java.util.ArrayList;
 

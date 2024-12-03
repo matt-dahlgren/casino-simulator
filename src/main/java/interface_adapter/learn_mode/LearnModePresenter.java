@@ -2,8 +2,9 @@ package interface_adapter.learn_mode;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.main_menu.MainMenuViewModel;
+import use_case.learn_mode.LearnModeOutputBoundary;
 
-public class LearnModePresenter {
+public class LearnModePresenter implements LearnModeOutputBoundary {
     ViewManagerModel viewManagerModel;
     MovesViewModel movesViewModel;
     DealingViewModel dealingViewModel;
