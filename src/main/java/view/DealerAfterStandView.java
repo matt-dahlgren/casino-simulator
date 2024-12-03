@@ -102,8 +102,11 @@ public class DealerAfterStandView extends JPanel implements ActionListener, Prop
             public void actionPerformed(ActionEvent e) {
                 //TODO ADD
             }
-        }
+        });
 
     }
 
+    public String getViewName() {
+        return "Dealer After Stand";
+    }
 }
