@@ -38,6 +38,11 @@ public class DealerAfterStandView extends JPanel implements ActionListener, Prop
         int dealerScore = viewModel.getState().getDealerScore();
         int playerScore = viewModel.getState().getPlayerScore();
         ArrayList<String> cards = viewModel.getState().getCardImages();
+
+        if (cards == null) {
+            cards = new ArrayList<>();
+        }
+
         boolean playerWin = viewModel.getState().getPlayerWin();
         String playerWinString = null;
 
@@ -86,19 +91,21 @@ public class DealerAfterStandView extends JPanel implements ActionListener, Prop
 
         cardPanel.setBackground(TABLECOLOUR);
 
-        for (String card : cards) {
-            try {
-                URL imageUrl = new URL(card);
-                BufferedImage image = ImageIO.read(imageUrl);
-                ImageIcon icon = new ImageIcon(image);
-                JLabel imageLabel = new JLabel(icon);
+        if (!cards.isEmpty()) {
+            for (String card : cards) {
+                try {
+                    URL imageUrl = new URL(card);
+                    BufferedImage image = ImageIO.read(imageUrl);
+                    ImageIcon icon = new ImageIcon(image);
+                    JLabel imageLabel = new JLabel(icon);
 
-                cardPanel.add(imageLabel, BorderLayout.CENTER);
-            } catch (IOException e) {
-                e.printStackTrace();
-                JLabel errorLabel = new JLabel("Failed to load image.");
-                errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                cardPanel.add(errorLabel, BorderLayout.CENTER);
+                    cardPanel.add(imageLabel, BorderLayout.CENTER);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JLabel errorLabel = new JLabel("Failed to load image.");
+                    errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    cardPanel.add(errorLabel, BorderLayout.CENTER);
+                }
             }
 
         }

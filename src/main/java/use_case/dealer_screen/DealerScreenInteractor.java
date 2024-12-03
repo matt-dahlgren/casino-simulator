@@ -18,13 +18,19 @@ public class DealerScreenInteractor implements DealerScreenInputBoundary {
     private final GameDataAccessObject gameDataAccessObject;
     private final DealerScreenOutputDataBoundary outputPresenter;
     private final GameReportDataAccessObject reportDataAccessObject;
+    private final ArrayList<String> cards;
 
     public DealerScreenInteractor(GameDataAccessObject gameDataAccessObject,
                                   DealerScreenOutputDataBoundary outputPresenter,
-                                  GameReportDataAccessObject reportDataAccessObject) {
+                                  GameReportDataAccessObject reportDataAccessObject, ArrayList<String> cards) {
         this.gameDataAccessObject = gameDataAccessObject;
         this.outputPresenter = outputPresenter;
         this.reportDataAccessObject = reportDataAccessObject;
+        this.cards = cards;
+
+        for (Card card : gameDataAccessObject.getDealer().getHand()) {
+            cards.add(card.getImage());
+        }
     }
 
     /**
@@ -118,14 +124,8 @@ public class DealerScreenInteractor implements DealerScreenInputBoundary {
 
         boolean gameWin = playerScore <= BLACKJACK && ((dealerScore > BLACKJACK) || playerScore >= dealerScore);
 
-        ArrayList<String> cardStrings = new ArrayList<>();
-
-        for (Card card : gameDataAccessObject.getDealer().getHand()) {
-            cardStrings.add(card.getImage());
-        }
-
         DealerScreenOutputData outputData = new DealerScreenOutputData(dealerScore, playerScore,
-                cardStrings, gameWin, String.valueOf(reportDataAccessObject.getNumGames()));
+                cards, gameWin, String.valueOf(reportDataAccessObject.getNumGames()));
 
         outputPresenter.prepareStandView(outputData);
     }

@@ -202,4 +202,9 @@ public class AssistedView extends JPanel implements ActionListener, PropertyChan
 
     public String getViewName() {
         return "Assisted";
-    }}
+    }
+
+    public void setAssistedModeController(AssistedModeController controller) {
+        this.assistedModeController = controller;
+    }
+}

@@ -33,9 +33,16 @@
 - A better than average UI!
 
 //TODO Include explanations of the following
-### Learning Mode
+### Learn Mode
+Learn Mode allows you to learn about how to play BlackJack. You can toggle between different concepts, like the 
+objective of the game, how dealing works, and what kinds of moves you can do. You can navigate to Learn Mode from the 
+Main Menu of the game. The aim of this mode is to be as inclusive as possible of players with different 
+levels of expertise!
 
 ### Assisted Mode
+Assisted Mode allows you to play Blackjack in a zero risk environment with active suggestions on whether hitting or
+standing is a better move for the player to make in the board's current state. This allows experienced blackjack players
+to train themselves, and giving less experienced players exposure to a new game with assistance. 
 
 ### Game Report
 
