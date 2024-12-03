@@ -1,5 +1,7 @@
 package view;
 
+import interface_adapter.login_adapter.LoginController;
+import interface_adapter.login_adapter.LoginViewModel;
 import interface_adapter.signup_adapter.SignupController;
 import interface_adapter.signup_adapter.SignupState;
 import interface_adapter.signup_adapter.SignupViewModel;
@@ -21,6 +23,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private SignupController signupController;
 
     private final SignupViewModel signupViewModel;
+    private final LoginViewModel loginViewModel;
     private final JTextField usernameInputField = new JTextField(15);
     private final JTextField emailInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
@@ -29,9 +32,11 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JButton signUp;
     private final JButton login;
 
-    public SignupView(SignupViewModel signupViewModel) {
+    public SignupView(SignupViewModel signupViewModel, LoginViewModel loginViewModel) {
         this.signupViewModel = signupViewModel;
+        this.loginViewModel = loginViewModel;
         signupViewModel.addPropertyChangeListener(this);
+        loginViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
         title.setAlignmentX(CENTER_ALIGNMENT);

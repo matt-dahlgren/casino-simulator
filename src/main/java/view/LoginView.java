@@ -3,6 +3,7 @@ package view;
 import interface_adapter.login_adapter.LoginController;
 import interface_adapter.login_adapter.LoginState;
 import interface_adapter.login_adapter.LoginViewModel;
+import interface_adapter.main_menu.MainMenuViewModel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -17,6 +18,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     private final String viewName = "log in";
     private final LoginViewModel loginViewModel;
+    private final MainMenuViewModel mainMenuViewModel;
 
     private final JTextField usernameInputField = new JTextField(15);
     private final JLabel usernameErrorLabel = new JLabel();
@@ -29,9 +31,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     private LoginController controller;
 
-    public LoginView(LoginViewModel loginViewModel) {
+    public LoginView(LoginViewModel loginViewModel, MainMenuViewModel mainMenuViewModel) {
         this.loginViewModel = loginViewModel;
+        this.mainMenuViewModel = mainMenuViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
+        this.mainMenuViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel("Blackjack");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -52,6 +56,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                             final LoginState currentState = loginViewModel.getState();
 
                             controller.execute(currentState.getUsername(), currentState.getPassword());
+                            controller.switchToMainMenuView();
 
                         }
                     }
