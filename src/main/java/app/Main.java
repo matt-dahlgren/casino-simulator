@@ -57,6 +57,10 @@ public class Main {
                 .addDealingLearnModeUseCase()
                 .addMovesView()
                 .addMovesLearnModeUseCase()
+
+                .addReportView()
+                .addReportUseCase()
+
                 .build();
 
         application.pack();
