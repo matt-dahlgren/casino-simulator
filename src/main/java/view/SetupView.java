@@ -89,7 +89,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         standButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setupController.switchToDealerAfterStandView();
+                hitController.switchToDealerAfterStandView();
             }
         });
 
