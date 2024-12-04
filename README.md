@@ -117,15 +117,6 @@ SOLID would make it very difficult to run without having the entire program asse
 making it a nightmare to independently test sections of code, make modifications, or understanding what the code
 is actually doing.
 
-## Test Coverage
-Below is our test coverage for our program. [INSERT TEST COVERAGE DETAILS HERE ONCE WE'RE FINISHED WITH THEM]
-
-In our tests, we did not test the visual UI elements as they are best manually tested. Unfortunately, our tests don't
-have perfect coverage as we were crunching the code of our program. However, the most important elements are tested.
-
-## Images
-Insert a bunch of images of us doing things with an explanation of what they are
-
 ## Contribution
 As this was an assignment done for our CSC207 course and was a demonstration of what we could achieve given the course
 material, public contributions are closed. However, if you wish to make a fork, you can! Nothing special is needed
