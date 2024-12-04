@@ -1,4 +1,4 @@
-package interface_adapter.freePlay.newhit;
+package interface_adapter.free_play.newhit;
 
 import use_case.freeplay.newhit.NewHitInputBoundary;
 
@@ -18,7 +18,4 @@ public class NewHitController {
         hitInteractor.execute();
     }
 
-    public void switchToDealerAfterStandView() {
-        hitInteractor.switchToDealerAfterStandView();
-    }
 }

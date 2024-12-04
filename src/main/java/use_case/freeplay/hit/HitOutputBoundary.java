@@ -23,7 +23,5 @@ public interface HitOutputBoundary {
 
     void switchToHitView(HitOutputData outputData);
 
-    void switchToDealerAfterStandView(SetupOutputData outputData);
-
     void switchToMainMenuView();
 }

@@ -9,8 +9,6 @@ public interface HitInputBoundary {
 
     void executeSetuptoHit();
 
-    void switchToDealerAfterStandView(SetupOutputData outputData);
-
     void switchToMainMenuView();
 
 }

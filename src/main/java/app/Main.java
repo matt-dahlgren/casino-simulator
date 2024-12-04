@@ -43,23 +43,21 @@ public class Main {
                 .addDealerAfterStandView()
                 .addDealerScreenUseCase()
 
-                .addAssistedView()
-                .addAssistedSetupUseCase()
-                .addAssistedGameUseCase()
+//                .addAssistedView()
+//                .addAssistedSetupUseCase()
+//                .addAssistedGameUseCase()
+//                .addReportView()
+//
+//                .addReportUseCase()
+//                .addObjectiveView()
+//                .addObjectiveLearnModeUseCase()
+//                .addDealingView()
+//                .addDealingLearnModeUseCase()
+//                .addMovesView()
+//                .addMovesLearnModeUseCase()
 
-                .addReportView()
-                .addGameReportUseCase()
-                .addEmailReportUseCase()
-
-                .addObjectiveView()
-                .addObjectiveLearnModeUseCase()
-                .addDealingView()
-                .addDealingLearnModeUseCase()
-                .addMovesView()
-                .addMovesLearnModeUseCase()
-
-                .addReportView()
-                .addReportUseCase()
+//                .addReportView()
+//                .addReportUseCase()
 
                 .build();
 

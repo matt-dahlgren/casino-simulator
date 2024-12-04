@@ -9,6 +9,4 @@ public interface NewHitInputBoundary {
      * Executes the hit use case.
      */
     void execute();
-
-    void switchToDealerAfterStandView();
 }

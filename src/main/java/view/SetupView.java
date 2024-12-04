@@ -1,7 +1,7 @@
 package view;
 
 import interface_adapter.dealer_screen.DealerScreenViewModel;
-import interface_adapter.freePlay.newhit.NewHitController;
+import interface_adapter.free_play.newhit.NewHitController;
 import interface_adapter.free_play.setup.SetupController;
 import interface_adapter.free_play.setup.SetupState;
 import interface_adapter.free_play.setup.SetupViewModel;
@@ -89,7 +89,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         standButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                hitController.switchToDealerAfterStandView();
+                setupController.switchToDealerAfterStandView();
             }
         });
 

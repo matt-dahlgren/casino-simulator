@@ -8,7 +8,7 @@ import interface_adapter.assisted_mode.AssistedModeController;
 import interface_adapter.assisted_mode.AssistedModeHitPresenter;
 import interface_adapter.assisted_mode.AssistedModeViewModel;
 import interface_adapter.dealer_screen.DealerScreenViewModel;
-import interface_adapter.freePlay.newhit.NewHitController;
+import interface_adapter.free_play.newhit.NewHitController;
 import interface_adapter.free_play.newhit.NewHitPresenter;
 import interface_adapter.free_play.setup.SetupController;
 import interface_adapter.free_play.setup.SetupViewModel;
@@ -155,27 +155,27 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the Assisted view to the application.
-     * @return this builder
-     */
-    public AppBuilder addAssistedView() {
-        assistedModeViewModel = new AssistedModeViewModel();
-        assistedView = new AssistedView(assistedModeViewModel, mainMenuViewModel, dealerScreenViewModel);
-        cardPanel.add(assistedView, assistedView.getViewName());
-        return this;
-    }
+//    /**
+//     * Adds the Assisted view to the application.
+//     * @return this builder
+//     */
+//    public AppBuilder addAssistedView() {
+//        assistedModeViewModel = new AssistedModeViewModel();
+//        assistedView = new AssistedView(assistedModeViewModel, mainMenuViewModel, dealerScreenViewModel);
+//        cardPanel.add(assistedView, assistedView.getViewName());
+//        return this;
+//    }
 
-    /**
-     * Adds the Report view to the application.
-     * @return this builder
-     */
-    public AppBuilder addReportView() throws FileNotFoundException {
-        reportViewModel = new ReportViewModel(accountInfoDAO.getCurrentUser(), gameReportDAO.getNumGames());
-        reportView = new ReportView(reportViewModel);
-        cardPanel.add(reportView, reportView.getViewName());
-        return this;
-    }
+//    /**
+//     * Adds the Report view to the application.
+//     * @return this builder
+//     */
+//    public AppBuilder addReportView() throws FileNotFoundException {
+//        reportViewModel = new ReportViewModel(accountInfoDAO.getCurrentUser(), gameReportDAO.getNumGames());
+//        reportView = new ReportView(reportViewModel);
+//        cardPanel.add(reportView, reportView.getViewName());
+//        return this;
+//    }
 
     /**
      * Adds the DealerAfterStand view to the application.
@@ -325,21 +325,21 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the Assisted Mode GAME Use Case to the application.
-     * @return this builder
-     */
-    public AppBuilder addAssistedGameUseCase() {
-        final AssistedGameOutputDataBoundary assistedGamePresenter = new AssistedModeHitPresenter(viewManagerModel, assistedModeViewModel, dealerScreenViewModel, mainMenuViewModel);
-
-        final AssistedGameInputDataBoundary assistedGameInteractor = new AssistedGameInteractor(gameDAO, assistedGamePresenter, accountInfoDAO, gameReportDAO);
-
-        final AssistedModeController controller = new AssistedModeController(assistedGameInteractor);
-
-        assistedView.setAssistedModeController(controller);
-
-        return this;
-    }
+//    /**
+//     * Adds the Assisted Mode GAME Use Case to the application.
+//     * @return this builder
+//     */
+//    public AppBuilder addAssistedGameUseCase() {
+//        final AssistedGameOutputDataBoundary assistedGamePresenter = new AssistedModeHitPresenter(viewManagerModel, assistedModeViewModel, dealerScreenViewModel, mainMenuViewModel);
+//
+//        final AssistedGameInputDataBoundary assistedGameInteractor = new AssistedGameInteractor(gameDAO, assistedGamePresenter, accountInfoDAO, gameReportDAO);
+//
+//        final AssistedModeController controller = new AssistedModeController(assistedGameInteractor);
+//
+//        assistedView.setAssistedModeController(controller);
+//
+//        return this;
+//    }
 
     public AppBuilder addObjectiveLearnModeUseCase() {
         final LearnModeOutputBoundary learnModeOutputBoundary = new LearnModePresenter(viewManagerModel);
@@ -365,31 +365,31 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addReportUseCase() throws FileNotFoundException {
-        gameReportDAO = new GameReportDataAccessObject(accountInfoDAO.getCurrentUser());
-
-        final GameReportOutputBoundary reportOutputBoundary = new GameReportPresenter(reportViewModel,
-                viewManagerModel);
-        final GameReportInputBoundary gameReportUseCaseInteractor = new GameReportInteractor(gameReportDAO,
-                reportOutputBoundary);
-        final GameReportController gameReportController = new GameReportController(gameReportUseCaseInteractor);
-        reportView.setGameReportController(gameReportController);
-
-        EmailReportOutputBoundary emailReportOutputBoundary = new EmailReportPresenter(reportViewModel,
-                viewManagerModel);
-        EmailReportInputBoundary emailReportUseCaseInteractor = new EmailReportInteractor(gameReportDAO,
-                emailReportOutputBoundary, accountInfoDAO);
-        EmailReportController emailReportController = new EmailReportController(emailReportUseCaseInteractor);
-        reportView.setEmailReportController(emailReportController);
-        return this;
-    }
+//    public AppBuilder addReportUseCase() throws FileNotFoundException {
+//        gameReportDAO = new GameReportDataAccessObject(accountInfoDAO.getCurrentUser());
+//
+//        final GameReportOutputBoundary reportOutputBoundary = new GameReportPresenter(reportViewModel,
+//                viewManagerModel, loginViewModel);
+//        final GameReportInputBoundary gameReportUseCaseInteractor = new GameReportInteractor(gameReportDAO,
+//                reportOutputBoundary);
+//        final GameReportController gameReportController = new GameReportController(gameReportUseCaseInteractor);
+//        reportView.setGameReportController(gameReportController);
+//
+//        EmailReportOutputBoundary emailReportOutputBoundary = new EmailReportPresenter(reportViewModel,
+//                viewManagerModel);
+//        EmailReportInputBoundary emailReportUseCaseInteractor = new EmailReportInteractor(gameReportDAO,
+//                emailReportOutputBoundary, accountInfoDAO);
+//        EmailReportController emailReportController = new EmailReportController(emailReportUseCaseInteractor);
+//        reportView.setEmailReportController(emailReportController);
+//        return this;
+//    }
 
     /**
      * Creates the JFrame for the application and initially sets the Signup View to be displayed.
      * @return the application
      */
     public JFrame build() {
-        accountInfoDAO.setCurrentUser("Martha");
+//        accountInfoDAO.setCurrentUser("Martha");
 
         final JFrame application = new JFrame("Blackjack Prediction Simulator");
         application.setIconImage(img.getImage());
@@ -397,7 +397,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(reportView.getViewName());
+        viewManagerModel.setState(signupView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

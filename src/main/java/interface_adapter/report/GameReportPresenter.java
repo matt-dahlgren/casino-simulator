@@ -13,13 +13,13 @@ import use_case.endgame_report.GameReportOutputData;
 public class GameReportPresenter implements GameReportOutputBoundary {
     private final ReportViewModel reportViewModel;
     private final ViewManagerModel viewManagerModel;
-    private final LoginViewModel mainMenuViewModel;
+    private final LoginViewModel loginViewModel;
 
     public GameReportPresenter(ReportViewModel reportViewModel, ViewManagerModel viewManagerModel,
-                               MainMenuViewModel mainMenuViewModel) {
+                               LoginViewModel loginViewModel) {
         this.reportViewModel = reportViewModel;
         this.viewManagerModel = viewManagerModel;
-        this.mainMenuViewModel = mainMenuViewModel;
+        this.loginViewModel = loginViewModel;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class GameReportPresenter implements GameReportOutputBoundary {
 
     @Override
     public void switchToMainMenuView() {
-        viewManagerModel.setState(mainMenuViewModel.getViewName());
+        viewManagerModel.setState(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

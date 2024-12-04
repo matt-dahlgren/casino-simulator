@@ -24,10 +24,6 @@ public class HitController {
         hitInteractor.switchToHitView();
     }
 
-    public void switchToDealerAfterStandView() {
-        hitInteractor.switchToDealerAfterStandView();
-    }
-
     public void switchToMainMenuView() {
         hitInteractor.switchToMainMenuView();
     }

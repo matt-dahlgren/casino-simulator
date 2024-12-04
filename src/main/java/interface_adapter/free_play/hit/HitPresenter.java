@@ -81,23 +81,6 @@ public class HitPresenter implements HitOutputBoundary {
     }
 
     @Override
-    public void switchToDealerAfterStandViewSetupOutputData (SetupOutputData outputData) {
-        final DealerScreenState dealerState = dealerScreenViewModel.getState();
-        dealerState.setGameType(1);
-        dealerState.setCardImages(outputData.getDealerHand());
-        dealerState.setDealerScore(outputData.getDealerScore());
-        dealerState.setPlayerScore(outputData.getPlayerScore());
-        dealerState.setPlayerWin(outputData.isWinGame());
-        dealerScreenViewModel.setState(dealerState);
-
-        this.dealerScreenViewModel.setState(dealerState);
-        this.dealerScreenViewModel.firePropertyChanged();
-
-        this.viewManagerModel.setState(dealerScreenViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
-    }
-
-    @Override
     public void switchToMainMenuView() {
         viewManagerModel.setState(setupViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
