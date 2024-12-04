@@ -1,6 +1,7 @@
 package use_case.freeplay.setup;
 
 import data_access.APIDataAccessObject;
+import data_access.GameDataAccessObject;
 import entities.Card;
 import entities.Dealer;
 import entities.Player;
@@ -9,6 +10,7 @@ import use_case.freeplay.FreePlayDA;
 import use_case.freeplay.GameDataAccess;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static use_case.assisted_mode.game.probability.ProbabilityConstants.BLACKJACK;
 
@@ -18,7 +20,9 @@ import static use_case.assisted_mode.game.probability.ProbabilityConstants.BLACK
 public class SetupInteractor implements SetupInputBoundary {
     private final FreePlayDA deckDataObject;
     private final SetupOutputBoundary setupPresenter;
-    private final GameDataAccess gameDataObject;
+    private GameDataAccess gameDataObject;
+    private boolean winGame = false;
+    private int dealerScore = 0;
 
     public SetupInteractor(GameDataAccess gameDataObject,
                            FreePlayDA setupDeckDataAccessInterface,
@@ -44,12 +48,25 @@ public class SetupInteractor implements SetupInputBoundary {
         //Creates hidden card
         dealerHand.getFirst().setVisible(false);
 
+        //Checks if userPlayer has an ace and updates the userPlayer's score, also provides the score for output purposes!
+        int score = updateScore(userPlayerHand);
+
+        if (score == 21) {
+            this.winGame = true;
+        }
+
+        //Creates the dealer and userPlayer.
         Dealer dealer = new Dealer(dealerHand);
         UserPlayer userPlayer = new UserPlayer(userPlayerHand);
 
         //Creates the lists that hold the strings for the image links for the cards.
         ArrayList<String> userPlayerHandLinks = new ArrayList<>();
         ArrayList<String> dealerHandLinks = new ArrayList<>();
+
+        //Only the second card (non-hidden) of the dealer needs to be calculated for their score.
+        if (dealerHand.get(1) != null) {
+            this.dealerScore = dealerHand.get(1).getValue();
+        }
 
         for (Card card : dealer.getHand()) {
             dealerHandLinks.add(card.getImage());
@@ -59,100 +76,38 @@ public class SetupInteractor implements SetupInputBoundary {
             userPlayerHandLinks.add(card.getImage());
         }
 
+
         gameDataObject.setDealer(dealer);
         gameDataObject.setPlayer(userPlayer);
         gameDataObject.setDeckID(deckID);
 
-        final SetupOutputData setupOutputData = new SetupOutputData(dealerHandLinks, userPlayerHandLinks, false, 0, 0);
+        final SetupOutputData setupOutputData = new SetupOutputData(dealerHandLinks, userPlayerHandLinks, winGame,
+                score, dealerScore);
         setupPresenter.prepareSuccessView(setupOutputData);
-    }
-
-    /**
-     * The score of the dealer's current hand. If you have aces in your hand, handScore will return the highest score
-     * possible before any possible bust (greater than 21). If the hand cannot be under 21 this handScore will return
-     * the smallest possible score.
-     * @return an integer representing the score of your current hand.
-     */
-    private int handScore (Player player) {
-
-        int result = 0;
-        int aceCount = 0;
-
-        if (player instanceof Dealer) {
-            for (Card card : gameDataObject.getDealer().getHand()) {
-                result += card.getValue();
-                if (card.getValue() == 11) {
-                    aceCount++;
-                }
-            }
-        }
-        else {
-            for (Card card : gameDataObject.getPlayer().getHand()) {
-                result += card.getValue();
-                if (card.getValue() == 11) {
-                    aceCount++;
-                }
-            }
-        }
-
-        // If the player has a hand with aces and have bust (using any aces as a score of 11), reduce the score by 10
-        // until either all aces have been evaluated as score 1 or the hand is scored to be less than or equal to 21.
-        while (aceCount > 0) {
-            if (result > BLACKJACK) {
-                result -= 10;
-                aceCount--;
-            }
-            else {
-                aceCount = 0;
-            }
-        }
-
-        return result;
-    }
-
-    private boolean gameWin(int handscore, int dealerScore) {
-        return handscore <= BLACKJACK && ((dealerScore > BLACKJACK) || handscore >= dealerScore);
-    }
-
-    /**
-     * The dealer pulls cards from the Deck until they have a score of at least 17.
-     */
-    private void pullToSeventeen() {
-
-        APIDataAccessObject apiDataAccessObject = new APIDataAccessObject();
-
-        while (this.handScore(gameDataObject.getDealer()) < 17) {
-            this.gameDataObject.getDealer().hit(apiDataAccessObject.getCard(gameDataObject.getDeckID()));
-        }
-    }
-
-    @Override
-    public void switchToDealerAfterStandView() {
-
-        int playerScore = handScore(gameDataObject.getPlayer());
-        pullToSeventeen();
-        int dealerScore = handScore(gameDataObject.getDealer());
-        boolean winGame = gameWin(playerScore, dealerScore);
-
-        ArrayList<String> playerVisibleCards = new ArrayList<>();
-        ArrayList<String> dealerVisibleCards = new ArrayList<>();
-
-        for (Card card: gameDataObject.getPlayer().getHand()) {
-            playerVisibleCards.add(card.getImage());
-        }
-
-        for (Card card: gameDataObject.getDealer().getHand()) {
-            dealerVisibleCards.add(card.getImage());
-        }
-
-        SetupOutputData outputData = new SetupOutputData(dealerVisibleCards, playerVisibleCards, winGame, playerScore,
-                dealerScore);
-
-        setupPresenter.switchToDealerAfterStandView(outputData);
     }
 
     @Override
     public void switchToMainMenuView() {
         setupPresenter.switchToMainMenuView();
+    }
+
+
+    /**
+     * Helper function for execute score calculation, updates Aces to equal to 1 if needed.
+     */
+    public int updateScore(ArrayList<Card> hand) {
+        int score = 0;
+        ArrayList<Card> aces11 = new ArrayList<>();
+        for (Card card : hand) {
+            score += card.getValue();
+            if (Objects.equals(card.getValue(), 11)) {
+                aces11.add(card);
+            }
+        }
+
+        while (score > 21 && !aces11.isEmpty()) {
+            aces11.removeFirst().setValue(1);
+        }
+        return score;
     }
 }

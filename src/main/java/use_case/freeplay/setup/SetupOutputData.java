@@ -15,12 +15,13 @@ public class SetupOutputData {
 
     /**
      * The output data for Setup
-     * @param dealerHand the list of all the image links for the images of the dealer's hand.
+     *
+     * @param dealerHand     the list of all the image links for the images of the dealer's hand.
      * @param userPlayerHand the list of all the image links for the images of the userPlayer's hand.
+     * @param dealerScore
      */
     public SetupOutputData(ArrayList<String> dealerHand, ArrayList<String> userPlayerHand, boolean winGame,
                            int playerScore, int dealerScore) {
-//        this.dealerHand = dealerHand;
         this.userPlayerHand = userPlayerHand;
         this.dealerHand = dealerHand;
         this.winGame = winGame;

@@ -164,7 +164,6 @@ public class MainMenuView extends JPanel implements ActionListener, PropertyChan
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
     }
 
     public void setAssistedModeSetupController(AssistedModeSetupController controller) {

@@ -1,5 +1,6 @@
-package interface_adapter.freePlay.setup;
+package interface_adapter.free_play.setup;
 
+import app.Main;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.dealer_screen.DealerScreenState;
 import interface_adapter.dealer_screen.DealerScreenViewModel;
@@ -58,28 +59,11 @@ public class SetupPresenter implements SetupOutputBoundary {
     }
 
     @Override
-    public void switchToDealerAfterStandView(SetupOutputData outputData) {
-        final DealerScreenState dealerState = dealerScreenViewModel.getState();
-        dealerState.setGameType(1);
-        dealerState.setCardImages(outputData.getDealerHand());
-        dealerState.setDealerScore(outputData.getDealerScore());
-        dealerState.setPlayerScore(outputData.getPlayerScore());
-        dealerState.setPlayerWin(outputData.isWinGame());
-        dealerScreenViewModel.setState(dealerState);
-
-        this.dealerScreenViewModel.setState(dealerState);
-        this.dealerScreenViewModel.firePropertyChanged();
-
-        this.viewManagerModel.setState(dealerScreenViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
-
-    }
-
-    @Override
     public void switchToMainMenuView() {
         viewManagerModel.setState(mainMenuViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
+
 
 //    /**
 //     * Fail view aka bust

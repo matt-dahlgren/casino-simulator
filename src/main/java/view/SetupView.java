@@ -5,6 +5,7 @@ import interface_adapter.free_play.newhit.NewHitController;
 import interface_adapter.free_play.setup.SetupController;
 import interface_adapter.free_play.setup.SetupState;
 import interface_adapter.free_play.setup.SetupViewModel;
+import interface_adapter.free_play.stand.StandController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,20 +20,28 @@ import java.net.URL;
 
 import static interface_adapter.assisted_mode.AssistedModeColourConstants.TABLECOLOUR;
 
-
+/**
+ * The Free Play view (yes it says setup, no it is not only setup).
+ */
 public class SetupView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "setup";
     private final DealerScreenViewModel dealerScreenViewModel;
 
     private SetupController setupController;
     private NewHitController hitController;
+    private StandController standController;
 
     private final SetupViewModel setupViewModel;
 
     private final JPanel dealerPanel;
     private final JPanel playerPanel;
 
-    private int SCORE = 0;
+    private final JButton hitButton;
+    private final JButton standButton;
+    private final JButton quitGameButton;
+
+    private int SCORE;
+    private boolean end = false;
 
     public SetupView(SetupViewModel setupViewModel, DealerScreenViewModel dealerScreenViewModel) {
         this.setupViewModel = setupViewModel;
@@ -47,13 +56,8 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
 
         Panel northPanel = new Panel(new BorderLayout());
 
-        // This button should go back to the main menu view
-        JButton mainMenuButton = new JButton("MAIN MENU");
-        mainMenuButton.setFont(font);
-        mainMenuButton.setSize(40, 20);
-        northPanel.add(mainMenuButton, BorderLayout.LINE_START);
-
         add(northPanel, BorderLayout.NORTH);
+
 
         JPanel movesPanel = new JPanel();
         movesPanel.setLayout(new GridBagLayout());
@@ -63,15 +67,16 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 1;
-        JButton hitButton = new JButton("Hit");
+        hitButton = new JButton("Hit");
         hitButton.setFont(font);
         hitButton.setSize(40, 30);
         movesPanel.add(hitButton, constraints);
+
         // HIT BUTTON ACTION LISTENER
         hitButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(hitButton)) {
+                        if (evt.getSource().equals(hitButton) && !end) {
                             hitController.execute();
                         }
                     }
@@ -82,30 +87,33 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         // STAND BUTTON
         constraints.gridx = 0;
         constraints.gridy = 1;
-        JButton standButton = new JButton("Stand");
+        standButton = new JButton("Stand");
         standButton.setFont(font);
         movesPanel.add(standButton, constraints);
+
         // STAND BUTTON ACTION LISTENER
-        standButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setupController.switchToDealerAfterStandView();
+        standButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getSource().equals(standButton) && !end) {
+                            standController.execute();
+                        }
             }
         });
 
         // QUIT BUTTON
         constraints.gridx = 0;
         constraints.gridy = 2;
-        JButton quitGameButton = new JButton("Quit");
+        quitGameButton = new JButton("Quit");
         quitGameButton.setFont(font);
         movesPanel.setBackground(TABLECOLOUR);
         movesPanel.add(quitGameButton, constraints);
 
         // QUIT BUTTON ACTION LISTENER
-        quitGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setupController.switchToMainMenuView();
+        quitGameButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        setupController.switchToMainMenuView();
             }
         });
 
@@ -117,6 +125,7 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         playerPanel.setBackground(TABLECOLOUR);
 
         this.dealerPanel = new JPanel(new FlowLayout());
+        dealerPanel.setBackground(TABLECOLOUR);
 
         cardPanel.add(playerPanel, BorderLayout.SOUTH);
         cardPanel.add(dealerPanel, BorderLayout.NORTH);
@@ -126,18 +135,6 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         movesPanel.setBounds(810, 100, 230, 50);
         add(movesPanel, BorderLayout.LINE_START);
 
-        JPanel playerScorePanel = new JPanel(new FlowLayout());
-        playerScorePanel.setBackground(TABLECOLOUR);
-
-        JLabel playerScoreLabel =
-                new JLabel("<html><font color = 'white'>Your Score: " + SCORE + "</font></html>");
-        playerScoreLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
-        playerScoreLabel.setSize(50, 100);
-
-        playerScorePanel.add(playerScoreLabel);
-
-        add(playerScorePanel, BorderLayout.SOUTH);
-
         }
 
     public void propertyChange(PropertyChangeEvent evt) {
@@ -145,8 +142,6 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         // Happens by default when setup use case happens
         if (evt.getPropertyName().equals("state")) {
             final SetupState state = (SetupState) evt.getNewValue();
-
-            SCORE = state.getScore();
 
             for (String card : state.getPlayerHand()) {
                 try {
@@ -164,9 +159,26 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
                     playerPanel.add(errorLabel, BorderLayout.CENTER);
                 }}
 
-            for (String card : state.getDealerHand()) {
+            // Hides the first dealer card
+            state.setHiddenDealer(state.getDealerHand().getFirst());
+            try {
+                URL imageUrl = new URL("https://deckofcardsapi.com/static/img/back.png");
+                BufferedImage image = ImageIO.read(imageUrl);
+                ImageIcon icon = new ImageIcon(image);
+                JLabel imageLabel = new JLabel(icon);
+
+                dealerPanel.add(imageLabel);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                JLabel errorLabel = new JLabel("Failed to load image.");
+                errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                dealerPanel.add(errorLabel, BorderLayout.CENTER);
+            }
+
+            // Creates the rest of the dealer's hand (just the second card)
                 try {
-                    URL imageUrl = new URL(card);
+                    URL imageUrl = new URL(state.getDealerHand().getLast());
                     BufferedImage image = ImageIO.read(imageUrl);
                     ImageIcon icon = new ImageIcon(image);
                     JLabel imageLabel = new JLabel(icon);
@@ -178,14 +190,18 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
                     JLabel errorLabel = new JLabel("Failed to load image.");
                     errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
                     dealerPanel.add(errorLabel, BorderLayout.CENTER);
-                }}
+                }
+
+            if (state.getWin()) {
+                standController.execute();
+            }
+
             }
 
         // Occurs when hit use case happens.
         else if (evt.getPropertyName().equals("hit")) {
             final SetupState state = (SetupState) evt.getNewValue();
 
-            SCORE = state.getScore();
 
             int componentCount = playerPanel.getComponentCount();
             int handSize = state.getPlayerHand().size();
@@ -208,18 +224,88 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
             }
             //Reloads the page, allows the new cards to be updated to it
             this.revalidate();
+
+            if (state.getWin()) {
+                standController.execute();
+            }
         }
 
         else if (evt.getPropertyName().equals("stand")) {
             final SetupState state = (SetupState) evt.getNewValue();
+
+            this.SCORE = state.getScore();
+
+            int componentCount = dealerPanel.getComponentCount();
+            int handSize = state.getDealerHand().size();
+
+            dealerPanel.remove(0);
+
+            try {
+                URL imageUrl = new URL(state.getHiddenDealer());
+                BufferedImage image = ImageIO.read(imageUrl);
+                ImageIcon icon = new ImageIcon(image);
+                JLabel imageLabel = new JLabel(icon);
+
+                dealerPanel.add(imageLabel);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                JLabel errorLabel = new JLabel("Failed to load image.");
+                errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                dealerPanel.add(errorLabel, BorderLayout.CENTER);
+            }
+
+            for (int i = componentCount; i < handSize; i++) {
+                try {
+                    URL imageUrl = new URL(state.getDealerHand().get(i));
+                    BufferedImage image = ImageIO.read(imageUrl);
+                    ImageIcon icon = new ImageIcon(image);
+                    JLabel imageLabel = new JLabel(icon);
+
+                    dealerPanel.add(imageLabel);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JLabel errorLabel = new JLabel("Failed to load image.");
+                    errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    dealerPanel.add(errorLabel, BorderLayout.CENTER);
+                }
+            }
+
+            this.revalidate();
+
+            this.end = true;
+
+
+            String outcome_text = "";
+
+            if (state.getWin()) {
+                outcome_text += "YOU WON!\nCongrats!";
+            }
+
+            else {
+                outcome_text += "YOU LOST!";
+                if (state.getScore() > 21) {
+                    outcome_text += "\nBusted before the Dealer even drew Cards!";
+                }
+                else {
+                    outcome_text += "\nDealer beat you, should've been more Risky";
+                }
+            }
+
+
+            JOptionPane.showMessageDialog(this, outcome_text);
+
+
+
         }
+
 
         }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
     }
 
     public String getViewName() {
@@ -234,8 +320,12 @@ public class SetupView extends JPanel implements ActionListener, PropertyChangeL
         System.out.println("New Controller added!");
         this.hitController = controller;
     }
+
+    public void setStandController(StandController controller) {
+        this.standController = controller;
+    }
 }
 
 
-
+// component 4
 

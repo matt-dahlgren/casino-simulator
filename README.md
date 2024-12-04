@@ -59,10 +59,12 @@ reference.
 - Run with Java 22. Built and Tested with Amazon Corretto 11.0.24 on macOS Sequoia, Windows 10, and Windows 11.
 - Utilize Maven to install needed dependacies.
 - Run [Main.java](./src/main/java/app/Main.java)
-
-Luckily, the only issues that may arise are with Maven. If the app refuses to build, navigate to Maven in your 
+  
+- Luckily, the main issues that arise are with Maven. If the app refuses to build, navigate to Maven in your 
 Setting's Build Tools, select "Runner" and then tick the checkbox to delegate IDE build/run actions to Maven.
 Also, consider reloading your pom.xml file if you have issues.
+- Another problem that may arise is with the [Account Info](./src/main/java/user_data/Account_Info) incorrectly saving data,
+please delete the empty entires in the file, and things should work okay!
 
 ## Design Process:
 In the beginning, we created CRC cards to determine which classes we'd need in the final product. Although we expanded
@@ -116,15 +118,6 @@ Although this entire process could be done through solely a single view, the dis
 SOLID would make it very difficult to run without having the entire program assembled all at once. As well as
 making it a nightmare to independently test sections of code, make modifications, or understanding what the code
 is actually doing.
-
-## Test Coverage
-Below is our test coverage for our program. [INSERT TEST COVERAGE DETAILS HERE ONCE WE'RE FINISHED WITH THEM]
-
-In our tests, we did not test the visual UI elements as they are best manually tested. Unfortunately, our tests don't
-have perfect coverage as we were crunching the code of our program. However, the most important elements are tested.
-
-## Images
-Insert a bunch of images of us doing things with an explanation of what they are
 
 ## Contribution
 As this was an assignment done for our CSC207 course and was a demonstration of what we could achieve given the course

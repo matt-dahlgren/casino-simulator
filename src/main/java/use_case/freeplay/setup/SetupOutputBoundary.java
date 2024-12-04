@@ -6,15 +6,11 @@ public interface SetupOutputBoundary {
      * @param outputData the output data
      */
     void prepareSuccessView(SetupOutputData outputData);
-
-    //TODO Don't think it can currently fail, maybe remove?
     /**
      * Prepares the failure view for the Setup Use Case.
      * @param errorMessage the explanation of the failure
      */
     void prepareFailView(String errorMessage);
-
-    void switchToDealerAfterStandView(SetupOutputData outputData);
 
     void switchToMainMenuView();
 }

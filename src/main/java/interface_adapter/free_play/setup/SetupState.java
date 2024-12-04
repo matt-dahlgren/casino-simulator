@@ -6,7 +6,9 @@ public class SetupState {
     private ArrayList<String> dealerHand;
     private ArrayList<String> playerHand;
     private int score;
-    private String outcome;
+    private boolean win;
+    private int dealerScore;
+    private String hiddenDealer;
 
     public SetupState() {}
 
@@ -14,7 +16,7 @@ public class SetupState {
         dealerHand = copy.dealerHand;
         playerHand = copy.playerHand;
         score = copy.score;
-        outcome = copy.outcome;
+        win = copy.win;
     }
 
     public ArrayList<String> getPlayerHand() {
@@ -41,11 +43,27 @@ public class SetupState {
         this.score = score;
     }
 
-    public String getOutcome() {
-        return outcome;
+    public boolean getWin() {
+        return win;
     }
 
-    public void setOutcome(String outcome) {
-        this.outcome = outcome;
+    public void setWin(boolean win) {
+        this.win = win;
+    }
+
+    public void setDealerScore(int dealerScore) {
+        this.dealerScore = dealerScore;
+    }
+
+    public int getDealerScore() {
+        return dealerScore;
+    }
+
+    public String getHiddenDealer() {
+        return hiddenDealer;
+    }
+
+    public void setHiddenDealer(String hiddenDealer) {
+        this.hiddenDealer = hiddenDealer;
     }
 }
