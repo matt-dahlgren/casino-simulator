@@ -59,10 +59,12 @@ reference.
 - Run with Java 22. Built and Tested with Amazon Corretto 11.0.24 on macOS Sequoia, Windows 10, and Windows 11.
 - Utilize Maven to install needed dependacies.
 - Run [Main.java](./src/main/java/app/Main.java)
-
-Luckily, the only issues that may arise are with Maven. If the app refuses to build, navigate to Maven in your 
+  
+- Luckily, the main issues that arise are with Maven. If the app refuses to build, navigate to Maven in your 
 Setting's Build Tools, select "Runner" and then tick the checkbox to delegate IDE build/run actions to Maven.
 Also, consider reloading your pom.xml file if you have issues.
+- Another problem that may arise is with the [Account Info](./src/main/java/user_data/Account_Info) incorrectly saving data,
+please delete the empty entires in the file, and things should work okay!
 
 ## Design Process:
 In the beginning, we created CRC cards to determine which classes we'd need in the final product. Although we expanded
