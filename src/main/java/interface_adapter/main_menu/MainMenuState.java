@@ -9,14 +9,6 @@ import app.Main;
 public class MainMenuState {
     private String username = "";
 
-    public MainMenuState(MainMenuState copy) {
-        username = copy.username;
-    }
-
-    public MainMenuState() {
-
-    }
-
     public String getUsername() {
         return username;
     }

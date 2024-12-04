@@ -150,7 +150,7 @@ public class AppBuilder {
      */
     public AppBuilder addSetupView() {
         setupViewModel = new SetupViewModel();
-        setupView = new SetupView(setupViewModel);
+        setupView = new SetupView(setupViewModel, dealerScreenViewModel);
         cardPanel.add(setupView, setupView.getViewName());
         return this;
     }
@@ -281,6 +281,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addHitUseCase() {
+
         final NewHitOutputBoundary hitOutputBoundary = new NewHitPresenter(setupViewModel);
 
         final NewHitInputBoundary newHitInteractor = new NewHitInteractor(APIDAO, gameDAO, hitOutputBoundary);

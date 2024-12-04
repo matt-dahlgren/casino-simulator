@@ -1,21 +1,26 @@
 package interface_adapter.free_play.hit;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.dealer_screen.DealerScreenState;
+import interface_adapter.dealer_screen.DealerScreenViewModel;
 import interface_adapter.free_play.setup.SetupViewModel;
 import use_case.freeplay.hit.HitOutputBoundary;
 import use_case.freeplay.hit.HitOutputData;
+import use_case.freeplay.setup.SetupOutputData;
 
 import java.util.ArrayList;
 
 public class HitPresenter implements HitOutputBoundary {
     private final ViewManagerModel viewManagerModel;
+    private final DealerScreenViewModel dealerScreenViewModel;
     interface_adapter.free_play.hit.HitViewModel hitViewModel;
     SetupViewModel setupViewModel;
 
-    public HitPresenter(ViewManagerModel viewManagerModel, SetupViewModel setupViewModel, HitViewModel hitView) {
+    public HitPresenter(ViewManagerModel viewManagerModel, SetupViewModel setupViewModel, HitViewModel hitView, DealerScreenViewModel dealerScreenViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.hitViewModel = hitView;
         this.setupViewModel = setupViewModel;
+        this.dealerScreenViewModel = dealerScreenViewModel;
 
     }
 
@@ -76,9 +81,20 @@ public class HitPresenter implements HitOutputBoundary {
     }
 
     @Override
-    public void switchToDealerAfterStandView() {
-//        viewManagerModel.setState(freePlayStandViewModel.getViewName());
-//        viewManagerModel.firePropertyChanged();
+    public void switchToDealerAfterStandViewSetupOutputData (SetupOutputData outputData) {
+        final DealerScreenState dealerState = dealerScreenViewModel.getState();
+        dealerState.setGameType(1);
+        dealerState.setCardImages(outputData.getDealerHand());
+        dealerState.setDealerScore(outputData.getDealerScore());
+        dealerState.setPlayerScore(outputData.getPlayerScore());
+        dealerState.setPlayerWin(outputData.isWinGame());
+        dealerScreenViewModel.setState(dealerState);
+
+        this.dealerScreenViewModel.setState(dealerState);
+        this.dealerScreenViewModel.firePropertyChanged();
+
+        this.viewManagerModel.setState(dealerScreenViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
 
     @Override

@@ -1,7 +1,9 @@
 package view;
 
 import interface_adapter.login_adapter.LoginController;
+import interface_adapter.login_adapter.LoginState;
 import interface_adapter.login_adapter.LoginViewModel;
+import interface_adapter.main_menu.MainMenuState;
 import interface_adapter.signup_adapter.SignupController;
 import interface_adapter.signup_adapter.SignupState;
 import interface_adapter.signup_adapter.SignupViewModel;
@@ -55,7 +57,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         buttons.add(login);
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
-
 
         signUp.addActionListener(
                 new ActionListener() {
@@ -219,17 +220,23 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final SignupState current = (SignupState) evt.getNewValue();
-        if (current.getUsernameError() != null) {
-            JOptionPane.showMessageDialog(this, current.getUsernameError());
-        }
-        else if (current.getPasswordError() != null) {
-            JOptionPane.showMessageDialog(this, current.getPasswordError());
+        if (evt.getNewValue() instanceof SignupState) {
+            final SignupState state = (SignupState) evt.getNewValue();
+            if (state.getUsernameError() != null) {
+                JOptionPane.showMessageDialog(this, state.getUsernameError());
+            }
+            else if (state.getPasswordError() != null) {
+                JOptionPane.showMessageDialog(this, state.getPasswordError());
+            }
+            // Proceed with LoginState logic
+        } else {
+            final LoginState state = (LoginState) evt.getNewValue();
         }
     }
 
+
     public String getViewName() {
-        return viewName;
+        return "sign up";
     }
 
     public void setSignupController(SignupController controller) {

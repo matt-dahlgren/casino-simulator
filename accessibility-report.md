@@ -44,8 +44,6 @@ build familiarity with knowing when it is safe to continue hitting.
 Less Likely Demographics:
 
 There should be a larger age disparity as our product is not to be marketed towards minors (as even though there is no 
-monetary transaction in our program it promotes gambling). With the need to download the package to allow for the 
-emailing of game reports to users, a barrier on top of just installation of our software is added which would most 
-likely deter those who are less familiar with technology (namely a larger percent of the elder population than other 
-age demographics). Also, with no customizability of display colours/saturations or languages, our program is mostly 
-accessible to those without severe vision impairments and English speakers.
+monetary transaction in our program it promotes gambling). Also, as previously mentioned, with no customizability of 
+display colours/saturations or languages, our program is mostly accessible to those without severe vision impairments 
+and English speakers.

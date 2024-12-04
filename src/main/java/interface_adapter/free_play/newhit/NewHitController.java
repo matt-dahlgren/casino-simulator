@@ -17,4 +17,8 @@ public class NewHitController {
     public void execute() {
         hitInteractor.execute();
     }
+
+    public void switchToDealerAfterStandView() {
+        hitInteractor.switchToDealerAfterStandView();
+    }
 }
