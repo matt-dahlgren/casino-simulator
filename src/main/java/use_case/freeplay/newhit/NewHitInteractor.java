@@ -17,6 +17,7 @@ public class NewHitInteractor implements NewHitInputBoundary {
     private final FreePlayDA freePlayDA;
     private final GameDataAccess gameDataAccess;
     private final NewHitOutputBoundary hitPresenter;
+    private boolean iswin;
 
     public NewHitInteractor(FreePlayDA freePlayDA, GameDataAccess gameDataAccess, NewHitOutputBoundary hitOutputBoundary) {
         this.freePlayDA = freePlayDA;
@@ -41,17 +42,11 @@ public class NewHitInteractor implements NewHitInputBoundary {
             for (Card card : gameDataAccess.getPlayer().getHand()) {
                 player_images.add(card.getImage());
             }
+            iswin = getScore(player.getHand()) > 21;
 
-            final NewHitOutputData outputData = new NewHitOutputData(player_images, getScore(player.getHand()));
+            final NewHitOutputData outputData = new NewHitOutputData(player_images, getScore(player.getHand()), iswin);
 
             hitPresenter.prepareSuccessView(outputData);
-        }
-
-        if (getScore(player.getHand()) == 21) {
-            hitPresenter.prepareBustView("Winner!");
-        }
-        else {
-            hitPresenter.prepareBustView("Bust! You're Over 21");
         }
 
 

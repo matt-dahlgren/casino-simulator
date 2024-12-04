@@ -11,7 +11,10 @@ import interface_adapter.dealer_screen.DealerScreenViewModel;
 import interface_adapter.free_play.newhit.NewHitController;
 import interface_adapter.free_play.newhit.NewHitPresenter;
 import interface_adapter.free_play.setup.SetupController;
+import interface_adapter.free_play.setup.SetupPresenter;
 import interface_adapter.free_play.setup.SetupViewModel;
+import interface_adapter.free_play.stand.StandController;
+import interface_adapter.free_play.stand.StandPresenter;
 import interface_adapter.learn_mode.*;
 import interface_adapter.main_menu.MainMenuViewModel;
 import interface_adapter.report.*;
@@ -34,6 +37,9 @@ import use_case.email_report.EmailReportOutputBoundary;
 import use_case.endgame_report.GameReportInputBoundary;
 import use_case.endgame_report.GameReportInteractor;
 import use_case.endgame_report.GameReportOutputBoundary;
+import use_case.freeplay.stand.StandInputBoundary;
+import use_case.freeplay.stand.StandInteractor;
+import use_case.freeplay.stand.StandOutputBoundary;
 import use_case.learn_mode.LearnModeInputBoundary;
 import use_case.learn_mode.LearnModeInteractor;
 import use_case.learn_mode.LearnModeOutputBoundary;
@@ -155,6 +161,7 @@ public class AppBuilder {
         return this;
     }
 
+
 //    /**
 //     * Adds the Assisted view to the application.
 //     * @return this builder
@@ -250,6 +257,19 @@ public class AppBuilder {
     }
 
     /**
+     * Stand Use Case
+     * @return this builder.
+     */
+    public AppBuilder addStandUseCase() {
+        final StandOutputBoundary standOutputBoundary = new StandPresenter(setupViewModel);
+        final StandInputBoundary standInputBoundary = new StandInteractor(gameDAO, APIDAO, standOutputBoundary);
+
+        final StandController controller = new StandController(standInputBoundary);
+        setupView.setStandController(controller);
+        return this;
+    }
+
+    /**
      * Adds the Signup Use Case to the application.
      * @return this builder.
      */
@@ -267,12 +287,13 @@ public class AppBuilder {
      * @return this builder.
      */
     public AppBuilder addSetupUseCase() {
-        final SetupOutputBoundary setupOutputBoundary = new interface_adapter.freePlay.setup.SetupPresenter(viewManagerModel, mainMenuViewModel, setupViewModel, dealerScreenViewModel);
+        final SetupOutputBoundary setupOutputBoundary = new SetupPresenter(viewManagerModel, mainMenuViewModel, setupViewModel, dealerScreenViewModel);
 
         final SetupInputBoundary setupInteractor = new SetupInteractor(gameDAO, APIDAO, setupOutputBoundary);
 
         final SetupController controller = new SetupController(setupInteractor);
         mainMenuView.setSetupController(controller);
+        setupView.setSetupController(controller);
         return this;
     }
 

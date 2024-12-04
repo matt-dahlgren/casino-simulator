@@ -42,6 +42,7 @@ public class Main {
                 .addHitUseCase()
                 .addDealerAfterStandView()
                 .addDealerScreenUseCase()
+                .addStandUseCase()
 
 //                .addAssistedView()
 //                .addAssistedSetupUseCase()

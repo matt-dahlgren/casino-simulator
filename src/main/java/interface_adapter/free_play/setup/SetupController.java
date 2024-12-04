@@ -12,19 +12,14 @@ public class SetupController {
         this.setupInteractor = setupInteractor;
     }
 
-
-    public void switchToDealerAfterStandView() {
-        setupInteractor.switchToDealerAfterStandView();
-    }
-
-    public void switchToMainMenuView() {
-        setupInteractor.switchToMainMenuView();
-    }
-
     /**
      * Execute the setup use case. No need for parameters.
      */
     public void execute() {
         setupInteractor.execute();
+    }
+
+    public void switchToMainMenuView() {
+        setupInteractor.switchToMainMenuView();
     }
 }

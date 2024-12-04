@@ -21,20 +21,9 @@ public class NewHitPresenter implements NewHitOutputBoundary {
         SetupState setupState = setupViewModel.getState();
         setupState.setPlayerHand(outputData.getUserPlayerHand());
         setupState.setScore(outputData.getScore());
+        setupState.setWin(outputData.getWin());
 
         setupViewModel.firePropertyChanged("hit");
 
-    }
-
-    /**
-     * Used for displaying the end of the game, either a WINNER or YOU BUSTED screen.
-     * @param outcome the string with the details from the NewHitInteractor
-     */
-    @Override
-    public void prepareBustView(String outcome) {
-        SetupState setupState = setupViewModel.getState();
-        setupState.setOutcome(outcome);
-
-        setupViewModel.firePropertyChanged("display result");
     }
 }
